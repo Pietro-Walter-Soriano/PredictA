@@ -26,10 +26,11 @@ for y in seasons.all_starts():
     if os.path.exists(dest) and y != seasons.current_start(): continue
     try:
         r = requests.get(FD_URL.format(code=code), headers=UA, timeout=30)
-        if r.status_code == 200 and r.text.startswith("Div,"):
-            open(dest, "w", encoding="utf-8").write(r.text); print("football-data", code, "downloaded", flush=True)
+        text = r.content.decode("utf-8-sig", errors="replace")   # newer files start with a UTF-8 BOM
+        if r.status_code == 200 and text.lstrip().startswith("Div,"):
+            open(dest, "w", encoding="utf-8").write(text); print("football-data", code, "downloaded", flush=True)
         else:
-            print("football-data", code, "not available (http", r.status_code, ")", flush=True)
+            print("football-data", code, "not available (http", r.status_code, "starts with", repr(text[:20]), ")", flush=True)
     except requests.RequestException as e:
         print("football-data unreachable:", type(e).__name__, "- put the CSVs in data/manual/ instead", flush=True); break
     time.sleep(1)

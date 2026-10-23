@@ -9,7 +9,12 @@ exec 9>data/.run.lock; flock -n 9 || { echo "already running"; exit 0; }
 PY=.venv/bin/python
 [ -x "$PY" ] || { echo "run ./setup.sh first"; exit 1; }
 echo "== $(date -u +%FT%TZ) start"
-$PY -I src/fetch_fotmob.py data "$($PY -I -c 'import sys; sys.path.insert(0, "src"); import seasons; print(seasons.fotmob(seasons.current_start()))')"
+# whole archive on the first run (cached seasons are skipped), then only the current season
+if [ -d data/raw/fotmob ] && [ "$(ls data/raw/fotmob | wc -l)" -gt 1 ]; then
+  $PY -I src/fetch_fotmob.py data "$($PY -I -c 'import sys; sys.path.insert(0, "src"); import seasons; print(seasons.fotmob(seasons.current_start()))')"
+else
+  $PY -I src/fetch_fotmob.py data
+fi
 $PY -I src/fetch_aux.py data
 $PY -I src/fetch_odds.py data
 $PY -I src/dataset.py data

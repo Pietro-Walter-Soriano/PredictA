@@ -207,7 +207,7 @@ def inv(*odds):
         return None
 ext = []
 for f in sorted(glob.glob(f"{DATA}/raw/football_data/I1_*.csv")):
-    for r in pd.read_csv(f, encoding="latin-1").to_dict("records"):
+    for r in pd.read_csv(f, encoding="utf-8-sig", encoding_errors="replace").to_dict("records"):
         if pd.isna(r.get("HomeTeam")) or pd.isna(r.get("Date")): continue
         day = pd.to_datetime(r["Date"], dayfirst=True).strftime("%Y-%m-%d")
         for src, cols, ou in (("pinnacle", ("PSCH", "PSCD", "PSCA"), ("PC>2.5", "PC<2.5")), ("pinnacle", ("PSH", "PSD", "PSA"), ("P>2.5", "P<2.5")),
