@@ -1,0 +1,13 @@
+# secrets
+.env
+# environment
+.venv/
+__pycache__/
+# downloaded / generated data (rebuilt by ./run.sh)
+data/raw/
+data/manual/*.csv
+data/dataset.pkl
+data/*.log
+data/.run.lock
+site/
+# kept in git: data/ledger/ (forecast archive), data/rounds.json, data/backtest.json, data/calibration.json, data/params.json
