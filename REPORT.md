@@ -1,14 +1,14 @@
 # PredictA — Serie A
 
-Aggiornato: 2026-10-23 16:47 UTC · dashboard completa: scarica `site/serie-a.html` dall'ultimo run in *Actions → Artifacts*.
+Aggiornato: 2026-10-23 16:54 UTC · dashboard completa: scarica `site/serie-a.html` dall'ultimo run in *Actions → Artifacts*.
 
-## Voto complessivo: **69/100** su 70 partite
+## Voto complessivo: **68/100** su 70 partite
 
 | 1X2 vs storico | 1X2 vs bookmaker | Mercati gol | Linee statistiche | Marcatori |
 |---|---|---|---|---|
-| 82 | 55 | 61 | 80 | 66 |
+| 81 | 51 | 61 | 80 | 66 |
 
-Favorito indovinato 59% · log-loss 1X2 0.918 (storico 1.051, bookmaker 0.927) · risultato esatto 16% (top-3 39%) · scommesse di valore 14/27, P&L +5.24 u
+Favorito indovinato 60% · log-loss 1X2 0.923 (storico 1.051, bookmaker 0.925) · risultato esatto 13% (top-3 34%) · scommesse di valore 0/0, P&L +0.00 u
 
 50 = come il riferimento ingenuo, 75 = errore più basso del 10%. Dettagli nel README.
 
@@ -16,13 +16,13 @@ Favorito indovinato 59% · log-loss 1X2 0.918 (storico 1.051, bookmaker 0.927) �
 
 | Giornata | Voto | 1X2 vs storico | 1X2 vs bookmaker | Mercati gol | Linee statistiche | Marcatori | Favorito | Log-loss | Value P&L | Tipo |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2026-2027 R7 | **61** | 47 | 40 | 59 | 88 | 73 | 70% | 1.025 | +0.78 | ricostruita |
-| 2026-2027 R6 | **74** | 97 | 63 | 47 | 91 | 70 | 60% | 0.853 | +1.18 | ricostruita |
-| 2026-2027 R5 | **62** | 51 | 56 | 57 | 78 | 66 | 30% | 1.066 | -0.32 | ricostruita |
-| 2026-2027 R4 | **62** | 73 | 48 | 47 | 81 | 60 | 50% | 0.952 | -2.00 | ricostruita |
-| 2026-2027 R3 | **68** | 88 | 61 | 53 | 69 | 70 | 60% | 0.926 | +1.25 | ricostruita |
-| 2026-2027 R2 | **82** | 100 | 67 | 75 | 94 | 73 | 80% | 0.749 | +5.04 | ricostruita |
-| 2026-2027 R1 | **67** | 100 | 47 | 81 | 57 | 50 | 60% | 0.851 | -0.68 | ricostruita |
+| 2026-2027 R7 | **67** | 55 | 54 | 67 | 88 | 73 | 70% | 0.994 | +0.00 | ricostruita |
+| 2026-2027 R6 | **68** | 89 | 49 | 41 | 91 | 69 | 60% | 0.884 | +0.00 | ricostruita |
+| 2026-2027 R5 | **58** | 47 | 49 | 52 | 78 | 66 | 30% | 1.083 | +0.00 | ricostruita |
+| 2026-2027 R4 | **63** | 73 | 49 | 54 | 81 | 59 | 50% | 0.953 | +0.00 | ricostruita |
+| 2026-2027 R3 | **66** | 82 | 49 | 61 | 69 | 70 | 60% | 0.952 | +0.00 | ricostruita |
+| 2026-2027 R2 | **78** | 100 | 55 | 70 | 94 | 73 | 80% | 0.765 | +0.00 | ricostruita |
+| 2026-2027 R1 | **66** | 100 | 52 | 74 | 57 | 49 | 70% | 0.828 | +0.00 | ricostruita |
 
 ## Prossime partite
 
