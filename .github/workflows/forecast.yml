@@ -6,6 +6,11 @@ on:
   schedule:
     - cron: "17 * * * *"
   workflow_dispatch:
+    inputs:
+      replay:
+        description: "Rebuild the finished rounds of this season with the current engine before the normal cycle"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -41,6 +46,14 @@ jobs:
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: ./run.sh
+
+      - name: Replay finished rounds with the current engine
+        if: ${{ inputs.replay }}
+        run: |
+          .venv/bin/python -I src/replay.py data
+          .venv/bin/python -I src/evaluate.py data/ledger data data/rounds.json
+          .venv/bin/python -I src/report.py data/rounds.json site/data/index.json REPORT.md
+          .venv/bin/python -I src/render.py src/template.html site/data site/serie-a.html data/rounds.json
 
       - name: Save data cache
         if: always()
