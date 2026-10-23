@@ -12,3 +12,4 @@ data/.run.lock
 site/
 # kept in git: data/ledger/ (forecast archive), data/rounds.json, data/backtest.json, data/calibration.json, data/params.json
 data/.replay/
+_pages/

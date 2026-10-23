@@ -10,7 +10,7 @@ num = lambda x, d=3: "–" if x is None else f"{x:.{d}f}"
 COMP = ["1X2 vs storico", "1X2 vs bookmaker", "Mercati gol", "Linee statistiche", "Marcatori"]
 
 out = ["# PredictA — Serie A", "", f"Aggiornato: {(I.get('generated') or '')[:16].replace('T', ' ')} UTC · "
-       "dashboard completa: scarica `site/serie-a.html` dall'ultimo run in *Actions → Artifacts*.", ""]
+       "dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).", ""]
 t = R.get("total")
 if t:
     out += [f"## Voto complessivo: **{R['total_grade']}/100** su {t['n']} partite", "",

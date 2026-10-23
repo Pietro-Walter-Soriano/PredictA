@@ -14,6 +14,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: forecast
@@ -69,6 +71,17 @@ jobs:
           name: serie-a-dashboard
           path: site/serie-a.html
           retention-days: 14
+
+      # GitHub Pages: the dashboard as a fixed web page (needs Settings -> Pages -> Source: GitHub Actions, once)
+      - name: Prepare Pages site
+        run: mkdir -p _pages && cp site/serie-a.html _pages/index.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _pages
+      - name: Publish to GitHub Pages
+        id: pages
+        continue-on-error: true   # Pages not enabled yet: the forecast itself still succeeds
+        uses: actions/deploy-pages@v4
 
       - name: Commit results
         run: |
