@@ -1,0 +1,68 @@
+name: forecast
+
+# Hourly matchday cycle on GitHub: refresh data, forecast, archive pre-kick-off forecasts, score finished rounds,
+# then commit data/ledger, data/rounds.json, data/backtest.json, data/calibration.json and REPORT.md.
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: forecast
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      # downloaded archive (~80 MB): restored from the latest run, saved again under a new key at the end
+      - name: Restore data cache
+        uses: actions/cache/restore@v4
+        with:
+          path: data/raw
+          key: raw-${{ github.run_id }}
+          restore-keys: raw-
+
+      - name: Setup
+        run: ./setup.sh
+
+      - name: Run matchday cycle
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: ./run.sh
+
+      - name: Save data cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data/raw
+          key: raw-${{ github.run_id }}
+
+      - name: Upload dashboard
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: serie-a-dashboard
+          path: site/serie-a.html
+          retention-days: 14
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/ledger data/rounds.json data/backtest.json data/calibration.json REPORT.md
+          if git diff --cached --quiet; then echo "nothing changed"; exit 0; fi
+          git commit -m "forecast update $(date -u +%FT%H:%MZ)"
+          git pull --rebase --autostash
+          git push

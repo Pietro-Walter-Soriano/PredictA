@@ -28,7 +28,15 @@ raggiungibile, metti a mano i CSV in `data/manual/` con il nome `I1_2021.csv`, `
 
 Priorità delle quote: Pinnacle chiusura > media di mercato > Bet365 > The Odds API > ESPN/DraftKings.
 
-## Esecuzione automatica
+## Esecuzione automatica su GitHub (attiva)
+
+`.github/workflows/forecast.yml` esegue `run.sh` ogni ora sui server di GitHub e committa archivio, pagelle e
+[`REPORT.md`](REPORT.md) (voto, KPI per giornata, prossime partite). I dati scaricati restano nella cache di Actions,
+la dashboard HTML è negli *Artifacts* di ogni run. Per le quote The Odds API aggiungi il secret `ODDS_API_KEY`
+(*Settings → Secrets and variables → Actions*). Una sola macchina deve scrivere sul repository: se usi GitHub Actions,
+in locale lancia `run.sh` solo per guardare, senza fare push.
+
+## Esecuzione automatica in locale (alternativa)
 
 `run.sh` si può lanciare quando vuoi e si ferma da solo se è già in corso. Ogni ora va bene:
 

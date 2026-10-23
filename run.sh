@@ -19,5 +19,6 @@ $PY -I check/verify.py site/data
 $PY -I src/ledger.py site/data data/ledger
 $PY -I src/evaluate.py data/ledger data data/rounds.json
 $PY -I src/render.py src/template.html site/data site/serie-a.html data/rounds.json
+$PY -I src/report.py data/rounds.json site/data/index.json REPORT.md
 [ -n "${PUBLISH_DIR:-}" ] && cp site/serie-a.html "$PUBLISH_DIR/" || true   # optional extra copy (e.g. a Windows folder)
 echo "== $(date -u +%FT%TZ) done"
