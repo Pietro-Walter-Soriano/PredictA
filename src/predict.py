@@ -132,7 +132,8 @@ index = []
 for r in up.itertuples():
     vh = V[(V.match_id == r.match_id) & (V.side == "home")]
     va = V[(V.match_id == r.match_id) & (V.side == "away")]
-    if vh.empty or va.empty or len(r.lineup["home"]["starters"]) < 11: continue
+    if vh.empty or va.empty or any(len(r.lineup[s]["starters"]) != 11 for s in ("home", "away")):
+        print("skip", r.home, "-", r.away, ": lineup not complete yet", flush=True); continue
     both = pd.concat([vh, va])
     lam_model = gm.predict(both)
     has_mk = not pd.isna(r.p1_close)

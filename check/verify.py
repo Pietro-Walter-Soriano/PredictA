@@ -1,4 +1,4 @@
-"""Independent consistency checks on every forecast JSON (throwaway review aid)."""
+"""Consistency checks on every forecast JSON; exits non-zero on any failure."""
 import glob, json, math, sys
 from scipy.stats import poisson
 fails = []
@@ -23,4 +23,5 @@ for f in sorted(glob.glob(sys.argv[1] + "/2*.json")):
     c = d["lines"]["corners"]
     if c["disp"] <= 1.0001: ok(abs(c["over"]["9.5"] - (1 - poisson.cdf(9, c["mean"]))) < 1e-3, f"{n} corners poisson")
     else: ok(c["over"]["9.5"] < 1 and c["over"]["7.5"] > c["over"]["11.5"], f"{n} corners monotone")
-print("FAIL", fails) if fails else print("PASS", len(glob.glob(sys.argv[1] + "/2*.json")), "files")
+if fails: print("FAIL", fails); sys.exit(1)   # a failed check stops run.sh before anything is archived
+print("PASS", len(glob.glob(sys.argv[1] + "/2*.json")), "files")
