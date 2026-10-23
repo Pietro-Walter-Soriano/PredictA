@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 # Matchday cycle: refresh data, retrain, forecast upcoming Serie A matches, archive pre-kick-off forecasts,
-# score every finished round, rebuild the dashboard. Safe to run any time; scheduled by Windows Task Scheduler.
+# score every finished round, rebuild the dashboard. Safe to run any time; scheduled by GitHub Actions (or cron).
 set -euo pipefail
 cd "$(dirname "$0")"
 mkdir -p data
 exec 9>data/.run.lock; flock -n 9 || { echo "already running"; exit 0; }
-[ -f .env ] && { set -a; . ./.env; set +a; }          # optional keys, e.g. ODDS_API_KEY
+# optional keys from .env (e.g. ODDS_API_KEY); a variable already set in the environment (GitHub secret) wins,
+# and empty values in .env are ignored
+if [ -f .env ]; then
+  while IFS='=' read -r k v; do
+    [[ "$k" =~ ^[A-Z_][A-Z0-9_]*$ ]] && [ -n "$v" ] && [ -z "${!k:-}" ] && export "$k=$v"
+  done < <(sed 's/\r$//' .env)
+fi
 PY=.venv/bin/python
 [ -x "$PY" ] || { echo "run ./setup.sh first"; exit 1; }
 echo "== $(date -u +%FT%TZ) start"
