@@ -9,12 +9,15 @@ KPIs per round (and cumulative):
   - players: anytime scorer (Brier, how many actual scorers were in our top-3 per team, hit rate of picks >= 35%)
   - calibration buckets (predicted vs observed) for every binary event of the round
   - first vs final forecast (did the official XI improve us?)
+  - head to head: the model alone vs the final forecast vs the bookmaker on the same matches (1X2 and Over 2.5), and in how many matches each beats the bookmaker
   - value: flat 1-unit stake on every 1X2 outcome where our probability beats the bookmaker's (fair odds), ROI
 """
 import glob, json, math, os, sys
 from collections import defaultdict
 import numpy as np
 import pandas as pd
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import model
 
 LEDGER, DATA, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
 EDGE = 0.03          # minimum probability edge over the market to count as a "value" pick
@@ -55,6 +58,15 @@ def score_match(d, kind):
         # value bets at fair odds 1/q: stake 1 where our p exceeds the market by EDGE
         bets = [(k, p[k], q[k]) for k in "1X2" if p[k] - q[k] >= EDGE]
         r["bets"] = [{"pick": k, "p": pk, "q": qk, "odds": round(1 / qk, 2), "won": k == res, "pnl": (1 / qk - 1) if k == res else -1.0} for k, pk, qk in bets]
+    pm = d.get("p_model")   # the statistical model alone, before it is blended with the bookmaker's goal rates
+    if pm:
+        r.update({"pm_p": pm, "pm_fav_hit": max("1X2", key=lambda k: pm[k]) == res, "pm_logloss": ll(pm[res]),
+                  "pm_brier": sum((pm[k] - o[k]) ** 2 for k in "1X2"), "pm_rps": rps(pm)})
+    pmk = d.get("p_market") or {}
+    if pmk.get("over") is not None and pmk.get("ou_line") == 2.5 and d.get("lambda_model"):   # Over 2.5: model alone vs final vs bookmaker
+        lm, i = d["lambda_model"], np.arange(model.MAXG + 1)
+        r["ov25"] = {"y": float(hg + ag > 2.5), "model": float(model.dixon_coles(lm["home"], lm["away"])[(i[:, None] + i[None, :]) > 2.5].sum()),
+                     "final": d["markets"]["ou"]["2.5"], "mkt": pmk["over"]}
     top = [s["s"] for s in d["top_scores"]]
     r["top1_hit"], r["top3_hit"] = top[0] == f"{hg}-{ag}", f"{hg}-{ag}" in top[:3]
     r["top_pred"] = top[0]
@@ -114,6 +126,25 @@ for f in sorted(glob.glob(f"{LEDGER}/*/R*/*_*.json")):
     s = score_match(json.load(open(f)), kind)
     if s: rounds[(season, rnd)][kind].append(s)
 
+def head2head(ms):
+    """Same matches, three forecasts: model alone, final (model + bookmaker goal rates) and the bookmaker. Lower log-loss/Brier/RPS wins."""
+    x = [m for m in ms if "mk_logloss" in m and "pm_logloss" in m]
+    if not x: return None
+    bl = lambda p, y: -math.log(max(p if y else 1 - p, 1e-9))
+    out = {"n": len(x),
+           "model": {k: mean([m["pm_" + k] for m in x]) for k in ("fav_hit", "logloss", "brier", "rps")},
+           "final": {k: mean([m[k] for m in x]) for k in ("fav_hit", "logloss", "brier", "rps")},
+           "market": {k: mean([m["mk_" + k] for m in x]) for k in ("fav_hit", "logloss", "brier", "rps")},
+           "wins": {"model": sum(m["pm_logloss"] < m["mk_logloss"] for m in x), "final": sum(m["logloss"] < m["mk_logloss"] for m in x)},
+           "over25": None}
+    ov = [m["ov25"] for m in ms if "ov25" in m]
+    if ov:
+        src = {"model": "model", "final": "final", "market": "mkt"}
+        out["over25"] = {"n": len(ov), **{k: {"logloss": mean([bl(o[s], o["y"]) for o in ov]), "brier": mean([(o[s] - o["y"]) ** 2 for o in ov]),
+                                            "hit": mean([(o[s] >= .5) == bool(o["y"]) for o in ov])} for k, s in src.items()},
+                         "wins": {"model": sum(abs(o["model"] - o["y"]) < abs(o["mkt"] - o["y"]) for o in ov), "final": sum(abs(o["final"] - o["y"]) < abs(o["mkt"] - o["y"]) for o in ov)}}
+    return out
+
 def summarize(ms):
     if not ms: return None
     n = len(ms); mk = [m for m in ms if "mk_logloss" in m]
@@ -138,6 +169,7 @@ def summarize(ms):
         "market": {"n": len(mk), "fav_hit": mean([m["mk_fav_hit"] for m in mk]), "logloss": mean([m["mk_logloss"] for m in mk]),
                    "brier": mean([m["mk_brier"] for m in mk]), "rps": mean([m["mk_rps"] for m in mk]),
                    "model_logloss_same": mean([m["logloss"] for m in mk])} if mk else None,
+        "h2h": head2head(ms),
         "top1_hit": mean([m["top1_hit"] for m in ms]), "top3_hit": mean([m["top3_hit"] for m in ms]),
         "binary": {k: {"n": len(v), "hit": mean([x["hit"] for x in v]), "brier": mean([x["brier"] for x in v])} for k, v in allbin.items()},
         "counts": {k: {"n": len(v), "mae": mean([x["abs_err"] for x in v]), "line_hit": mean([(x["p_over"] >= .5) == (x["act"] > x["line"]) for x in v if "line" in x])} for k, v in counts.items()},

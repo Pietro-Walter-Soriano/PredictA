@@ -468,6 +468,29 @@ const kpi = (k, v, sub, cls = "") => `<div><span class="k">${k}</span><span clas
 function compBars(c) {
   return `<div class="pi">${Object.entries(c).map(([k, v]) => `<div class="pi-row" style="grid-template-columns:170px minmax(0,1fr) 40px"><span>${k}</span><span class="pi-tr" data-tip="${k}: ${v}/100 (50 = come il riferimento ingenuo)"><i style="width:${v}%;background:${v >= 60 ? "var(--good)" : v < 45 ? "var(--bad)" : "var(--accent)"}"></i><b></b></span><span class="num" style="text-align:right">${v}</span></div>`).join("")}</div>`;
 }
+// model alone vs final forecast vs bookmaker, on the same matches: a column is green where it beats the bookmaker (lower error, higher hit rate)
+function h2hPanel(h) {
+  if (!h) return "";
+  const cell = (v, ref, d, low = true, isPct = false) => { const win = v != null && ref != null && (low ? v < ref : v > ref), tie = v != null && ref != null && v === ref;
+    return `<td class="n"><b class="${win ? "up" : tie ? "" : "down"}">${v == null ? "–" : isPct ? pct(v) : fx(v, d)}</b></td>`; };
+  const row = (label, a, b, c, d, low, isPct) => `<tr><td>${label}</td>${cell(a, c, d, low, isPct)}${cell(b, c, d, low, isPct)}<td class="n">${c == null ? "–" : isPct ? pct(c) : fx(c, d)}</td></tr>`;
+  const o = h.over25;
+  return `<section class="sec"><div class="sec-head"><h2>Noi contro i bookmaker</h2><span class="small muted">Sulle stesse ${h.n} partite con quote · verde = battiamo il bookmaker, rosso = no</span></div>
+    <div class="panel tbl"><table><thead><tr><th>Statistica</th><th class="n">Modello puro</th><th class="n">Finale</th><th class="n">Bookmaker</th></tr></thead><tbody>
+      <tr><td colspan="4" class="muted small">Esito 1X2</td></tr>
+      ${row("Log-loss (più basso è meglio)", h.model.logloss, h.final.logloss, h.market.logloss, 3, true)}
+      ${row("Brier (più basso è meglio)", h.model.brier, h.final.brier, h.market.brier, 3, true)}
+      ${row("RPS (più basso è meglio)", h.model.rps, h.final.rps, h.market.rps, 3, true)}
+      ${row("Favorito indovinato", h.model.fav_hit, h.final.fav_hit, h.market.fav_hit, 0, false, true)}
+      <tr><td>Partite in cui dà più probabilità all'esito reale del bookmaker</td><td class="n"><b>${h.wins.model}/${h.n}</b></td><td class="n"><b>${h.wins.final}/${h.n}</b></td><td class="n muted">–</td></tr>
+      ${o ? `<tr><td colspan="4" class="muted small">Over 2.5 (${o.n} partite con linea 2.5)</td></tr>
+      ${row("Log-loss", o.model.logloss, o.final.logloss, o.market.logloss, 3, true)}
+      ${row("Brier",o.model.brier, o.final.brier, o.market.brier, 3, true)}
+      ${row("Indovinato (soglia 50%)", o.model.hit, o.final.hit, o.market.hit, 0, false, true)}
+      <tr><td>Partite in cui la probabilità è più vicina all'esito reale</td><td class="n"><b>${o.wins.model}/${o.n}</b></td><td class="n"><b>${o.wins.final}/${o.n}</b></td><td class="n muted">–</td></tr>` : ""}
+    </tbody></table>
+    <p class="small muted" style="margin:8px 0 0"><b>Modello puro</b> = solo le nostre statistiche (rating, stile, formazioni), senza quote. <b>Finale</b> = quello che pubblichiamo: modello fuso con i gol attesi implicati dalle quote. <b>Bookmaker</b> = quote di chiusura senza margine. Poche partite = numeri molto instabili: un singolo risultato sposta tutto.</p></div></section>`;
+}
 function renderRound(key) {
   curRound = key; rail(key);
   const main = document.getElementById("main");
@@ -489,6 +512,7 @@ function renderRound(key) {
       ${kpi("Favorito indovinato", pct(f.fav_hit), mk ? `bookmaker ${pct(mk.fav_hit)}` : "")}
       ${kpi("Log-loss 1X2", fx(f.logloss, 3), `storico ${fx(f.baseline_logloss, 3)}${mk ? " · bookmaker " + fx(mk.logloss, 3) : ""}`, f.logloss < f.baseline_logloss ? "up" : "down")}
       ${kpi("RPS", fx(f.rps, 3), mk ? `bookmaker ${fx(mk.rps, 3)}` : "")}
+      ${f.h2h ? kpi("Modello puro vs bookmaker", `${f.h2h.wins.model}/${f.h2h.n}`, `partite in cui diamo all'esito reale più probabilità del bookmaker · log-loss ${fx(f.h2h.model.logloss, 3)} vs ${fx(f.h2h.market.logloss, 3)}`, f.h2h.model.logloss < f.h2h.market.logloss ? "up" : "down") : ""}
       ${kpi("Risultato esatto", pct(f.top1_hit), `nei primi 3: ${pct(f.top3_hit)}`)}
       ${kpi("Gol previsti / reali", `${fx(f.goals.pred, 1)} / ${f.goals.act}`, "")}
       ${kpi("Scommesse di valore", v.bets ? `${v.won}/${v.bets}` : "–", v.bets ? `P&L ${v.pnl >= 0 ? "+" : ""}${fx(v.pnl, 2)} u · ROI ${pct(v.roi)}` : `margine ≥ ${pct(RND.edge)}`, v.pnl > 0 ? "up" : v.pnl < 0 ? "down" : "")}
@@ -497,6 +521,7 @@ function renderRound(key) {
       ${kpi("XI indovinato", pct(pl.xi_overlap), "titolari previsti in campo")}
     </div>${first && first.n ? `<p class="small muted" style="margin:12px 0 0">Prima previsione della settimana: log-loss ${fx(first.logloss, 3)}, favorito ${pct(first.fav_hit)}. Ultima prima del calcio d'inizio: ${fx(f.logloss, 3)}, ${pct(f.fav_hit)}.</p>` : ""}</div>
   </section>
+  ${h2hPanel(f.h2h)}
   <section class="grid2">
     <div class="panel tbl"><h3 style="margin-bottom:8px">Mercati sì/no</h3><table><thead><tr><th>Mercato</th><th class="n">Indovinati</th><th class="n">Brier</th><th class="n">Casi</th></tr></thead><tbody>
       ${BN.map(([k, x]) => `<tr><td>${esc(k)}</td><td class="n"><b class="${x.hit >= .6 ? "up" : x.hit < .45 ? "down" : ""}">${pct(x.hit)}</b></td><td class="n">${fx(x.brier, 3)}</td><td class="n">${x.n}</td></tr>`).join("")}</tbody></table>
@@ -506,10 +531,10 @@ function renderRound(key) {
       <div><h3 style="margin-bottom:8px">Calibrazione</h3>${f.calibration.map(x => `<div class="mk-row" style="grid-template-columns:70px minmax(0,1fr) 120px"><span class="small">${x.bin}</span><span style="position:relative;height:14px"><span class="meter" style="height:14px"><i style="width:${x.obs * 100}%"></i></span><b style="position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink);left:${x.pred * 100}%" data-tip="Previsto in media ${pct(x.pred)}"></b></span><span class="small muted" style="text-align:right">${pct(x.obs)} reale · ${x.n}</span></div>`).join("")}
       <p class="small muted" style="margin:6px 0 0">Tutti gli eventi previsti (1X2, gol, statistiche): barra = quanto sono successi, tacca = probabilità media data.</p></div></div>
   </section>
-  <section class="sec"><div class="sec-head"><h2>Partita per partita</h2><span class="small muted">Verde = previsto, rosso = sbagliato</span></div><div class="panel tbl"><table><thead><tr><th>Partita</th><th class="n">Risultato</th><th class="n">1 · X · 2</th><th class="n">Prob. esito</th><th class="n">Bookmaker</th><th class="n">Ris. previsto</th><th class="n">Gol att./reali</th><th>O2.5</th><th>Gol entrambe</th><th>Marcatori</th><th class="n">Value</th></tr></thead><tbody>
+  <section class="sec"><div class="sec-head"><h2>Partita per partita</h2><span class="small muted">Verde = previsto, rosso = sbagliato</span></div><div class="panel tbl"><table><thead><tr><th>Partita</th><th class="n">Risultato</th><th class="n">1 · X · 2</th><th class="n">Prob. esito (finale)</th><th class="n" data-tip="Probabilità data all'esito reale dal solo modello, senza quote">Modello puro</th><th class="n">Bookmaker</th><th class="n">Ris. previsto</th><th class="n">Gol att./reali</th><th>O2.5</th><th>Gol entrambe</th><th>Marcatori</th><th class="n">Value</th></tr></thead><tbody>
     ${ms.map(m => { const b = m.binary, ok = x => `<span class="${x.hit ? "up" : "down"}">${x.hit ? "✓" : "✗"} ${pct(x.p)}</span>`, bets = m.bets || [];
       return `<tr><td>${esc(m.home)} – ${esc(m.away)}</td><td class="n"><b>${m.score}</b></td><td class="n">${pct(m.p["1"])} · ${pct(m.p.X)} · ${pct(m.p["2"])}</td>
-      <td class="n"><b class="${m.fav_hit ? "up" : "down"}">${m.fav_hit ? "✓" : "✗"} ${pct(m.p_res)}</b></td><td class="n">${m.mk_p ? pct(m.mk_p[m.res]) : "–"}</td>
+      <td class="n"><b class="${m.fav_hit ? "up" : "down"}">${m.fav_hit ? "✓" : "✗"} ${pct(m.p_res)}</b></td><td class="n"><span class="${m.pm_p && m.mk_p ? (m.pm_p[m.res] > m.mk_p[m.res] ? "up" : "down") : ""}">${m.pm_p ? pct(m.pm_p[m.res]) : "–"}</span></td><td class="n">${m.mk_p ? pct(m.mk_p[m.res]) : "–"}</td>
       <td class="n ${m.top1_hit ? "up" : ""}">${m.top_pred}${m.top3_hit && !m.top1_hit ? " (top3)" : ""}</td><td class="n">${fx(m.exp_goals, 1)} / ${m.goals}</td>
       <td>${ok(b["Over 2.5"])}</td><td>${ok(b["Gol entrambe"])}</td><td class="small">${esc(m.players.scorer_names.join(", ") || "–")}</td>
       <td class="n">${bets.length ? bets.map(x => `<span class="${x.won ? "up" : "down"}" data-tip="${x.pick} a ${x.odds}: nostro ${pct(x.p)} vs bookmaker ${pct(x.q)}">${x.pick}${x.won ? "✓" : "✗"}</span>`).join(" ") : "–"}</td></tr>`; }).join("")}
