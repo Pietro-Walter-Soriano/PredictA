@@ -12,6 +12,7 @@ LEAGUE = 55
 CUPS = {42: "ucl", 73: "uel", 10216: "uecl", 141: "coppa", 222: "supercoppa"}
 SEASONS = sys.argv[2:] or [seasons.fotmob(y) for y in seasons.all_starts()]   # e.g. "2026/2027"; with no args: whole archive
 UPCOMING_DAYS = 10
+SETTLE_HOURS = 6   # a match that ended less than this ago is fetched again: FotMob completes xG, shots and player stats after the whistle
 PAUSE = 0.5
 UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/126 Safari/537.36"}
 BASE = "https://www.fotmob.com/api/data"
@@ -33,6 +34,12 @@ def save(path, obj):
     with gzip.open(path + ".tmp", "wt", encoding="utf-8") as f: json.dump(obj, f)
     os.replace(path + ".tmp", path)
 
+def cached_finished(path):
+    """False for a file saved before the match ended (it would otherwise stay without result and statistics for good)."""
+    try:
+        with gzip.open(path, "rt", encoding="utf-8") as f: return bool(json.load(f)["general"].get("finished"))
+    except Exception: return False
+
 now = datetime.now(timezone.utc)
 for season in SEASONS:
     tag = season.replace("/", "-")
@@ -46,7 +53,7 @@ for season in SEASONS:
         path = f"{DATA}/raw/fotmob/{tag}/{m['id']}.json.gz"
         ko = datetime.fromisoformat(st["utcTime"].replace("Z", "+00:00"))
         if st.get("finished"):
-            if not os.path.exists(path): todo.append((m["id"], path))
+            if not os.path.exists(path) or now - ko < timedelta(hours=SETTLE_HOURS) or not cached_finished(path): todo.append((m["id"], path))
         elif ko < now + timedelta(days=UPCOMING_DAYS):
             todo.append((m["id"], path))
     print(season, "to fetch", len(todo), flush=True)

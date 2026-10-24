@@ -30,10 +30,21 @@ Priorità delle quote: Pinnacle chiusura > media di mercato > Bet365 > The Odds 
 
 ## Esecuzione automatica su GitHub (attiva)
 
-`.github/workflows/forecast.yml` esegue `run.sh` ogni ora sui server di GitHub e committa archivio, pagelle e
-[`REPORT.md`](REPORT.md) (voto, KPI per giornata, prossime partite). I dati scaricati restano nella cache di Actions,
-la dashboard HTML è negli *Artifacts* di ogni run. Per le quote The Odds API aggiungi il secret `ODDS_API_KEY`
-(*Settings → Secrets and variables → Actions*). Una sola macchina deve scrivere sul repository: se usi GitHub Actions,
+`.github/workflows/forecast.yml` si sveglia ogni 10 minuti e `src/plan.py` decide se c'è qualcosa da fare (GitHub può
+ritardare i cron di qualche minuto: il piano ragiona sull'orologio reale, non sul tick):
+
+- **50 minuti prima** del calcio d'inizio, se FotMob ha già la formazione ufficiale (11 titolari per squadra): previsione rifatta con quella;
+- **30 minuti prima**, se la formazione ufficiale non c'era: previsione rifatta con la formazione probabile;
+- **partita finita**: scarica i dati finali, calcola il risultato, valuta la previsione e inserisce i KPI nella scheda della giornata
+  (*Pagelle giornate*, giornata "in corso n/N"), partita per partita; dopo ~20 minuti un secondo passaggio, perché FotMob completa xG, tiri
+  e statistiche dei giocatori un po' dopo il fischio finale;
+- altrimenti un giro completo (con backtest) circa ogni ora, come prima.
+
+I giri a tempo (previsione, risultato) saltano il backtest (`FAST=true` in `run.sh`) e usano `data/calibration.json` già committato;
+la richiesta a The Odds API parte solo quando si rifà una previsione. Lo stato del piano è in `data/schedule.json`.
+Ogni giro committa archivio, pagelle e [`REPORT.md`](REPORT.md) e aggiorna la dashboard su GitHub Pages (anche negli *Artifacts*).
+Run manuale: *Actions → forecast → Run workflow* (`force` = giro completo comunque). Per le quote The Odds API aggiungi il secret
+`ODDS_API_KEY` (*Settings → Secrets and variables → Actions*). Una sola macchina deve scrivere sul repository: se usi GitHub Actions,
 in locale lancia `run.sh` solo per guardare, senza fare push.
 
 ## Esecuzione automatica in locale (alternativa)
@@ -76,6 +87,7 @@ puntate a quota equa dove il modello supera il bookmaker di almeno 3 punti.
 | `src/tune.py` | ottimizzazione degli iperparametri sulle stagioni passate (da lanciare a mano) |
 | `src/predict.py` | previsioni per partita (`site/data/*.json`) |
 | `src/ledger.py`, `src/evaluate.py` | archivio delle previsioni (`data/ledger/<stagione>/Rxx/<id>_first|final.json`) e pagelle |
+| `src/plan.py` | pianificatore dello scheduler: T-50 / T-30 / fine partita / giro orario (`data/schedule.json`) |
 | `check/verify.py` | controlli di coerenza sulle previsioni |
 
 Ricostruire una giornata passata con i soli dati disponibili prima (formazioni ufficiali comprese):

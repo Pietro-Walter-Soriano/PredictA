@@ -22,9 +22,12 @@ else
   $PY -I src/fetch_fotmob.py data
 fi
 $PY -I src/fetch_aux.py data
-$PY -I src/fetch_odds.py data
+# a fast cycle that is not about to redo a forecast does not spend a metered The Odds API request (PREMATCH=true: it does)
+if [ "${FAST:-}" = "true" ] && [ "${PREMATCH:-}" != "true" ]; then ODDS_API_KEY= $PY -I src/fetch_odds.py data; else $PY -I src/fetch_odds.py data; fi
 $PY -I src/dataset.py data
-$PY -I src/backtest.py data > /dev/null
+# FAST=true (set by the planner for time-critical cycles: forecast before kick-off, score a finished match): skip the backtest,
+# data/calibration.json and data/backtest.json stay the committed ones; the hourly routine cycle refreshes them
+[ "${FAST:-}" = "true" ] || $PY -I src/backtest.py data > /dev/null
 $PY -I src/predict.py data site/data
 $PY -I check/verify.py site/data
 $PY -I src/ledger.py site/data data/ledger

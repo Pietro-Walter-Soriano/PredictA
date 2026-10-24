@@ -170,7 +170,8 @@ out = []
 for (season, rnd), v in sorted(rounds.items()):
     fin = summarize(v["final"]); first = summarize(v["first"])
     matches = sorted(v["final"], key=lambda m: M.at[m["match_id"], "date"])
-    out.append({"season": season, "round": int(rnd[1:]), "complete": len(v["final"]) == int(((M.season == season) & (M["round"] == int(rnd[1:]))).sum()),
+    out.append({"season": season, "round": int(rnd[1:]), "n_total": int(((M.season == season) & (M["round"] == int(rnd[1:]))).sum()),
+                "complete": len(v["final"]) == int(((M.season == season) & (M["round"] == int(rnd[1:]))).sum()),
                 "replay": any(json.load(open(f)).get("replay") for f in glob.glob(f"{LEDGER}/{season}/{rnd}/*_final.json")),
                 "grade": grade(fin), "components": components(fin), "final": fin, "first": first, "matches": matches})
 allm = [m for r in out for m in r["matches"]]

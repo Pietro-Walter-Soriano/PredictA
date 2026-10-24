@@ -1,12 +1,23 @@
 name: forecast
 
-# Hourly matchday cycle on GitHub: refresh data, forecast, archive pre-kick-off forecasts, score finished rounds,
-# then commit data/ledger, data/rounds.json, data/backtest.json, data/calibration.json and REPORT.md.
+# Matchday cycle on GitHub. The workflow wakes up every 10 minutes and src/plan.py decides whether there is something to do:
+#   - 50 min before a kick-off, if the official XI is already out -> forecast again with it
+#   - 30 min before a kick-off, if it was not -> forecast again with the probable XI
+#   - a match has just ended -> fetch the final data, score it, publish its KPIs in the matchday card (and again ~20 min later,
+#     when FotMob has completed xG and player stats)
+#   - otherwise a full cycle (with backtest) about once an hour, as before
+# Each cycle: refresh data, forecast, archive pre-kick-off forecasts, score finished matches, rebuild the dashboard, then commit
+# data/ledger, data/rounds.json, data/schedule.json, data/backtest.json, data/calibration.json and REPORT.md.
+# GitHub runs scheduled workflows with some delay (minutes, more at peak hours): the planner works on the real clock, not on the cron tick.
 on:
   schedule:
-    - cron: "17 * * * *"
+    - cron: "*/10 * * * *"
   workflow_dispatch:
     inputs:
+      force:
+        description: "Run a full cycle even if the planner finds nothing to do"
+        type: boolean
+        default: false
       replay:
         description: "Rebuild the finished rounds of this season with the current engine before the normal cycle"
         type: boolean
@@ -33,8 +44,19 @@ jobs:
           python-version: "3.12"
           cache: pip
 
+      # decides in a few seconds whether this tick has something to do; all the following steps are skipped otherwise
+      - name: Plan
+        id: plan
+        env:
+          FORCE: ${{ inputs.force || inputs.replay }}
+        run: |
+          pip install -q requests
+          mkdir -p data
+          python -I src/plan.py data
+
       # downloaded archive (~80 MB): restored from the latest run, saved again under a new key at the end
       - name: Restore data cache
+        if: steps.plan.outputs.run == 'true'
         uses: actions/cache/restore@v4
         with:
           path: data/raw
@@ -42,15 +64,23 @@ jobs:
           restore-keys: raw-
 
       - name: Setup
+        if: steps.plan.outputs.run == 'true'
         run: ./setup.sh
 
       - name: Run matchday cycle
+        if: steps.plan.outputs.run == 'true'
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          FAST: ${{ steps.plan.outputs.fast }}
+          PREMATCH: ${{ steps.plan.outputs.prematch }}
         run: ./run.sh
 
+      - name: Record what was done
+        if: steps.plan.outputs.run == 'true'
+        run: .venv/bin/python -I src/plan.py data mark
+
       - name: Replay finished rounds with the current engine
-        if: ${{ inputs.replay }}
+        if: ${{ inputs.replay && steps.plan.outputs.run == 'true' }}
         run: |
           .venv/bin/python -I src/replay.py data
           .venv/bin/python -I src/evaluate.py data/ledger data data/rounds.json
@@ -58,14 +88,14 @@ jobs:
           .venv/bin/python -I src/render.py src/template.html site/data site/serie-a.html data/rounds.json
 
       - name: Save data cache
-        if: always()
+        if: always() && steps.plan.outputs.run == 'true'
         uses: actions/cache/save@v4
         with:
           path: data/raw
           key: raw-${{ github.run_id }}
 
       - name: Upload dashboard
-        if: always()
+        if: always() && steps.plan.outputs.run == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: serie-a-dashboard
@@ -74,20 +104,24 @@ jobs:
 
       # GitHub Pages: the dashboard as a fixed web page (needs Settings -> Pages -> Source: GitHub Actions, once)
       - name: Prepare Pages site
+        if: steps.plan.outputs.run == 'true'
         run: mkdir -p _pages && cp site/serie-a.html _pages/index.html
       - uses: actions/upload-pages-artifact@v3
+        if: steps.plan.outputs.run == 'true'
         with:
           path: _pages
       - name: Publish to GitHub Pages
+        if: steps.plan.outputs.run == 'true'
         id: pages
         continue-on-error: true   # Pages not enabled yet: the forecast itself still succeeds
         uses: actions/deploy-pages@v4
 
       - name: Commit results
+        if: steps.plan.outputs.run == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/ledger data/rounds.json data/backtest.json data/calibration.json REPORT.md
+          git add data/ledger data/rounds.json data/schedule.json data/backtest.json data/calibration.json REPORT.md
           if git diff --cached --quiet; then echo "nothing changed"; exit 0; fi
           git commit -m "forecast update $(date -u +%FT%H:%MZ)"
           git pull --rebase --autostash

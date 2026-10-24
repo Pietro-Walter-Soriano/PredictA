@@ -460,7 +460,7 @@ function railRounds(sel) {
     const f = r.final;
     h += `<button class="fx" data-round="${rkey(r)}" aria-current="${sel === rkey(r)}"><span class="t"><span>${r.round}ª giornata</span><span class="num ${gcls(r.grade)}">${r.grade}</span></span>
       <span class="mini">${r.matches.map(m => `<i style="flex:1;background:${m.fav_hit ? "var(--good)" : "var(--bad)"}"></i>`).join("")}</span>
-      <span class="d"><span>${f.n} gare · favorito ${pct(f.fav_hit)} · ${r.replay ? "ricostruita" : "live"}</span><span>${r.complete ? "" : "in corso"}</span></span></button>`;
+      <span class="d"><span>${f.n} gare · favorito ${pct(f.fav_hit)} · ${r.replay ? "ricostruita" : "live"}</span><span>${r.complete ? "" : `● in corso ${f.n}/${r.n_total}`}</span></span></button>`;
   }
   document.getElementById("fx").innerHTML = h;
 }
@@ -480,7 +480,7 @@ function renderRound(key) {
   const CN = { goals: "Gol totali", corners: "Angoli", cards: "Gialli", sot: "Tiri in porta", shots: "Tiri", fouls: "Falli", offsides: "Fuorigioco" };
   main.innerHTML = `
   <header style="display:grid;gap:10px"><div class="eyebrow">Serie A ${RND.rounds.length ? RND.rounds[RND.rounds.length - 1].season.replace("-20", "-") : ""} · pagella ${all ? "complessiva" : `${r.round}ª giornata`}${!all && r.replay ? " · ricostruita a posteriori: dati fino al giorno prima, ma con le formazioni ufficiali (come la previsione di un'ora prima)" : ""}</div>
-    <div class="match" style="grid-template-columns:minmax(0,1fr) auto"><div><div class="team-name">${all ? "Tutte le giornate" : r.round + "ª giornata"}</div><div class="team-meta">${f.n} partite valutate${!all && !r.complete ? " · giornata non ancora conclusa" : ""}</div></div>
+    <div class="match" style="grid-template-columns:minmax(0,1fr) auto"><div><div class="team-name">${all ? "Tutte le giornate" : r.round + "ª giornata"}</div><div class="team-meta">${f.n} partite valutate${!all && !r.complete ? ` · giornata in corso: ${f.n} su ${r.n_total} partite, ognuna entra qui appena finisce` : ""}</div></div>
     <div class="xg-big"><div class="v ${gcls(grade)}">${grade}<span style="font-size:.5em" class="muted">/100</span></div><div class="l">voto</div></div></div></header>
   <section class="grid2">
     <div class="panel" style="display:grid;gap:12px"><h3>Componenti del voto</h3>${compBars(comps)}
