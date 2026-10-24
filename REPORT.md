@@ -1,6 +1,6 @@
 # PredictA — Serie A
 
-Aggiornato: 2026-10-24 18:37 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
+Aggiornato: 2026-10-24 19:09 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
 
 ## Voto complessivo: **67/100** su 74 partite
 
