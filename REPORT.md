@@ -1,6 +1,6 @@
 # PredictA — Serie A
 
-Aggiornato: 2026-10-23 22:15 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
+Aggiornato: 2026-10-24 00:42 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
 
 ## Voto complessivo: **68/100** su 70 partite
 
@@ -28,9 +28,9 @@ Favorito indovinato 60% · log-loss 1X2 0.923 (storico 1.051, bookmaker 0.925) �
 
 | Data (UTC) | Partita | 1 | X | 2 | Gol attesi | Over 2.5 | Gol entrambe | Più probabile | Formazioni |
 |---|---|---|---|---|---|---|---|---|---|
-| 2026-10-24 13:00 | Como – Sassuolo | 64% | 20% | 16% | 2.27–1.04 | 64% | 58% | 2-1 (10%) | probabili |
+| 2026-10-24 13:00 | Como – Sassuolo | 64% | 20% | 16% | 2.26–1.04 | 64% | 58% | 2-1 (10%) | probabili |
 | 2026-10-24 13:00 | Cagliari – Bologna | 32% | 31% | 36% | 1.03–1.10 | 36% | 44% | 1-1 (14%) | probabili |
-| 2026-10-24 16:00 | Napoli – Roma | 35% | 27% | 37% | 1.31–1.36 | 50% | 55% | 1-1 (13%) | probabili |
+| 2026-10-24 16:00 | Napoli – Roma | 35% | 27% | 37% | 1.32–1.36 | 50% | 55% | 1-1 (13%) | probabili |
 | 2026-10-24 18:45 | Lazio – Parma | 68% | 21% | 11% | 2.00–0.69 | 50% | 44% | 2-0 (14%) | probabili |
 | 2026-10-25 11:30 | Inter – Fiorentina | 72% | 16% | 12% | 2.65–1.01 | 71% | 60% | 2-1 (9%) | probabili |
 | 2026-10-25 14:00 | Atalanta – Frosinone | 52% | 23% | 25% | 1.95–1.29 | 63% | 63% | 1-1 (10%) | probabili |
