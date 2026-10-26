@@ -427,13 +427,29 @@ function xgChart(t) {
     ${f.map((x, i) => { const cx = 28 + i * bw; return `<g data-tip="${x.date} ${x.venue === "home" ? "vs" : "@"} ${esc(x.opp)} ${x.gf}–${x.ga} · xG ${fx(x.xg)} / ${fx(x.xga)}"><rect x="${cx}" y="${mid - sc(x.xg) - 1}" width="${bw - 6}" height="${sc(x.xg)}" rx="3" fill="${t.side === "home" ? "var(--home)" : "var(--away)"}"/><rect x="${cx}" y="${mid + 1}" width="${bw - 6}" height="${sc(x.xga)}" rx="3" fill="var(--draw)"/><rect x="${cx - 2}" y="0" width="${bw - 2}" height="${Hh}" fill="transparent"/></g>`; }).join("")}</svg></div>`;
 }
 
+// Backtest of every bettable market: the model against the frequency of the event over all earlier matches (the naive reference).
+// z < -2 = the model beats the frequency beyond chance. Only Over 2.5 has a bookmaker price in our data.
+function marketsBacktest(b) {
+  const mk = b.markets; if (!mk || !mk.markets.length) return "";
+  const rows = mk.markets.slice().sort((a, c) => a.z - c.z);
+  const ob = mk.markets.find(m => m.bookmaker)?.bookmaker;
+  return `<section class="sec"><div class="sec-head"><h2>Tutti i mercati: modello contro frequenza storica</h2><span class="small muted">${mk.n_matches} partite · walk-forward · ogni evento previsto con i dati precedenti</span></div>
+    <div class="panel tbl"><table><thead><tr><th>Mercato</th><th class="n">Casi</th><th class="n">Capita</th><th class="n">Modello dice</th><th class="n" data-tip="Quanto l'errore quadratico del modello è più basso di quello di una previsione basata solo sulla frequenza storica. Positivo = il modello aggiunge informazione">Miglioramento</th><th class="n" data-tip="Differenza di log-loss divisa per il suo errore standard. Sotto −2 il vantaggio non è dovuto al caso">z</th><th class="n">Indovinati</th><th class="n">Solo frequenza</th></tr></thead><tbody>
+    ${rows.map(m => `<tr><td>${esc(m.market)}</td><td class="n">${m.n}</td><td class="n">${pct(m.rate)}</td><td class="n">${pct(m.model_p)}</td>
+      <td class="n"><b class="${m.brier_skill > 0.02 ? "up" : m.brier_skill < 0 ? "down" : ""}">${m.brier_skill >= 0 ? "+" : ""}${(m.brier_skill * 100).toFixed(1)}%</b></td>
+      <td class="n"><span class="${m.z <= -2 ? "up" : m.z >= 2 ? "down" : "muted"}">${fx(m.z, 1)}</span></td><td class="n">${pct(m.hit)}</td><td class="n muted">${pct(m.hit_freq)}</td></tr>`).join("")}
+    </tbody></table>
+    <p class="small muted" style="margin:8px 0 0">Riferimento = la frequenza storica dello stesso evento: è facile da battere. <b>Non è il bookmaker</b>: per queste linee non abbiamo le sue quote, quindi un miglioramento qui non prova che il mercato si possa battere.
+      ${ob ? ` L'unico confronto vero è Over 2.5: sulle ${ob.n} partite con quota, log-loss modello ${fx(ob.logloss_model, 4)} contro bookmaker ${fx(ob.logloss_book, 4)} (z ${fx(ob.z_vs_book, 1)}: il bookmaker è migliore).` : ""}</p></div></section>`;
+}
+
 function track() {
   const b = IDX.backtest, f = b.full_model, base = b.base_elo_xg, c = b.climatology, vm = b.vs_market || {};
   const bg = vm.blend_grid && vm.blend_grid[String(IDX.model_weight)] || vm.blend_grid?.[IDX.model_weight];
   const cal = b.calibration_home_win || [];
   const st = Object.entries(b).filter(([k]) => k.startsWith("stat_"));
   const SN = { stat_corners: "Angoli", stat_shots: "Tiri", stat_sot: "Tiri in porta", stat_yc: "Gialli", stat_fouls: "Falli", stat_offsides: "Fuorigioco" };
-  return `<section class="sec"><div class="sec-head"><h2>Affidabilità del modello</h2><span class="small muted">Backtest walk-forward su ${b.n_matches} partite (${b.seasons.join(", ")}): ogni gara prevista solo con i dati precedenti</span></div>
+  return marketsBacktest(b) + `<section class="sec"><div class="sec-head"><h2>Affidabilità del modello</h2><span class="small muted">Backtest walk-forward su ${b.n_matches} partite (${b.seasons.join(", ")}): ogni gara prevista solo con i dati precedenti</span></div>
   <div class="grid2"><div class="panel tbl"><table><thead><tr><th>Metodo</th><th class="n">Log-loss 1X2</th><th class="n">RPS</th><th class="n">Log-loss O2.5</th></tr></thead><tbody>
     <tr><td>Solo frequenze storiche</td><td class="n">${fx(c.logloss_1x2, 3)}</td><td class="n">${fx(c.rps, 3)}</td><td class="n">–</td></tr>
     <tr><td>Rating xG (base)</td><td class="n">${fx(base.logloss_1x2, 3)}</td><td class="n">${fx(base.rps, 3)}</td><td class="n">${fx(base.logloss_o25, 3)}</td></tr>

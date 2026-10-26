@@ -69,7 +69,7 @@ matches, team_rows, player_rows = [], [], []
 for path in sorted(glob.glob(f"{DATA}/raw/fotmob/*/*.json.gz")):
     if path.endswith("league.json.gz"): continue
     d = load(path); g, c = d["general"], d["content"]
-    season = path.split("/")[-2]
+    season = path.replace("\\", "/").split("/")[-2]
     mid = int(g["matchId"]); home, away = canon(g["homeTeam"]["name"]), canon(g["awayTeam"]["name"])
     ids = {g["homeTeam"]["id"]: "home", g["awayTeam"]["id"]: "away"}
     ko = datetime.fromisoformat(g["matchTimeUTCDate"].replace("Z", "+00:00")).replace(tzinfo=None)
@@ -135,7 +135,8 @@ for path in sorted(glob.glob(f"{DATA}/raw/fotmob_cups/*/*/*.json.gz")):
     d = load(path); g = d["general"]
     if not g.get("finished"): continue
     ko = datetime.fromisoformat(g["matchTimeUTCDate"].replace("Z", "+00:00")).replace(tzinfo=None)
-    player_rows.extend(players_of(d, int(g["matchId"]), ko, path.split("/")[-2], path.split("/")[-3]))
+    parts = path.replace("\\", "/").split("/")
+    player_rows.extend(players_of(d, int(g["matchId"]), ko, parts[-2], parts[-3]))
 P = pd.DataFrame(player_rows).drop_duplicates(["match_id", "player_id"]).sort_values("date").reset_index(drop=True)
 COUNTS = [c for c in PLAYER_STATS.values() if c not in ("rating", "min", "xgot_faced", "saves", "conceded")]
 P[COUNTS] = P[COUNTS].fillna(0)  # FotMob omits a counting stat when it is zero

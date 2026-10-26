@@ -126,7 +126,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/ledger data/rounds.json data/schedule.json data/backtest.json data/calibration.json REPORT.md
+          git add data/ledger data/rounds.json data/schedule.json data/backtest.json data/backtest_markets.json data/calibration.json REPORT.md
           if [ -f data/backtest_matches.csv ]; then git add data/backtest_matches.csv; fi
           if git diff --cached --quiet; then echo "nothing changed"; exit 0; fi
           git commit -m "forecast update $(date -u +%FT%H:%MZ)"

@@ -17,6 +17,8 @@ for old in __import__("glob").glob(f"{OUT}/2*.json"): os.remove(old)  # matches 
 cal = json.load(open(f"{DATA}/calibration.json"))
 W_MODEL = cal["model_weight"]
 bt = json.load(open(f"{DATA}/backtest.json"))
+try: bt["markets"] = json.load(open(f"{DATA}/backtest_markets.json"))   # every bettable market vs its historical frequency / the bookmaker
+except OSError: pass
 
 D = pd.read_pickle(f"{DATA}/dataset.pkl")
 now = datetime.fromisoformat(AS_OF) if AS_OF else datetime.now(timezone.utc).replace(tzinfo=None)
