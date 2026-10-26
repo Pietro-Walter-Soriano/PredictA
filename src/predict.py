@@ -86,7 +86,7 @@ def team_block(team, side, Vrow, lu, ko):
             "pens": int(hist.pen_att.sum()), "pens_season": int(hs.pen_att.sum()),
             "rest_days": (ko - hist.date.iloc[-1]).days if len(hist) else None,  # days between his last game (any competition) and this kick-off
             "min_14d": int(hist[hist.date >= now - timedelta(days=14)]["min"].sum()),
-            "log": [{"date": r.date.strftime("%Y-%m-%d"), "comp": r.comp, "team": r.team, "min": int(r.min), "start": bool(r.starter), "rating": r3(r.rating), "g": int(r.g),
+            "log": [{"date": r.date.strftime("%Y-%m-%d"), "comp": r.comp, "team": r.team if isinstance(r.team, str) else None, "min": int(r.min), "start": bool(r.starter), "rating": r3(r.rating), "g": int(r.g),
                      "a": int(r.a), "npxg": r3(r.npxg), "xa": r3(r.xa), "sh": None if pd.isna(r.sh) else int(r.sh), "yc": int(r.yc)} for r in hist.tail(10).itertuples()],
             "by_season": [{"season": k[0], "comp": k[1], "apps": int(len(v)), "min": int(v["min"].sum()), "g": int(v.g.sum()), "a": int(v.a.sum()),
                            "npxg": r3(v.npxg.sum()) if v.npxg.notna().any() else None, "xa": r3(v.xa.sum()) if v.xa.notna().any() else None,
