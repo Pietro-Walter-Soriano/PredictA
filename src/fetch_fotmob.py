@@ -61,7 +61,7 @@ for season in SEASONS:
         d = get(f"{BASE}/matchDetails?matchId={mid}")
         if d and "content" in d:
             save(path, {"general": d["general"], "header": d["header"], "content": {k: d["content"].get(k) for k in
-                       ("matchFacts", "stats", "playerStats", "shotmap", "lineup", "weather", "attackingZones", "h2h")}})
+                       ("matchFacts", "stats", "playerStats", "shotmap", "lineup", "weather", "attackingZones", "h2h", "momentum")}})
         if i % 50 == 0: print(season, i, "/", len(todo), flush=True)
         time.sleep(PAUSE)
 # --- cups: finished matches involving a Serie A club of the same season (current season always re-listed) ---
