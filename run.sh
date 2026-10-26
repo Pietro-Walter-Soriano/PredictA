@@ -27,7 +27,7 @@ if [ "${FAST:-}" = "true" ] && [ "${PREMATCH:-}" != "true" ]; then ODDS_API_KEY=
 $PY -I src/dataset.py data
 # FAST=true (set by the planner for time-critical cycles: forecast before kick-off, score a finished match): skip the backtest,
 # data/calibration.json and data/backtest.json stay the committed ones; the hourly routine cycle refreshes them
-[ "${FAST:-}" = "true" ] || $PY -I src/backtest.py data > /dev/null
+{ [ "${FAST:-}" = "true" ] && [ "${DUMP:-}" != "1" ]; } || $PY -I src/backtest.py data > /dev/null   # DUMP=1 forces it and writes data/backtest_matches.csv
 $PY -I src/predict.py data site/data
 $PY -I check/verify.py site/data
 $PY -I src/ledger.py site/data data/ledger

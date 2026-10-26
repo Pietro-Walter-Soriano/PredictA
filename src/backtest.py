@@ -3,7 +3,7 @@
 Reports log-loss / Brier / RPS for 1X2, log-loss for O2.5 and BTTS, MAE for stat counts, calibration buckets,
 and compares against the bookmaker closing line where available. Writes calibration params to data/calibration.json.
 """
-import json, sys
+import json, os, sys
 import numpy as np
 import pandas as pd
 sys.path.insert(0, __import__("os").path.dirname(__import__("os").path.abspath(__file__)))
@@ -20,6 +20,9 @@ R = model.referee_table(M, T)
 V = model.team_view(M, T, L, R)
 V["o_lam_base"] = V.groupby("match_id")["lam_base"].transform(lambda s: s[::-1].values)
 tm = T.set_index(["match_id", "venue"])
+# pre-match features saved next to the predictions (data/backtest_matches.csv, only with DUMP=1) to study what the bookmaker prices
+DUMP = os.environ.get("DUMP") == "1"
+DUMP_FEATS = [c for c in V.columns if c.startswith(("s_", "o_s_", "xi_", "o_xi_", "ref_"))] + ["lam_base", "o_lam_base"] if DUMP else []
 
 def stat_y(target):
     return pd.Series([tm[target].get((m, s), np.nan) if target in tm else np.nan for m, s in zip(V.match_id, V.side)], index=V.index)
@@ -38,6 +41,7 @@ for a, b in zip(cuts[:-1], cuts[1:]):
     sm = {t: model.StatModel(t).fit(past, Y[t][past.index]) for t in model.STAT_TARGETS}
     out = nxt[["match_id", "side", "lam_base", "goals"]].copy()
     out["lam"] = lam
+    for c in DUMP_FEATS: out["f_" + c] = nxt[c].astype(float).values if c in nxt else np.nan
     for t, m_ in sm.items():
         out["pred_" + t] = m_.predict(nxt); out["y_" + t] = Y[t][nxt.index].values; out["disp_" + t] = m_.dispersion
         out["mean_" + t] = Y[t][past.index].mean()  # naive benchmark known before kick-off
@@ -70,6 +74,15 @@ def score(prefix, df):
     return {"logloss_1x2": ll((p * o).sum(1)), "brier_1x2": np.mean(((p - o) ** 2).sum(1)), "rps": np.mean(((cum_p - cum_o) ** 2).sum(1) / 2),
             "logloss_o25": ll(np.where(df.o25 == 1, df[f"{prefix}_o25"], 1 - df[f"{prefix}_o25"])) if f"{prefix}_o25" in df else None,
             "logloss_btts": ll(np.where(df.btts == 1, df[f"{prefix}_btts"], 1 - df[f"{prefix}_btts"])) if f"{prefix}_btts" in df else None}
+
+if DUMP:   # one row per match: result, model goal rates and probabilities, de-vigged market, home/away pre-match features
+    fcols = ["f_" + c for c in DUMP_FEATS]
+    ft = Pr.pivot_table(index="match_id", columns="side", values=["lam"] + fcols)
+    ft.columns = [f"{a}_{b}" for a, b in ft.columns]
+    dump = S.merge(ft, left_on="match_id", right_index=True).merge(
+        M[["match_id", "date", "home", "away", "hg", "ag", "p1_close", "px_close", "p2_close", "ou_line", "pover", "punder", "odds_src"]], on="match_id", how="left")
+    dump.to_csv(f"{DATA}/backtest_matches.csv", index=False)
+    print("dumped", dump.shape, "->", f"{DATA}/backtest_matches.csv", file=sys.stderr)
 
 freq = S.res.value_counts(normalize=True)
 S["c_1"], S["c_X"], S["c_2"] = freq["1"], freq["X"], freq["2"]
