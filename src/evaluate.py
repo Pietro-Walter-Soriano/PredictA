@@ -10,7 +10,7 @@ KPIs per round (and cumulative):
   - calibration buckets (predicted vs observed) for every binary event of the round
   - first vs final forecast (did the official XI improve us?)
   - head to head: the model alone vs the final forecast vs the bookmaker on the same matches (1X2 and Over 2.5), and in how many matches each beats the bookmaker
-  - value: flat 1-unit stake on every 1X2 outcome where our probability beats the bookmaker's (fair odds), ROI
+  - value: flat 1-unit stake on every 1X2 / Over-Under 2.5 outcome where the MODEL-ONLY probability beats the bookmaker's (fair odds), ROI
 """
 import glob, json, math, os, sys
 from collections import defaultdict
@@ -55,9 +55,6 @@ def score_match(d, kind):
         q = {k: d["p_market"][k] for k in "1X2"}
         r.update({"mk_p": q, "mk_fav_hit": max("1X2", key=lambda k: q[k]) == res, "mk_logloss": ll(q[res]),
                   "mk_brier": sum((q[k] - o[k]) ** 2 for k in "1X2"), "mk_rps": rps(q)})
-        # value bets at fair odds 1/q: stake 1 where our p exceeds the market by EDGE
-        bets = [(k, p[k], q[k]) for k in "1X2" if p[k] - q[k] >= EDGE]
-        r["bets"] = [{"pick": k, "p": pk, "q": qk, "odds": round(1 / qk, 2), "won": k == res, "pnl": (1 / qk - 1) if k == res else -1.0} for k, pk, qk in bets]
     pm = d.get("p_model")   # the statistical model alone, before it is blended with the bookmaker's goal rates
     if pm:
         r.update({"pm_p": pm, "pm_fav_hit": max("1X2", key=lambda k: pm[k]) == res, "pm_logloss": ll(pm[res]),
@@ -67,6 +64,13 @@ def score_match(d, kind):
         lm, i = d["lambda_model"], np.arange(model.MAXG + 1)
         r["ov25"] = {"y": float(hg + ag > 2.5), "model": float(model.dixon_coles(lm["home"], lm["away"])[(i[:, None] + i[None, :]) > 2.5].sum()),
                      "final": d["markets"]["ou"]["2.5"], "mkt": pmk["over"]}
+    if d.get("p_market") and pm:
+        # value bets: the MODEL ALONE (the published forecast is mostly the bookmaker's own rates and could never disagree with it)
+        # against the de-vigged bookmaker at fair odds 1/q; stake 1 where the model exceeds the bookmaker by EDGE
+        cand = [(k, pm[k], r["mk_p"][k], res == k) for k in "1X2"]
+        if "ov25" in r:
+            ov = r["ov25"]; cand += [("Over 2.5", ov["model"], ov["mkt"], ov["y"] == 1.0), ("Under 2.5", 1 - ov["model"], 1 - ov["mkt"], ov["y"] == 0.0)]
+        r["bets"] = [{"pick": k, "p": pk, "q": qk, "odds": round(1 / qk, 2), "won": bool(w), "pnl": (1 / qk - 1) if w else -1.0} for k, pk, qk, w in cand if pk - qk >= EDGE]
     top = [s["s"] for s in d["top_scores"]]
     r["top1_hit"], r["top3_hit"] = top[0] == f"{hg}-{ag}", f"{hg}-{ag}" in top[:3]
     r["top_pred"] = top[0]

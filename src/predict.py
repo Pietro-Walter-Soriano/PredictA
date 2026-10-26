@@ -179,7 +179,7 @@ for r in up.itertuples():
         "lambda_base": {"home": r3(vh.lam_base.iloc[0]), "away": r3(va.lam_base.iloc[0])},
         "lambda_market": {"home": r3(mlh), "away": r3(mla)} if has_mk else None, "model_weight": W_MODEL if has_mk else 1.0,
         "p": {**{k: r3(v) for k, v in model.outcome_probs(S).items()}},
-        "p_model": {k: r3(v) for k, v in model.outcome_probs(Smodel).items()},
+        "p_model": {k: r3(v) for k, v in model.outcome_probs(Smodel).items()}, "p_model_over25": r3(Smodel[tot > 2.5].sum()),
         "p_market": {"1": r3(r.p1_close / (r.p1_close + r.px_close + r.p2_close)), "X": r3(r.px_close / (r.p1_close + r.px_close + r.p2_close)),
                      "2": r3(r.p2_close / (r.p1_close + r.px_close + r.p2_close)), "ou_line": r3(r.ou_line),
                      "over": r3(r.pover / (r.pover + r.punder)) if r.pover and not pd.isna(r.pover) else None,

@@ -263,14 +263,32 @@ function header() {
     </div></header>`;
 }
 
+// Where the model-only probability differs from the bookmaker's (margin removed): quote "equa" = 1 / bookmaker probability.
+// The bookmaker's real price carries a margin (typically 4-8% of expected value), so an edge only matters if it is clearly larger.
+function valueSection() {
+  if (!D.p_market) return "";
+  const q = D.p_market, edge = RND.edge ?? 0.03, rows = [["1", D.home, D.p_model["1"], q["1"]], ["X", "Pareggio", D.p_model.X, q.X], ["2", D.away, D.p_model["2"], q["2"]]];
+  if (q.ou_line === 2.5 && q.over != null && D.p_model_over25 != null) rows.push(["Over 2.5", "Più di 2 gol", D.p_model_over25, q.over], ["Under 2.5", "Meno di 3 gol", 1 - D.p_model_over25, 1 - q.over]);
+  const tv = RND.total && RND.total.value;
+  const body = rows.map(([k, label, p, b]) => { const d = p - b, ev = p / b - 1, ok = d >= edge;
+    return `<tr class="${ok ? "val" : ""}"><td><b>${esc(k)}</b> <span class="muted small">${esc(label)}</span></td><td class="n">${fair(b)}</td><td class="n">${pct(b, 1)}</td><td class="n">${pct(p, 1)}</td>
+      <td class="n"><b class="${ok ? "up" : d <= -edge ? "down" : ""}">${d >= 0 ? "+" : ""}${(d * 100).toFixed(1)}</b></td><td class="n"><b class="${ok ? "up" : ""}">${ev >= 0 ? "+" : ""}${(ev * 100).toFixed(0)}%</b></td>
+      <td>${ok ? '<b class="up">Valore</b>' : '<span class="muted">–</span>'}</td></tr>`; }).join("");
+  return `<section class="sec"><div class="sec-head"><h2>Modello contro bookmaker</h2><span class="small muted">Dove il modello dà più probabilità del bookmaker, la quota è più alta di quanto dovrebbe</span></div>
+    <div class="panel tbl"><table><thead><tr><th>Esito</th><th class="n" data-tip="1 / probabilità del bookmaker, senza il suo margine. La quota realmente giocabile è più bassa">Quota equa</th><th class="n">Bookmaker</th><th class="n">Modello</th><th class="n" data-tip="Punti percentuali: modello meno bookmaker">Scarto</th><th class="n" data-tip="Guadagno medio per euro puntato se il modello avesse ragione, a quota equa">Valore atteso</th><th></th></tr></thead><tbody>${body}</tbody></table>
+    <p class="small muted" style="margin:8px 0 0">«Valore» = scarto di almeno ${(edge * 100).toFixed(0)} punti. Probabilità del bookmaker: quote di chiusura (Pinnacle, media di mercato o il bookmaker mediano di The Odds API), senza margine. Il margine reale (4-8%) riduce il valore atteso.
+      ${tv && tv.bets ? ` Finora, sulle partite già giocate: ${tv.won}/${tv.bets} scommesse di valore vinte, P&amp;L ${tv.pnl >= 0 ? "+" : ""}${fx(tv.pnl, 1)} unità a quota equa. Campione piccolo: non è una prova.` : ""}</p></div></section>`;
+}
+
 function verdict() {
   const m = D.markets;
   return `<section class="verdict">
     <div class="panel">
-      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px"><h3>Esito 1X2</h3><span class="small muted">${D.p_market ? `Finale = ${pct(D.model_weight)} modello, ${pct(1 - D.model_weight)} mercato (peso dal backtest)` : "Solo modello"}</span></div>
-      <div class="bar-row"><div class="lab"><b>Previsione finale</b></div>${stack(D.p)}</div>
-      <div class="bar-row"><div class="lab">Modello</div>${stack(D.p_model)}</div>
-      ${D.p_market ? `<div class="bar-row"><div class="lab">Mercato (chiusura)</div>${stack(D.p_market)}</div>` : ""}
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px"><h3>Esito 1X2</h3></div>
+      <div class="bar-row"><div class="lab"><b>Modello</b></div>${stack(D.p_model)}</div>
+      ${D.p_market ? `<div class="bar-row"><div class="lab">Bookmaker</div>${stack(D.p_market)}</div>` : ""}
+      <div class="bar-row"><div class="lab muted">Finale pubblicata</div>${stack(D.p)}</div>
+      ${D.p_market ? `<p class="small muted" style="margin:6px 0 0">La finale pubblicata fonde modello (${pct(D.model_weight)}) e gol attesi del bookmaker: serve solo come numero unico, il confronto vero è modello contro bookmaker.</p>` : ""}
       <div class="legend"><span><i style="background:var(--home)"></i>${esc(D.home)}</span><span><i style="background:var(--draw)"></i>Pareggio</span><span><i style="background:var(--away)"></i>${esc(D.away)}</span></div>
       <div class="kv" style="margin-top:14px">
         <div><span class="k">Base rating</span><span class="v">${fx(D.lambda_base.home)}–${fx(D.lambda_base.away)}</span><span class="small muted">xG attesi</span></div>
@@ -434,7 +452,7 @@ function track() {
 function render(file) {
   D = ALL[file]; byId = {};
   for (const s of ["home", "away"]) for (const p of D.teams[s].players) byId[p.id] = { ...p, side: s };
-  document.getElementById("main").innerHTML = header() + verdict() +
+  document.getElementById("main").innerHTML = header() + verdict() + valueSection() +
     `<section class="sec"><div class="sec-head"><h2>Formazioni</h2><span class="small muted">Nel cerchio: numero e voto FotMob recente · probabilità di segnare · ▲▼ forma ultime 5</span></div><div class="pitch-wrap">${pitch("away")}${pitch("home")}</div></section>` +
     style() + markets() + stats() + props() + context() + track();
   rail(file);
@@ -515,7 +533,7 @@ function renderRound(key) {
       ${f.h2h ? kpi("Modello puro vs bookmaker", `${f.h2h.wins.model}/${f.h2h.n}`, `partite in cui diamo all'esito reale più probabilità del bookmaker · log-loss ${fx(f.h2h.model.logloss, 3)} vs ${fx(f.h2h.market.logloss, 3)}`, f.h2h.model.logloss < f.h2h.market.logloss ? "up" : "down") : ""}
       ${kpi("Risultato esatto", pct(f.top1_hit), `nei primi 3: ${pct(f.top3_hit)}`)}
       ${kpi("Gol previsti / reali", `${fx(f.goals.pred, 1)} / ${f.goals.act}`, "")}
-      ${kpi("Scommesse di valore", v.bets ? `${v.won}/${v.bets}` : "–", v.bets ? `P&L ${v.pnl >= 0 ? "+" : ""}${fx(v.pnl, 2)} u · ROI ${pct(v.roi)}` : `margine ≥ ${pct(RND.edge)}`, v.pnl > 0 ? "up" : v.pnl < 0 ? "down" : "")}
+      ${kpi("Scommesse di valore", v.bets ? `${v.won}/${v.bets}` : "–", v.bets ? `modello puro, quota equa · P&L ${v.pnl >= 0 ? "+" : ""}${fx(v.pnl, 2)} u · ROI ${pct(v.roi)}` : `modello puro con scarto ≥ ${pct(RND.edge)}`, v.pnl > 0 ? "up" : v.pnl < 0 ? "down" : "")}
       ${kpi("Marcatori", `${pl.top3_hits}`, `segnati dai nostri top-3 per squadra, su ${pl.scorers} marcatori`)}
       ${kpi("Pick marcatore ≥35%", pl.picks ? pct(pl.picks_hit) : "–", pl.picks ? `${pl.picks} pick, attesi ${pct(pl.picks_exp)}` : "")}
       ${kpi("XI indovinato", pct(pl.xi_overlap), "titolari previsti in campo")}
