@@ -112,7 +112,30 @@ def team_view(M, T, L, refs):
     V["xi_att_rel"] = np.log((V["xi_att"] + 0.05) / (V.groupby("team")["xi_att"].transform(lambda s: s.shift(1).ewm(halflife=6).mean()) + 0.05))
     V["xi_rating_rel"] = V["xi_rating"] - V.groupby("team")["xi_rating"].transform(lambda s: s.shift(1).ewm(halflife=6).mean())
     V["o_xi_rating_rel"] = V["o_xi_rating"] - V.groupby("opp")["o_xi_rating"].transform(lambda s: s.shift(1).ewm(halflife=6).mean())
+    V = add_context(V, M, T)
     return V.sort_values(["date", "match_id", "side"]).reset_index(drop=True)
+
+
+CTX_STATS = ("corners", "shots", "sot", "yc", "fouls", "offsides")
+
+
+def add_context(V, M, T):
+    """Match-context columns found by src/study_resid.py as systematic errors of the count models (all known before kick-off):
+    mismatch (|goal-rate gap|: lopsided games have fewer fouls and cards), kick-off hour (evening games, fewer fouls),
+    own style x what the opponent concedes (multiplicative), and the opponent's concession rate at a fast and a slow memory."""
+    V["lam_gap_abs"] = V.groupby("match_id")["lam_base"].transform(lambda s: s.max() - s.min())
+    V["hour"] = V.date.dt.hour + V.date.dt.minute / 60
+    for c in CTX_STATS: V[f"x_{c}"] = V[f"s_{c}"] * V[f"o_s_opp_{c}"]
+    Ts = T.sort_values("date")
+    cur = [f"o_cl_{c}_{hl}" for c in CTX_STATS for hl in (3, 25)]
+    for c in CTX_STATS:
+        for hl in (3, 25): Ts[f"o_cl_{c}_{hl}"] = Ts.groupby("team")[f"opp_{c}"].transform(lambda s: s.ewm(halflife=hl, ignore_na=True).mean())
+    done = pd.concat([Ts[["match_id", "team"]], Ts.groupby("team")[cur].shift(1)], axis=1)       # state before the match
+    last = Ts.groupby("team").tail(1).set_index("team")[cur]                                        # upcoming: state after the latest match
+    up = [{"match_id": r.match_id, "team": getattr(r, side), **last.loc[getattr(r, side)].to_dict()}
+          for r in M[~M.finished].itertuples() for side in ("home", "away") if getattr(r, side) in last.index]
+    oc = pd.concat([done, pd.DataFrame(up)], ignore_index=True).rename(columns={"team": "opp"})
+    return V.merge(oc, on=["match_id", "opp"], how="left")
 
 
 def referee_table(M, T):
@@ -161,9 +184,17 @@ WIDE_STATS = {"offsides": 20.0}   # targets that use every style / lineup / refe
                                   # walk-forward on 6 seasons, squared error -4..-11% in each season; no other count improved)
 
 
+CONTEXT_STATS = {   # extra columns per target, kept only where they cut the squared error in 6 of 6 seasons (src/study_stats2.py)
+    "yc": ["lam_gap_abs", "hour", "x_yc", "x_fouls"],                                    # -1.5%
+    "fouls": ["lam_gap_abs", "hour", "x_fouls"],                                         # -1.2%
+    "offsides": ["lam_gap_abs", "hour", "x_offsides", "o_cl_offsides_3", "o_cl_offsides_25"],   # -0.8% on top of the wide model
+}                       # corners, shots, shots on target: the same columns made them slightly worse, so they stay as they were
+
+
 class StatModel:
     def __init__(self, target, alpha=1.0):
-        self.target, self.feats, self.alpha = target, STAT_TARGETS[target] + ["is_home", "lam_base", "o_lam_base"], WIDE_STATS.get(target, alpha)
+        self.target, self.alpha = target, WIDE_STATS.get(target, alpha)
+        self.feats = STAT_TARGETS[target] + ["is_home", "lam_base", "o_lam_base"] + CONTEXT_STATS.get(target, [])
 
     def _X(self, V):
         return ((V[self.feats].astype(float) - self.mu) / self.sd).fillna(0.0).clip(-4, 4)
@@ -173,7 +204,7 @@ class StatModel:
         V, y = V[ok], y[ok]
         if self.target in WIDE_STATS:
             self.feats = [c for c in V.columns if c.startswith(("s_", "o_s_", "xi_", "o_xi_", "ref_")) and V[c].dtype.kind in "fiu" and V[c].notna().mean() > .5] \
-                         + ["is_home", "lam_base", "o_lam_base"]
+                         + ["is_home", "lam_base", "o_lam_base"] + CONTEXT_STATS.get(self.target, [])
         self.mu, self.sd = V[self.feats].mean(), V[self.feats].std().replace(0, 1)
         self.m = PoissonRegressor(alpha=self.alpha / len(V) * 100, max_iter=500).fit(self._X(V), y)
         resid_var = np.mean((y - self.m.predict(self._X(V))) ** 2)
