@@ -1,6 +1,6 @@
 # PredictA — Serie A
 
-Aggiornato: 2026-10-27 06:47 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
+Aggiornato: 2026-10-27 12:48 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
 
 ## Voto complessivo: **69/100** su 80 partite
 
@@ -29,19 +29,19 @@ Favorito indovinato 62% · log-loss 1X2 0.903 (storico 1.051, bookmaker 0.905) �
 
 | Data (UTC) | Partita | 1 | X | 2 | Gol attesi | Over 2.5 | Gol entrambe | Più probabile | Formazioni |
 |---|---|---|---|---|---|---|---|---|---|
-| 2026-10-27 17:30 | Sassuolo – Lazio | 29% | 26% | 45% | 1.24–1.59 | 54% | 57% | 1-1 (12%) | probabili |
-| 2026-10-27 19:45 | Roma – Cagliari | 73% | 18% | 9% | 2.22–0.65 | 55% | 43% | 2-0 (14%) | probabili |
-| 2026-10-27 19:45 | Torino – Como | 18% | 25% | 57% | 0.86–1.74 | 48% | 48% | 0-1 (12%) | probabili |
+| 2026-10-27 17:30 | Sassuolo – Lazio | 27% | 28% | 46% | 1.08–1.47 | 47% | 52% | 1-1 (13%) | probabili |
+| 2026-10-27 19:45 | Roma – Cagliari | 74% | 17% | 9% | 2.37–0.73 | 60% | 47% | 2-0 (13%) | probabili |
+| 2026-10-27 19:45 | Torino – Como | 20% | 25% | 55% | 0.94–1.71 | 50% | 51% | 1-1 (12%) | probabili |
 | 2026-10-28 17:30 | Venezia – Inter | 12% | 16% | 71% | 1.09–2.71 | 73% | 62% | 1-2 (9%) | probabili |
-| 2026-10-28 17:30 | Milan – Bologna | 59% | 24% | 17% | 1.84–0.90 | 52% | 50% | 1-1 (11%) | probabili |
-| 2026-10-28 17:30 | Parma – Udinese | 32% | 30% | 37% | 1.07–1.17 | 39% | 46% | 1-1 (14%) | probabili |
-| 2026-10-28 19:45 | Genoa – Juventus | 18% | 26% | 57% | 0.83–1.68 | 46% | 46% | 0-1 (13%) | probabili |
-| 2026-10-28 19:45 | Monza – Napoli | 22% | 23% | 55% | 1.16–1.93 | 60% | 59% | 1-1 (11%) | probabili |
-| 2026-10-29 17:30 | Frosinone – Lecce | 57% | 23% | 20% | 1.96–1.06 | 58% | 57% | 1-1 (11%) | probabili |
-| 2026-10-29 19:45 | Fiorentina – Atalanta | 44% | 26% | 31% | 1.60–1.31 | 56% | 59% | 1-1 (12%) | probabili |
+| 2026-10-28 17:30 | Milan – Bologna | 58% | 24% | 18% | 1.82–0.91 | 51% | 51% | 1-1 (11%) | probabili |
+| 2026-10-28 17:30 | Parma – Udinese | 33% | 30% | 37% | 1.08–1.17 | 39% | 46% | 1-1 (14%) | probabili |
+| 2026-10-28 19:45 | Genoa – Juventus | 18% | 26% | 57% | 0.83–1.67 | 46% | 46% | 0-1 (13%) | probabili |
+| 2026-10-28 19:45 | Monza – Napoli | 22% | 24% | 55% | 1.13–1.90 | 58% | 58% | 1-1 (11%) | probabili |
+| 2026-10-29 17:30 | Frosinone – Lecce | 57% | 23% | 20% | 1.95–1.06 | 58% | 57% | 1-1 (11%) | probabili |
+| 2026-10-29 19:45 | Fiorentina – Atalanta | 43% | 26% | 31% | 1.58–1.29 | 55% | 58% | 1-1 (12%) | probabili |
 | 2026-10-31 14:00 | Bologna – Monza | 54% | 25% | 21% | 1.73–1.01 | 52% | 53% | 1-1 (12%) | probabili |
-| 2026-10-31 17:00 | Udinese – Roma | 17% | 22% | 61% | 1.03–2.10 | 60% | 57% | 1-1 (10%) | probabili |
-| 2026-10-31 19:45 | Milan – Inter | 28% | 26% | 46% | 1.24–1.64 | 55% | 58% | 1-1 (12%) | probabili |
+| 2026-10-31 17:00 | Udinese – Roma | 17% | 22% | 61% | 1.03–2.09 | 60% | 57% | 1-1 (10%) | probabili |
+| 2026-10-31 19:45 | Milan – Inter | 27% | 26% | 47% | 1.22–1.67 | 55% | 58% | 1-1 (12%) | probabili |
 
 ---
 Strumento di analisi statistica, non un consiglio di scommessa.
