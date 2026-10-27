@@ -157,9 +157,13 @@ class GoalModel:
         return V.lam_base.values * self.m.predict(self._X(V))
 
 
+WIDE_STATS = {"offsides": 20.0}   # targets that use every style / lineup / referee column with a stronger penalty (src/study_stats.py:
+                                  # walk-forward on 6 seasons, squared error -4..-11% in each season; no other count improved)
+
+
 class StatModel:
     def __init__(self, target, alpha=1.0):
-        self.target, self.feats, self.alpha = target, STAT_TARGETS[target] + ["is_home", "lam_base", "o_lam_base"], alpha
+        self.target, self.feats, self.alpha = target, STAT_TARGETS[target] + ["is_home", "lam_base", "o_lam_base"], WIDE_STATS.get(target, alpha)
 
     def _X(self, V):
         return ((V[self.feats].astype(float) - self.mu) / self.sd).fillna(0.0).clip(-4, 4)
@@ -167,6 +171,9 @@ class StatModel:
     def fit(self, V, y):
         ok = y.notna()
         V, y = V[ok], y[ok]
+        if self.target in WIDE_STATS:
+            self.feats = [c for c in V.columns if c.startswith(("s_", "o_s_", "xi_", "o_xi_", "ref_")) and V[c].dtype.kind in "fiu" and V[c].notna().mean() > .5] \
+                         + ["is_home", "lam_base", "o_lam_base"]
         self.mu, self.sd = V[self.feats].mean(), V[self.feats].std().replace(0, 1)
         self.m = PoissonRegressor(alpha=self.alpha / len(V) * 100, max_iter=500).fit(self._X(V), y)
         resid_var = np.mean((y - self.m.predict(self._X(V))) ** 2)
