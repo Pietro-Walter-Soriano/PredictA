@@ -288,24 +288,24 @@
   "dispersion": 1.09
  },
  "stat_yc": {
-  "mae": 0.991,
+  "mae": 0.983,
   "mae_league_mean": 1.022,
-  "mse": 1.544,
+  "mse": 1.521,
   "mse_league_mean": 1.675,
   "dispersion": 1.0
  },
  "stat_fouls": {
-  "mae": 2.893,
+  "mae": 2.867,
   "mae_league_mean": 3.17,
-  "mse": 13.231,
+  "mse": 13.072,
   "mse_league_mean": 15.554,
-  "dispersion": 1.04
+  "dispersion": 1.02
  },
  "stat_offsides": {
-  "mae": 1.158,
+  "mae": 1.084,
   "mae_league_mean": 1.185,
-  "mse": 2.11,
+  "mse": 1.916,
   "mse_league_mean": 2.164,
-  "dispersion": 1.32
+  "dispersion": 1.15
  }
 }
