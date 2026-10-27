@@ -38,6 +38,14 @@ fin = V[V.finished]
 tm = T.set_index(["match_id", "venue"])
 gm = model.GoalModel().fit(fin)
 sm = {t: model.StatModel(t).fit(fin, pd.Series([tm[t].get((m, s), np.nan) for m, s in zip(fin.match_id, fin.side)], index=fin.index)) for t in model.STAT_TARGETS}
+# league level: ratings and count models follow the league slowly, so a jump (2026-27: +24% goals after the new rules against time wasting)
+# stays under-predicted for months. Factor = recent actual / predicted of the whole league (model.regime_factor), about 1.0 in a normal season.
+FACT = {}
+for t in model.REGIME_TARGETS:
+    p_in = gm.predict(fin) if t == "goals" else sm[t].predict(fin)
+    y_in = fin.goals.values if t == "goals" else np.array([tm[t].get((m, s), np.nan) for m, s in zip(fin.match_id, fin.side)], dtype=float)
+    FACT[t] = model.regime_factor(fin.match_id.values, y_in.astype(float), p_in)[1]
+print("league level factor", {k: round(float(v), 3) for k, v in FACT.items()}, flush=True)
 Mf = M[M.finished]
 share_1h = float((Mf.ht_hg + Mf.ht_ag).sum() / (Mf.hg + Mf.ag).sum())
 last = P.sort_values("date").groupby("player_id").tail(1).set_index("player_id")
@@ -137,7 +145,7 @@ for r in up.itertuples():
     if vh.empty or va.empty or any(len(r.lineup[s]["starters"]) != 11 for s in ("home", "away")):
         print("skip", r.home, "-", r.away, ": lineup not complete yet", flush=True); continue
     both = pd.concat([vh, va])
-    lam_model = gm.predict(both)
+    lam_model = gm.predict(both) * FACT["goals"]
     has_mk = not pd.isna(r.p1_close)
     if has_mk:
         pov = r.pover / (r.pover + r.punder) if r.pover and r.punder and not pd.isna(r.pover) else None
@@ -151,7 +159,7 @@ for r in up.itertuples():
     H1 = model.dixon_coles(lh * share_1h, la * share_1h, 0)
     stats = {}
     for t, m_ in sm.items():
-        pr = m_.predict(both)
+        pr = m_.predict(both) * FACT.get(t, 1.0)
         stats[t] = {"home": r3(pr[0]), "away": r3(pr[1]), "disp": r3(m_.dispersion), "league_avg": r3(league_means[t])}
     stats["poss"] = {"home": r3(50 + (vh.s_poss.iloc[0] - va.s_poss.iloc[0]) / 2), "away": r3(50 - (vh.s_poss.iloc[0] - va.s_poss.iloc[0]) / 2)}
     stats["saves"] = {"home": r3(max(stats["sot"]["away"] - la * 0.95, 0)), "away": r3(max(stats["sot"]["home"] - lh * 0.95, 0))}
@@ -180,6 +188,7 @@ for r in up.itertuples():
         "lambda": {"home": r3(lh), "away": r3(la)}, "lambda_model": {"home": r3(lam_model[0]), "away": r3(lam_model[1])},
         "lambda_base": {"home": r3(vh.lam_base.iloc[0]), "away": r3(va.lam_base.iloc[0])},
         "lambda_market": {"home": r3(mlh), "away": r3(mla)} if has_mk else None, "model_weight": W_MODEL if has_mk else 1.0,
+        "regime": {k: r3(float(v)) for k, v in FACT.items()},
         "p": {**{k: r3(v) for k, v in model.outcome_probs(S).items()}},
         "p_model": {k: r3(v) for k, v in model.outcome_probs(Smodel).items()}, "p_model_over25": r3(Smodel[tot > 2.5].sum()),
         "p_market": {"1": r3(r.p1_close / (r.p1_close + r.px_close + r.p2_close)), "X": r3(r.px_close / (r.p1_close + r.px_close + r.p2_close)),

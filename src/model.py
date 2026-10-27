@@ -180,6 +180,28 @@ class GoalModel:
         return V.lam_base.values * self.m.predict(self._X(V))
 
 
+REGIME_TARGETS = ("goals", "sot", "shots", "offsides", "fouls", "yc")   # corners: the factor lost in every season, left out
+REGIME_HL, REGIME_K = 100, 100   # half-life in team-rows (~50 matches) and shrinkage towards 1 (src/study_regime.py, src/study_regime2.py)
+
+
+def regime_factor(match_id, y, p, hl=REGIME_HL, k=REGIME_K):
+    """League-level correction. Per row: recent actual / predicted of the whole league over the matches BEFORE it (exponentially weighted,
+    shrunk towards 1 with k pseudo-rows); rows of the same match share it. Rows must be in chronological order, a match's rows adjacent.
+    Returns (factor per row, factor for matches not yet played). A normal season stays near 1 (cost 0.1% of the error at most); after a jump
+    of the league level (2026-27: +24% goals after the rules against time wasting) it follows it within weeks."""
+    dec, n = 0.5 ** (1 / hl), len(p)
+    pbar = float(np.nanmean(p)); sy = sp = 0.0
+    out, ids, i = np.ones(n), np.asarray(match_id), 0
+    while i < n:
+        j = i
+        while j < n and ids[j] == ids[i]: j += 1
+        out[i:j] = (sy + k * pbar) / (sp + k * pbar)
+        for r in range(i, j):
+            if not (np.isnan(y[r]) or np.isnan(p[r])): sy = sy * dec + y[r]; sp = sp * dec + p[r]
+        i = j
+    return out, (sy + k * pbar) / (sp + k * pbar)
+
+
 WIDE_STATS = {"offsides": 20.0}   # targets that use every style / lineup / referee column with a stronger penalty (src/study_stats.py:
                                   # walk-forward on 6 seasons, squared error -4..-11% in each season; no other count improved)
 
