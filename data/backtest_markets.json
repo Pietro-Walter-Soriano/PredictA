@@ -144,11 +144,11 @@
     }
    },
    "bookmaker": {
-    "n": 1976,
-    "logloss_model": 0.6885,
-    "logloss_book": 0.6815,
-    "diff_vs_book": 0.007,
-    "z_vs_book": 2.35
+    "n": 1980,
+    "logloss_model": 0.6883,
+    "logloss_book": 0.6814,
+    "diff_vs_book": 0.0069,
+    "z_vs_book": 2.33
    }
   },
   {
