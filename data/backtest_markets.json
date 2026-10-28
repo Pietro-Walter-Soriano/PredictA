@@ -7,18 +7,18 @@
   "2025-2026",
   "2026-2027"
  ],
- "n_matches": 1981,
+ "n_matches": 1984,
  "markets": [
   {
    "market": "Over 0.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.931,
    "model_p": 0.915,
-   "logloss_model": 0.252,
-   "logloss_freq": 0.2525,
+   "logloss_model": 0.2517,
+   "logloss_freq": 0.2522,
    "brier_skill": -0.0005,
    "diff": -0.0005,
-   "z": -0.14,
+   "z": -0.15,
    "hit": 0.931,
    "hit_freq": 0.931,
    "by_season": {
@@ -48,22 +48,22 @@
      "brier_skill": 0.0199
     },
     "2026-2027": {
-     "n": 80,
-     "diff": 0.0142,
-     "brier_skill": -0.1554
+     "n": 83,
+     "diff": 0.0133,
+     "brier_skill": -0.1511
     }
    }
   },
   {
    "market": "Over 1.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.748,
    "model_p": 0.734,
-   "logloss_model": 0.5638,
-   "logloss_freq": 0.5682,
-   "brier_skill": 0.0067,
-   "diff": -0.0044,
-   "z": -0.95,
+   "logloss_model": 0.5633,
+   "logloss_freq": 0.5678,
+   "brier_skill": 0.0068,
+   "diff": -0.0045,
+   "z": -0.97,
    "hit": 0.749,
    "hit_freq": 0.748,
    "by_season": {
@@ -85,7 +85,7 @@
     "2024-2025": {
      "n": 380,
      "diff": 0.004,
-     "brier_skill": -0.0116
+     "brier_skill": -0.0115
     },
     "2025-2026": {
      "n": 380,
@@ -93,24 +93,24 @@
      "brier_skill": 0.0105
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0124,
-     "brier_skill": 0.0279
+     "n": 83,
+     "diff": -0.0138,
+     "brier_skill": 0.0322
     }
    }
   },
   {
    "market": "Over 2.5",
-   "n": 1981,
-   "rate": 0.493,
+   "n": 1984,
+   "rate": 0.494,
    "model_p": 0.483,
-   "logloss_model": 0.6885,
+   "logloss_model": 0.6883,
    "logloss_freq": 0.6953,
-   "brier_skill": 0.0141,
-   "diff": -0.0069,
-   "z": -1.39,
-   "hit": 0.551,
-   "hit_freq": 0.493,
+   "brier_skill": 0.0144,
+   "diff": -0.007,
+   "z": -1.43,
+   "hit": 0.552,
+   "hit_freq": 0.494,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -125,22 +125,22 @@
     "2023-2024": {
      "n": 380,
      "diff": -0.0166,
-     "brier_skill": 0.0324
+     "brier_skill": 0.0325
     },
     "2024-2025": {
      "n": 380,
-     "diff": -0.0096,
+     "diff": -0.0097,
      "brier_skill": 0.0198
     },
     "2025-2026": {
      "n": 380,
      "diff": 0.0157,
-     "brier_skill": -0.029
+     "brier_skill": -0.0289
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0144,
-     "brier_skill": 0.0268
+     "n": 83,
+     "diff": -0.0184,
+     "brier_skill": 0.0347
     }
    },
    "bookmaker": {
@@ -153,16 +153,16 @@
   },
   {
    "market": "Over 3.5",
-   "n": 1981,
-   "rate": 0.265,
+   "n": 1984,
+   "rate": 0.266,
    "model_p": 0.273,
-   "logloss_model": 0.5709,
-   "logloss_freq": 0.5819,
-   "brier_skill": 0.0221,
-   "diff": -0.011,
-   "z": -2.34,
-   "hit": 0.73,
-   "hit_freq": 0.735,
+   "logloss_model": 0.5716,
+   "logloss_freq": 0.5829,
+   "brier_skill": 0.0228,
+   "diff": -0.0113,
+   "z": -2.41,
+   "hit": 0.729,
+   "hit_freq": 0.734,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -177,36 +177,36 @@
     "2023-2024": {
      "n": 380,
      "diff": -0.0252,
-     "brier_skill": 0.0529
+     "brier_skill": 0.0528
     },
     "2024-2025": {
      "n": 380,
-     "diff": -0.0174,
+     "diff": -0.0175,
      "brier_skill": 0.0365
     },
     "2025-2026": {
      "n": 380,
-     "diff": -0.0032,
+     "diff": -0.0033,
      "brier_skill": 0.0059
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0235,
-     "brier_skill": 0.0439
+     "n": 83,
+     "diff": -0.0305,
+     "brier_skill": 0.0554
     }
    }
   },
   {
    "market": "Over 4.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.12,
    "model_p": 0.133,
-   "logloss_model": 0.3635,
-   "logloss_freq": 0.3707,
-   "brier_skill": 0.0147,
-   "diff": -0.0071,
-   "z": -1.79,
-   "hit": 0.881,
+   "logloss_model": 0.3648,
+   "logloss_freq": 0.3722,
+   "brier_skill": 0.0152,
+   "diff": -0.0074,
+   "z": -1.85,
+   "hit": 0.88,
    "hit_freq": 0.88,
    "by_season": {
     "2021-2022": {
@@ -227,32 +227,32 @@
     "2024-2025": {
      "n": 380,
      "diff": -0.006,
-     "brier_skill": 0.009
+     "brier_skill": 0.0089
     },
     "2025-2026": {
      "n": 380,
-     "diff": -0.0028,
+     "diff": -0.0029,
      "brier_skill": 0.0067
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0251,
-     "brier_skill": 0.0483
+     "n": 83,
+     "diff": -0.03,
+     "brier_skill": 0.0523
     }
    }
   },
   {
    "market": "Gol entrambe",
-   "n": 1981,
-   "rate": 0.516,
+   "n": 1984,
+   "rate": 0.517,
    "model_p": 0.48,
-   "logloss_model": 0.6954,
-   "logloss_freq": 0.6953,
-   "brier_skill": 0.0003,
+   "logloss_model": 0.6953,
+   "logloss_freq": 0.6952,
+   "brier_skill": 0.0002,
    "diff": 0.0001,
    "z": 0.02,
-   "hit": 0.521,
-   "hit_freq": 0.516,
+   "hit": 0.522,
+   "hit_freq": 0.517,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -267,37 +267,37 @@
     "2023-2024": {
      "n": 380,
      "diff": 0.0049,
-     "brier_skill": -0.0092
+     "brier_skill": -0.0091
     },
     "2024-2025": {
      "n": 380,
-     "diff": 0.0095,
-     "brier_skill": -0.018
+     "diff": 0.0094,
+     "brier_skill": -0.0179
     },
     "2025-2026": {
      "n": 380,
-     "diff": -0.004,
-     "brier_skill": 0.0088
+     "diff": -0.0041,
+     "brier_skill": 0.0089
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0146,
-     "brier_skill": 0.0291
+     "n": 83,
+     "diff": -0.0132,
+     "brier_skill": 0.0263
     }
    }
   },
   {
    "market": "Porta inviolata casa",
-   "n": 1981,
-   "rate": 0.303,
+   "n": 1984,
+   "rate": 0.302,
    "model_p": 0.335,
-   "logloss_model": 0.5809,
-   "logloss_freq": 0.615,
-   "brier_skill": 0.0657,
-   "diff": -0.0341,
-   "z": -4.91,
+   "logloss_model": 0.5806,
+   "logloss_freq": 0.6146,
+   "brier_skill": 0.0654,
+   "diff": -0.034,
+   "z": -4.9,
    "hit": 0.701,
-   "hit_freq": 0.697,
+   "hit_freq": 0.698,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -325,20 +325,20 @@
      "brier_skill": 0.0457
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.025,
-     "brier_skill": 0.0585
+     "n": 83,
+     "diff": -0.0228,
+     "brier_skill": 0.051
     }
    }
   },
   {
    "market": "Porta inviolata ospite",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.25,
    "model_p": 0.27,
-   "logloss_model": 0.5231,
-   "logloss_freq": 0.5642,
-   "brier_skill": 0.0821,
+   "logloss_model": 0.5228,
+   "logloss_freq": 0.5637,
+   "brier_skill": 0.082,
    "diff": -0.041,
    "z": -5.77,
    "hit": 0.746,
@@ -356,34 +356,34 @@
     },
     "2023-2024": {
      "n": 380,
-     "diff": -0.0174,
-     "brier_skill": 0.022
+     "diff": -0.0175,
+     "brier_skill": 0.0221
     },
     "2024-2025": {
      "n": 380,
      "diff": -0.0689,
-     "brier_skill": 0.1394
+     "brier_skill": 0.1395
     },
     "2025-2026": {
      "n": 380,
-     "diff": -0.0585,
+     "diff": -0.0586,
      "brier_skill": 0.1032
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0586,
-     "brier_skill": 0.115
+     "n": 83,
+     "diff": -0.0561,
+     "brier_skill": 0.1109
     }
    }
   },
   {
    "market": "Angoli over 7.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.683,
    "model_p": 0.672,
-   "logloss_model": 0.6174,
+   "logloss_model": 0.6175,
    "logloss_freq": 0.6257,
-   "brier_skill": 0.016,
+   "brier_skill": 0.0159,
    "diff": -0.0083,
    "z": -2.7,
    "hit": 0.683,
@@ -415,23 +415,23 @@
      "brier_skill": 0.0246
     },
     "2026-2027": {
-     "n": 80,
-     "diff": 0.0114,
-     "brier_skill": -0.0225
+     "n": 83,
+     "diff": 0.0108,
+     "brier_skill": -0.0215
     }
    }
   },
   {
    "market": "Angoli over 8.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.577,
-   "model_p": 0.562,
-   "logloss_model": 0.6734,
+   "model_p": 0.563,
+   "logloss_model": 0.6733,
    "logloss_freq": 0.6822,
    "brier_skill": 0.0173,
-   "diff": -0.0088,
+   "diff": -0.0089,
    "z": -2.66,
-   "hit": 0.573,
+   "hit": 0.574,
    "hit_freq": 0.577,
    "by_season": {
     "2021-2022": {
@@ -460,22 +460,22 @@
      "brier_skill": 0.0355
     },
     "2026-2027": {
-     "n": 80,
-     "diff": 0.0113,
-     "brier_skill": -0.0221
+     "n": 83,
+     "diff": 0.0105,
+     "brier_skill": -0.0207
     }
    }
   },
   {
    "market": "Angoli over 9.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.461,
    "model_p": 0.454,
    "logloss_model": 0.6815,
-   "logloss_freq": 0.6914,
-   "brier_skill": 0.0196,
+   "logloss_freq": 0.6915,
+   "brier_skill": 0.0197,
    "diff": -0.0099,
-   "z": -3.15,
+   "z": -3.16,
    "hit": 0.575,
    "hit_freq": 0.53,
    "by_season": {
@@ -505,24 +505,24 @@
      "brier_skill": 0.0409
     },
     "2026-2027": {
-     "n": 80,
-     "diff": 0.0015,
-     "brier_skill": -0.0026
+     "n": 83,
+     "diff": 0.0006,
+     "brier_skill": -0.0009
     }
    }
   },
   {
    "market": "Angoli over 10.5",
-   "n": 1981,
-   "rate": 0.344,
+   "n": 1984,
+   "rate": 0.345,
    "model_p": 0.354,
-   "logloss_model": 0.6385,
-   "logloss_freq": 0.6447,
-   "brier_skill": 0.0126,
-   "diff": -0.0062,
-   "z": -2.3,
-   "hit": 0.656,
-   "hit_freq": 0.656,
+   "logloss_model": 0.6387,
+   "logloss_freq": 0.645,
+   "brier_skill": 0.0127,
+   "diff": -0.0063,
+   "z": -2.33,
+   "hit": 0.655,
+   "hit_freq": 0.655,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -542,7 +542,7 @@
     "2024-2025": {
      "n": 380,
      "diff": -0.0034,
-     "brier_skill": 0.0067
+     "brier_skill": 0.0066
     },
     "2025-2026": {
      "n": 380,
@@ -550,22 +550,22 @@
      "brier_skill": 0.0279
     },
     "2026-2027": {
-     "n": 80,
-     "diff": 0.0002,
-     "brier_skill": -0.0017
+     "n": 83,
+     "diff": -0.0017,
+     "brier_skill": 0.0026
     }
    }
   },
   {
    "market": "Angoli over 11.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.238,
    "model_p": 0.266,
    "logloss_model": 0.5444,
-   "logloss_freq": 0.55,
-   "brier_skill": 0.0107,
-   "diff": -0.0057,
-   "z": -2.22,
+   "logloss_freq": 0.5502,
+   "brier_skill": 0.011,
+   "diff": -0.0058,
+   "z": -2.28,
    "hit": 0.761,
    "hit_freq": 0.762,
    "by_season": {
@@ -595,29 +595,29 @@
      "brier_skill": 0.0277
     },
     "2026-2027": {
-     "n": 80,
-     "diff": 0.002,
-     "brier_skill": -0.0055
+     "n": 83,
+     "diff": -0.0017,
+     "brier_skill": 0.0019
     }
    }
   },
   {
    "market": "Gialli over 2.5",
-   "n": 1981,
-   "rate": 0.783,
+   "n": 1984,
+   "rate": 0.782,
    "model_p": 0.766,
-   "logloss_model": 0.4924,
-   "logloss_freq": 0.5238,
-   "brier_skill": 0.0687,
-   "diff": -0.0314,
-   "z": -6.15,
-   "hit": 0.784,
-   "hit_freq": 0.783,
+   "logloss_model": 0.493,
+   "logloss_freq": 0.5253,
+   "brier_skill": 0.0708,
+   "diff": -0.0323,
+   "z": -6.3,
+   "hit": 0.783,
+   "hit_freq": 0.782,
    "by_season": {
     "2021-2022": {
      "n": 380,
      "diff": 0.0005,
-     "brier_skill": -0.004
+     "brier_skill": -0.0039
     },
     "2022-2023": {
      "n": 381,
@@ -636,28 +636,28 @@
     },
     "2025-2026": {
      "n": 380,
-     "diff": -0.0397,
+     "diff": -0.0396,
      "brier_skill": 0.0738
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0896,
-     "brier_skill": 0.1409
+     "n": 83,
+     "diff": -0.1102,
+     "brier_skill": 0.1668
     }
    }
   },
   {
    "market": "Gialli over 3.5",
-   "n": 1981,
-   "rate": 0.588,
+   "n": 1984,
+   "rate": 0.587,
    "model_p": 0.579,
-   "logloss_model": 0.6378,
-   "logloss_freq": 0.6788,
-   "brier_skill": 0.0815,
-   "diff": -0.041,
-   "z": -8.3,
-   "hit": 0.668,
-   "hit_freq": 0.588,
+   "logloss_model": 0.6375,
+   "logloss_freq": 0.6791,
+   "brier_skill": 0.0827,
+   "diff": -0.0417,
+   "z": -8.42,
+   "hit": 0.669,
+   "hit_freq": 0.587,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -677,7 +677,7 @@
     "2024-2025": {
      "n": 380,
      "diff": -0.0624,
-     "brier_skill": 0.1149
+     "brier_skill": 0.1148
     },
     "2025-2026": {
      "n": 380,
@@ -685,22 +685,22 @@
      "brier_skill": 0.1302
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0985,
-     "brier_skill": 0.1757
+     "n": 83,
+     "diff": -0.1114,
+     "brier_skill": 0.1959
     }
    }
   },
   {
    "market": "Gialli over 4.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.379,
-   "model_p": 0.39,
-   "logloss_model": 0.6272,
-   "logloss_freq": 0.6642,
-   "brier_skill": 0.07,
-   "diff": -0.037,
-   "z": -9.67,
+   "model_p": 0.389,
+   "logloss_model": 0.6266,
+   "logloss_freq": 0.664,
+   "brier_skill": 0.0706,
+   "diff": -0.0374,
+   "z": -9.76,
    "hit": 0.634,
    "hit_freq": 0.621,
    "by_season": {
@@ -730,22 +730,22 @@
      "brier_skill": 0.1392
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0882,
-     "brier_skill": 0.1777
+     "n": 83,
+     "diff": -0.0945,
+     "brier_skill": 0.1914
     }
    }
   },
   {
    "market": "Gialli over 5.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.21,
-   "model_p": 0.235,
-   "logloss_model": 0.4913,
-   "logloss_freq": 0.5149,
-   "brier_skill": 0.0433,
-   "diff": -0.0236,
-   "z": -7.55,
+   "model_p": 0.234,
+   "logloss_model": 0.4907,
+   "logloss_freq": 0.5145,
+   "brier_skill": 0.0437,
+   "diff": -0.0237,
+   "z": -7.62,
    "hit": 0.79,
    "hit_freq": 0.79,
    "by_season": {
@@ -775,22 +775,22 @@
      "brier_skill": 0.0914
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0707,
-     "brier_skill": 0.1732
+     "n": 83,
+     "diff": -0.0734,
+     "brier_skill": 0.182
     }
    }
   },
   {
    "market": "Gialli over 6.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.105,
    "model_p": 0.127,
-   "logloss_model": 0.3238,
-   "logloss_freq": 0.3364,
-   "brier_skill": 0.0214,
-   "diff": -0.0126,
-   "z": -4.45,
+   "logloss_model": 0.3234,
+   "logloss_freq": 0.3361,
+   "brier_skill": 0.0215,
+   "diff": -0.0127,
+   "z": -4.48,
    "hit": 0.895,
    "hit_freq": 0.895,
    "by_season": {
@@ -820,23 +820,23 @@
      "brier_skill": 0.0622
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.037,
-     "brier_skill": 0.1739
+     "n": 83,
+     "diff": -0.0383,
+     "brier_skill": 0.1805
     }
    }
   },
   {
    "market": "Tiri in porta over 6.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.715,
    "model_p": 0.712,
-   "logloss_model": 0.5904,
-   "logloss_freq": 0.5988,
-   "brier_skill": 0.0167,
-   "diff": -0.0084,
-   "z": -2.25,
-   "hit": 0.714,
+   "logloss_model": 0.5898,
+   "logloss_freq": 0.5984,
+   "brier_skill": 0.017,
+   "diff": -0.0085,
+   "z": -2.29,
+   "hit": 0.715,
    "hit_freq": 0.715,
    "by_season": {
     "2021-2022": {
@@ -865,24 +865,24 @@
      "brier_skill": 0.0019
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0052,
-     "brier_skill": 0.0099
+     "n": 83,
+     "diff": -0.0089,
+     "brier_skill": 0.0187
     }
    }
   },
   {
    "market": "Tiri in porta over 7.5",
-   "n": 1981,
-   "rate": 0.593,
+   "n": 1984,
+   "rate": 0.594,
    "model_p": 0.586,
-   "logloss_model": 0.6659,
-   "logloss_freq": 0.6769,
-   "brier_skill": 0.0214,
-   "diff": -0.011,
-   "z": -2.8,
+   "logloss_model": 0.6654,
+   "logloss_freq": 0.6766,
+   "brier_skill": 0.0217,
+   "diff": -0.0112,
+   "z": -2.85,
    "hit": 0.598,
-   "hit_freq": 0.593,
+   "hit_freq": 0.594,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -910,24 +910,24 @@
      "brier_skill": 0.0048
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0061,
-     "brier_skill": 0.0101
+     "n": 83,
+     "diff": -0.011,
+     "brier_skill": 0.0205
     }
    }
   },
   {
    "market": "Tiri in porta over 8.5",
-   "n": 1981,
-   "rate": 0.462,
-   "model_p": 0.456,
-   "logloss_model": 0.6789,
-   "logloss_freq": 0.6914,
-   "brier_skill": 0.0247,
-   "diff": -0.0126,
-   "z": -3.1,
-   "hit": 0.569,
-   "hit_freq": 0.532,
+   "n": 1984,
+   "rate": 0.463,
+   "model_p": 0.457,
+   "logloss_model": 0.6787,
+   "logloss_freq": 0.6915,
+   "brier_skill": 0.0253,
+   "diff": -0.0128,
+   "z": -3.17,
+   "hit": 0.57,
+   "hit_freq": 0.531,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -952,27 +952,27 @@
     "2025-2026": {
      "n": 380,
      "diff": 0.0004,
-     "brier_skill": 0.0002
+     "brier_skill": 0.0001
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0072,
-     "brier_skill": 0.0153
+     "n": 83,
+     "diff": -0.0138,
+     "brier_skill": 0.0278
     }
    }
   },
   {
    "market": "Tiri in porta over 9.5",
-   "n": 1981,
-   "rate": 0.333,
+   "n": 1984,
+   "rate": 0.334,
    "model_p": 0.337,
-   "logloss_model": 0.6263,
-   "logloss_freq": 0.6372,
-   "brier_skill": 0.0218,
-   "diff": -0.0109,
-   "z": -2.76,
+   "logloss_model": 0.6264,
+   "logloss_freq": 0.6376,
+   "brier_skill": 0.0225,
+   "diff": -0.0112,
+   "z": -2.83,
    "hit": 0.672,
-   "hit_freq": 0.667,
+   "hit_freq": 0.666,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -992,7 +992,7 @@
     "2024-2025": {
      "n": 380,
      "diff": -0.016,
-     "brier_skill": 0.0311
+     "brier_skill": 0.031
     },
     "2025-2026": {
      "n": 380,
@@ -1000,22 +1000,22 @@
      "brier_skill": -0.0012
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0102,
-     "brier_skill": 0.0196
+     "n": 83,
+     "diff": -0.0173,
+     "brier_skill": 0.0312
     }
    }
   },
   {
    "market": "Tiri in porta over 10.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.231,
    "model_p": 0.236,
    "logloss_model": 0.532,
-   "logloss_freq": 0.5406,
-   "brier_skill": 0.018,
-   "diff": -0.0086,
-   "z": -2.24,
+   "logloss_freq": 0.5408,
+   "brier_skill": 0.0184,
+   "diff": -0.0088,
+   "z": -2.28,
    "hit": 0.768,
    "hit_freq": 0.769,
    "by_season": {
@@ -1045,22 +1045,22 @@
      "brier_skill": 0.0173
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0293,
-     "brier_skill": 0.0453
+     "n": 83,
+     "diff": -0.0324,
+     "brier_skill": 0.0502
     }
    }
   },
   {
    "market": "Tiri over 20.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.792,
-   "model_p": 0.751,
-   "logloss_model": 0.5018,
-   "logloss_freq": 0.5124,
-   "brier_skill": 0.0209,
-   "diff": -0.0107,
-   "z": -2.43,
+   "model_p": 0.752,
+   "logloss_model": 0.5012,
+   "logloss_freq": 0.512,
+   "brier_skill": 0.0211,
+   "diff": -0.0108,
+   "z": -2.46,
    "hit": 0.792,
    "hit_freq": 0.792,
    "by_season": {
@@ -1090,24 +1090,24 @@
      "brier_skill": -0.0108
     },
     "2026-2027": {
-     "n": 80,
-     "diff": 0.0095,
-     "brier_skill": -0.0572
+     "n": 83,
+     "diff": 0.0062,
+     "brier_skill": -0.0474
     }
    }
   },
   {
    "market": "Tiri over 22.5",
-   "n": 1981,
-   "rate": 0.671,
-   "model_p": 0.638,
-   "logloss_model": 0.6198,
-   "logloss_freq": 0.6344,
-   "brier_skill": 0.0294,
-   "diff": -0.0145,
-   "z": -3.46,
+   "n": 1984,
+   "rate": 0.672,
+   "model_p": 0.639,
+   "logloss_model": 0.6193,
+   "logloss_freq": 0.634,
+   "brier_skill": 0.0297,
+   "diff": -0.0147,
+   "z": -3.51,
    "hit": 0.668,
-   "hit_freq": 0.671,
+   "hit_freq": 0.672,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -1135,22 +1135,22 @@
      "brier_skill": 0.0039
     },
     "2026-2027": {
-     "n": 80,
-     "diff": 0.0004,
-     "brier_skill": -0.0061
+     "n": 83,
+     "diff": -0.0049,
+     "brier_skill": 0.0068
     }
    }
   },
   {
    "market": "Tiri over 24.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.536,
    "model_p": 0.517,
-   "logloss_model": 0.6744,
-   "logloss_freq": 0.6913,
-   "brier_skill": 0.0335,
-   "diff": -0.0169,
-   "z": -4.02,
+   "logloss_model": 0.674,
+   "logloss_freq": 0.6912,
+   "brier_skill": 0.0341,
+   "diff": -0.0172,
+   "z": -4.09,
    "hit": 0.592,
    "hit_freq": 0.536,
    "by_season": {
@@ -1180,24 +1180,24 @@
      "brier_skill": 0.0251
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0381,
-     "brier_skill": 0.076
+     "n": 83,
+     "diff": -0.0446,
+     "brier_skill": 0.0893
     }
    }
   },
   {
    "market": "Tiri over 26.5",
-   "n": 1981,
-   "rate": 0.389,
+   "n": 1984,
+   "rate": 0.39,
    "model_p": 0.399,
-   "logloss_model": 0.6474,
-   "logloss_freq": 0.6691,
-   "brier_skill": 0.043,
-   "diff": -0.0217,
-   "z": -5.4,
-   "hit": 0.621,
-   "hit_freq": 0.611,
+   "logloss_model": 0.6473,
+   "logloss_freq": 0.6693,
+   "brier_skill": 0.0435,
+   "diff": -0.022,
+   "z": -5.47,
+   "hit": 0.622,
+   "hit_freq": 0.61,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -1225,22 +1225,22 @@
      "brier_skill": 0.0419
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0577,
-     "brier_skill": 0.0983
+     "n": 83,
+     "diff": -0.0632,
+     "brier_skill": 0.1074
     }
    }
   },
   {
    "market": "Tiri over 28.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.274,
    "model_p": 0.293,
-   "logloss_model": 0.5719,
-   "logloss_freq": 0.5873,
-   "brier_skill": 0.0302,
-   "diff": -0.0154,
-   "z": -3.92,
+   "logloss_model": 0.572,
+   "logloss_freq": 0.5879,
+   "brier_skill": 0.0312,
+   "diff": -0.0159,
+   "z": -4.02,
    "hit": 0.724,
    "hit_freq": 0.726,
    "by_season": {
@@ -1270,24 +1270,24 @@
      "brier_skill": 0.0329
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.063,
-     "brier_skill": 0.093
+     "n": 83,
+     "diff": -0.0715,
+     "brier_skill": 0.1052
     }
    }
   },
   {
    "market": "Falli over 20.5",
-   "n": 1981,
-   "rate": 0.789,
-   "model_p": 0.804,
-   "logloss_model": 0.4675,
-   "logloss_freq": 0.5223,
-   "brier_skill": 0.1063,
-   "diff": -0.0548,
-   "z": -7.93,
+   "n": 1984,
+   "rate": 0.788,
+   "model_p": 0.803,
+   "logloss_model": 0.4679,
+   "logloss_freq": 0.524,
+   "brier_skill": 0.1091,
+   "diff": -0.0561,
+   "z": -8.08,
    "hit": 0.787,
-   "hit_freq": 0.789,
+   "hit_freq": 0.788,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -1307,7 +1307,7 @@
     "2024-2025": {
      "n": 380,
      "diff": -0.0663,
-     "brier_skill": 0.1263
+     "brier_skill": 0.1262
     },
     "2025-2026": {
      "n": 380,
@@ -1315,24 +1315,24 @@
      "brier_skill": 0.1348
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.1713,
-     "brier_skill": 0.2157
+     "n": 83,
+     "diff": -0.1978,
+     "brier_skill": 0.2422
     }
    }
   },
   {
    "market": "Falli over 22.5",
-   "n": 1981,
-   "rate": 0.659,
-   "model_p": 0.68,
-   "logloss_model": 0.5949,
-   "logloss_freq": 0.6509,
-   "brier_skill": 0.1056,
-   "diff": -0.056,
-   "z": -7.8,
+   "n": 1984,
+   "rate": 0.658,
+   "model_p": 0.679,
+   "logloss_model": 0.5946,
+   "logloss_freq": 0.6516,
+   "brier_skill": 0.1075,
+   "diff": -0.057,
+   "z": -7.92,
    "hit": 0.677,
-   "hit_freq": 0.659,
+   "hit_freq": 0.658,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -1360,29 +1360,29 @@
      "brier_skill": 0.0975
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.1659,
-     "brier_skill": 0.2451
+     "n": 83,
+     "diff": -0.1855,
+     "brier_skill": 0.2694
     }
    }
   },
   {
    "market": "Falli over 24.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.517,
    "model_p": 0.537,
-   "logloss_model": 0.6365,
-   "logloss_freq": 0.7041,
-   "brier_skill": 0.1273,
-   "diff": -0.0676,
-   "z": -9.13,
+   "logloss_model": 0.6359,
+   "logloss_freq": 0.7042,
+   "brier_skill": 0.1285,
+   "diff": -0.0683,
+   "z": -9.22,
    "hit": 0.65,
    "hit_freq": 0.517,
    "by_season": {
     "2021-2022": {
      "n": 380,
      "diff": -0.0395,
-     "brier_skill": 0.0797
+     "brier_skill": 0.0796
     },
     "2022-2023": {
      "n": 381,
@@ -1396,33 +1396,33 @@
     },
     "2024-2025": {
      "n": 380,
-     "diff": -0.0756,
-     "brier_skill": 0.1426
+     "diff": -0.0757,
+     "brier_skill": 0.1427
     },
     "2025-2026": {
      "n": 380,
-     "diff": -0.0836,
+     "diff": -0.0837,
      "brier_skill": 0.159
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.1898,
-     "brier_skill": 0.325
+     "n": 83,
+     "diff": -0.2027,
+     "brier_skill": 0.3445
     }
    }
   },
   {
    "market": "Falli over 26.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.398,
    "model_p": 0.394,
-   "logloss_model": 0.6142,
-   "logloss_freq": 0.6835,
-   "brier_skill": 0.1315,
-   "diff": -0.0693,
-   "z": -9.34,
+   "logloss_model": 0.6135,
+   "logloss_freq": 0.6834,
+   "brier_skill": 0.1324,
+   "diff": -0.0699,
+   "z": -9.42,
    "hit": 0.662,
-   "hit_freq": 0.57,
+   "hit_freq": 0.571,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -1441,31 +1441,31 @@
     },
     "2024-2025": {
      "n": 380,
-     "diff": -0.069,
+     "diff": -0.0691,
      "brier_skill": 0.1362
     },
     "2025-2026": {
      "n": 380,
-     "diff": -0.0852,
+     "diff": -0.0853,
      "brier_skill": 0.157
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.1449,
-     "brier_skill": 0.3014
+     "n": 83,
+     "diff": -0.1553,
+     "brier_skill": 0.3208
     }
    }
   },
   {
    "market": "Falli over 28.5",
-   "n": 1981,
+   "n": 1984,
    "rate": 0.259,
    "model_p": 0.268,
-   "logloss_model": 0.5284,
-   "logloss_freq": 0.5814,
-   "brier_skill": 0.1046,
-   "diff": -0.053,
-   "z": -8.1,
+   "logloss_model": 0.5277,
+   "logloss_freq": 0.581,
+   "brier_skill": 0.1052,
+   "diff": -0.0533,
+   "z": -8.16,
    "hit": 0.742,
    "hit_freq": 0.741,
    "by_season": {
@@ -1487,7 +1487,7 @@
     "2024-2025": {
      "n": 380,
      "diff": -0.0575,
-     "brier_skill": 0.1179
+     "brier_skill": 0.118
     },
     "2025-2026": {
      "n": 380,
@@ -1495,24 +1495,24 @@
      "brier_skill": 0.0966
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0907,
-     "brier_skill": 0.1997
+     "n": 83,
+     "diff": -0.0974,
+     "brier_skill": 0.2155
     }
    }
   },
   {
    "market": "Fuorigioco over 2.5",
-   "n": 1981,
-   "rate": 0.595,
+   "n": 1984,
+   "rate": 0.596,
    "model_p": 0.594,
-   "logloss_model": 0.6545,
-   "logloss_freq": 0.6781,
-   "brier_skill": 0.0473,
-   "diff": -0.0236,
+   "logloss_model": 0.6543,
+   "logloss_freq": 0.6778,
+   "brier_skill": 0.0472,
+   "diff": -0.0235,
    "z": -4.87,
-   "hit": 0.625,
-   "hit_freq": 0.595,
+   "hit": 0.626,
+   "hit_freq": 0.596,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -1540,24 +1540,24 @@
      "brier_skill": 0.0464
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0472,
-     "brier_skill": 0.0939
+     "n": 83,
+     "diff": -0.0456,
+     "brier_skill": 0.0915
     }
    }
   },
   {
    "market": "Fuorigioco over 3.5",
-   "n": 1981,
-   "rate": 0.405,
+   "n": 1984,
+   "rate": 0.406,
    "model_p": 0.392,
-   "logloss_model": 0.6495,
-   "logloss_freq": 0.6789,
-   "brier_skill": 0.0575,
-   "diff": -0.0294,
-   "z": -5.75,
-   "hit": 0.617,
-   "hit_freq": 0.591,
+   "logloss_model": 0.6499,
+   "logloss_freq": 0.6792,
+   "brier_skill": 0.0573,
+   "diff": -0.0293,
+   "z": -5.73,
+   "hit": 0.616,
+   "hit_freq": 0.59,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -1585,24 +1585,24 @@
      "brier_skill": 0.0589
     },
     "2026-2027": {
-     "n": 80,
-     "diff": -0.0508,
-     "brier_skill": 0.0913
+     "n": 83,
+     "diff": -0.0475,
+     "brier_skill": 0.0851
     }
    }
   },
   {
    "market": "Fuorigioco over 4.5",
-   "n": 1981,
-   "rate": 0.257,
+   "n": 1984,
+   "rate": 0.258,
    "model_p": 0.233,
-   "logloss_model": 0.5512,
-   "logloss_freq": 0.573,
+   "logloss_model": 0.5518,
+   "logloss_freq": 0.5736,
    "brier_skill": 0.0413,
-   "diff": -0.0218,
-   "z": -4.32,
-   "hit": 0.741,
-   "hit_freq": 0.743,
+   "diff": -0.0219,
+   "z": -4.34,
+   "hit": 0.74,
+   "hit_freq": 0.742,
    "by_season": {
     "2021-2022": {
      "n": 380,
@@ -1630,9 +1630,9 @@
      "brier_skill": 0.0476
     },
     "2026-2027": {
-     "n": 80,
-     "diff": 0.0154,
-     "brier_skill": -0.0074
+     "n": 83,
+     "diff": 0.013,
+     "brier_skill": -0.0043
     }
    }
   }
