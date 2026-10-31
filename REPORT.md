@@ -1,6 +1,6 @@
 # PredictA — Serie A
 
-Aggiornato: 2026-10-31 09:00 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
+Aggiornato: 2026-10-31 15:18 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
 
 ## Voto complessivo: **70/100** su 90 partite
 
@@ -30,14 +30,14 @@ Favorito indovinato 62% · log-loss 1X2 0.904 (storico 1.056, bookmaker 0.905) �
 
 | Data (UTC) | Partita | 1 | X | 2 | Gol attesi | Over 2.5 | Gol entrambe | Più probabile | Formazioni |
 |---|---|---|---|---|---|---|---|---|---|
-| 2026-10-31 14:00 | Bologna – Monza | 58% | 24% | 18% | 1.82–0.92 | 52% | 51% | 1-1 (11%) | probabili |
-| 2026-10-31 17:00 | Udinese – Roma | 17% | 22% | 61% | 1.02–2.08 | 60% | 57% | 1-1 (10%) | probabili |
-| 2026-10-31 19:45 | Milan – Inter | 27% | 26% | 47% | 1.14–1.59 | 52% | 55% | 1-1 (12%) | probabili |
+| 2026-10-31 14:00 | Bologna – Monza | 58% | 24% | 18% | 1.82–0.92 | 52% | 51% | 1-1 (12%) | ufficiali |
+| 2026-10-31 17:00 | Udinese – Roma | 17% | 22% | 61% | 1.03–2.09 | 60% | 57% | 1-1 (10%) | probabili |
+| 2026-10-31 19:45 | Milan – Inter | 26% | 26% | 48% | 1.15–1.61 | 52% | 55% | 1-1 (12%) | probabili |
 | 2026-11-01 11:30 | Como – Venezia | 75% | 15% | 10% | 2.83–1.00 | 74% | 60% | 2-1 (9%) | probabili |
 | 2026-11-01 14:00 | Lazio – Cagliari | 66% | 21% | 13% | 2.05–0.79 | 54% | 48% | 2-0 (12%) | probabili |
 | 2026-11-01 14:00 | Frosinone – Torino | 45% | 24% | 31% | 1.76–1.43 | 62% | 64% | 1-1 (11%) | probabili |
 | 2026-11-01 17:00 | Lecce – Genoa | 28% | 32% | 40% | 0.92–1.14 | 34% | 42% | 1-1 (14%) | probabili |
-| 2026-11-01 19:45 | Juventus – Napoli | 43% | 28% | 29% | 1.44–1.14 | 48% | 53% | 1-1 (13%) | probabili |
+| 2026-11-01 19:45 | Juventus – Napoli | 43% | 28% | 29% | 1.43–1.15 | 48% | 53% | 1-1 (13%) | probabili |
 | 2026-11-02 17:30 | Sassuolo – Fiorentina | 34% | 25% | 41% | 1.44–1.59 | 58% | 61% | 1-1 (12%) | probabili |
 | 2026-11-02 19:45 | Atalanta – Parma | 64% | 21% | 16% | 2.15–0.98 | 61% | 56% | 2-0 (10%) | probabili |
 
