@@ -38,7 +38,21 @@ STAT_BASE = {k: float((_tp[STATS[k]] > l).mean()) for k, l in FIXED_LINES.items(
 def ll(p): return -math.log(max(p, 1e-9))
 def mean(x): x = [v for v in x if v is not None and not (isinstance(v, float) and math.isnan(v))]; return sum(x) / len(x) if x else None
 
+def pure(d):
+    """The published forecast is the statistical model alone. Ledger entries made before that blended it with the bookmaker's goal rates
+    (model_weight < 1): they are rebuilt from lambda_model so that every match is scored the same way."""
+    if d.get("grid") == 2 or not d.get("lambda_model"): return d
+    lm = d["lambda_model"]; S = model.score_grid(lm["home"], lm["away"]); i = np.arange(model.MAXG + 1); tot = i[:, None] + i[None, :]
+    r3 = lambda x: round(float(x), 3)
+    d = dict(d); d["lambda"] = lm; d["model_weight"] = 1.0; d["p"] = {k: r3(v) for k, v in model.outcome_probs(S).items()}; d["p_model"] = d["p"]
+    d["p_model_over25"] = r3(S[tot > 2.5].sum())
+    d["markets"] = {**d["markets"], "ou": {str(l): r3(S[tot > l].sum()) for l in (0.5, 1.5, 2.5, 3.5, 4.5)}, "btts": r3(S[1:, 1:].sum()),
+                    "cs": {"home": r3(S[:, 0].sum()), "away": r3(S[0, :].sum())}}
+    d["top_scores"] = [{"s": f"{a}-{b}", "p": r3(S[a, b])} for a, b in sorted(((a, b) for a in range(7) for b in range(7)), key=lambda x: -S[x])[:9]]
+    return d
+
 def score_match(d, kind):
+    d = pure(d)
     mid = d["match_id"]
     if mid not in M.index or not M.at[mid, "finished"]: return None
     hg, ag = int(M.at[mid, "hg"]), int(M.at[mid, "ag"])
@@ -62,7 +76,7 @@ def score_match(d, kind):
     pmk = d.get("p_market") or {}
     if pmk.get("over") is not None and pmk.get("ou_line") == 2.5 and d.get("lambda_model"):   # Over 2.5: model alone vs final vs bookmaker
         lm, i = d["lambda_model"], np.arange(model.MAXG + 1)
-        r["ov25"] = {"y": float(hg + ag > 2.5), "model": float(model.dixon_coles(lm["home"], lm["away"])[(i[:, None] + i[None, :]) > 2.5].sum()),
+        r["ov25"] = {"y": float(hg + ag > 2.5), "model": float(d.get("p_model_over25", model.score_grid(lm["home"], lm["away"])[(i[:, None] + i[None, :]) > 2.5].sum())),
                      "final": d["markets"]["ou"]["2.5"], "mkt": pmk["over"]}
     if d.get("p_market") and pm:
         # value bets: the MODEL ALONE (the published forecast is mostly the bookmaker's own rates and could never disagree with it)
@@ -125,7 +139,7 @@ def score_match(d, kind):
 
 rounds = defaultdict(lambda: {"first": [], "final": []})
 for f in sorted(glob.glob(f"{LEDGER}/*/R*/*_*.json")):
-    season, rnd = f.split("/")[-3], f.split("/")[-2]
+    season, rnd = f.replace("\\", "/").split("/")[-3:-1]
     kind = "first" if f.endswith("_first.json") else "final"
     s = score_match(json.load(open(f)), kind)
     if s: rounds[(season, rnd)][kind].append(s)
@@ -139,14 +153,16 @@ def head2head(ms):
            "model": {k: mean([m["pm_" + k] for m in x]) for k in ("fav_hit", "logloss", "brier", "rps")},
            "final": {k: mean([m[k] for m in x]) for k in ("fav_hit", "logloss", "brier", "rps")},
            "market": {k: mean([m["mk_" + k] for m in x]) for k in ("fav_hit", "logloss", "brier", "rps")},
-           "wins": {"model": sum(m["pm_logloss"] < m["mk_logloss"] for m in x), "final": sum(m["logloss"] < m["mk_logloss"] for m in x)},
+           "wins": {"model": sum(m["pm_logloss"] < m["mk_logloss"] for m in x), "final": sum(m["logloss"] < m["mk_logloss"] for m in x),
+                    "market": sum(m["mk_logloss"] < m["pm_logloss"] for m in x)},
            "over25": None}
     ov = [m["ov25"] for m in ms if "ov25" in m]
     if ov:
         src = {"model": "model", "final": "final", "market": "mkt"}
         out["over25"] = {"n": len(ov), **{k: {"logloss": mean([bl(o[s], o["y"]) for o in ov]), "brier": mean([(o[s] - o["y"]) ** 2 for o in ov]),
                                             "hit": mean([(o[s] >= .5) == bool(o["y"]) for o in ov])} for k, s in src.items()},
-                         "wins": {"model": sum(abs(o["model"] - o["y"]) < abs(o["mkt"] - o["y"]) for o in ov), "final": sum(abs(o["final"] - o["y"]) < abs(o["mkt"] - o["y"]) for o in ov)}}
+                         "wins": {"model": sum(abs(o["model"] - o["y"]) < abs(o["mkt"] - o["y"]) for o in ov), "final": sum(abs(o["final"] - o["y"]) < abs(o["mkt"] - o["y"]) for o in ov),
+                                  "market": sum(abs(o["mkt"] - o["y"]) < abs(o["model"] - o["y"]) for o in ov)}}
     return out
 
 def summarize(ms):

@@ -28,6 +28,19 @@ def dixon_coles(lh, la, rho=RHO):
     return M / M.sum()
 
 
+SCORE_W = (0.83, 1.12, 1.50)   # weights of 0-0, 1-1 and k-k (k >= 2) on the Dixon-Coles grid, fitted on 6 seasons (src/study_score.py notes in README):
+                               # Poisson gives too few draws with goals (2-2: -33%) and too many 0-0; leave-one-season-out gain in score log-loss
+                               # +0.0054 (5 seasons of 6), both-teams-score +0.0026, clean sheet +0.002; 1X2 and Over/Under unchanged within noise
+
+
+def score_grid(lh, la, rho=RHO):
+    """Dixon-Coles grid with the draw weights above: the matrix every published market is read from."""
+    S = dixon_coles(lh, la, rho).copy()
+    S[0, 0] *= SCORE_W[0]; S[1, 1] *= SCORE_W[1]
+    for k in range(2, MAXG + 1): S[k, k] *= SCORE_W[2]
+    return S / S.sum()
+
+
 def outcome_probs(M):
     return {"1": np.tril(M, -1).sum(), "X": np.trace(M), "2": np.triu(M, 1).sum()}
 

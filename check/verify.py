@@ -10,11 +10,15 @@ for f in sorted(glob.glob(sys.argv[1] + "/2*.json")):
     ok(abs(sum(d["markets"]["goals_dist"]) - 1) < 3e-3, f"{n} goals dist sum")
     eg = sum(k * v for k, v in enumerate(d["markets"]["goals_dist"][:6])) + 6.5 * d["markets"]["goals_dist"][6]
     ok(abs(eg - lh - la) < 0.2, f"{n} E[goals] {eg:.2f} vs {lh+la:.2f}")
-    ok(abs(d["markets"]["cs"]["home"] - math.exp(-la)) < 0.03, f"{n} clean sheet")
-    ok(abs(d["markets"]["btts"] - (1 - math.exp(-lh)) * (1 - math.exp(-la))) < 0.03, f"{n} btts")
-    if d["lambda_market"]:  # final rate = geometric blend of model and market
-        w = d["model_weight"]
-        ok(abs(lh - d["lambda_model"]["home"] ** w * d["lambda_market"]["home"] ** (1 - w)) < 2e-3, f"{n} blend home")
+    # the grid weights draws (src/model.py SCORE_W): compare with the same grid built from the published rates, not with independent Poissons
+    sys.path.insert(0, __import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), "..", "src"))
+    import model
+    G = model.score_grid(lh, la)
+    ok(abs(d["markets"]["cs"]["home"] - G[:, 0].sum()) < 2e-3, f"{n} clean sheet")
+    ok(abs(d["markets"]["btts"] - G[1:, 1:].sum()) < 2e-3, f"{n} btts")
+    ok(abs(d["markets"]["btts"] - (1 - math.exp(-lh)) * (1 - math.exp(-la))) < 0.06, f"{n} btts far from independent")   # sanity: the weights stay mild
+    # the published forecast is the model alone: its rates must equal the model's
+    ok(abs(lh - d["lambda_model"]["home"]) < 2e-3 and abs(la - d["lambda_model"]["away"]) < 2e-3, f"{n} lambda is not the model's")
     for side, lam in (("home", lh), ("away", la)):
         pl = [x for x in d["teams"][side]["players"] if x["props"]]
         ok(abs(sum(x["props"]["exp_goals"] for x in pl) - lam) < 0.02, f"{n} {side} scorer sum {sum(x['props']['exp_goals'] for x in pl):.3f} vs {lam}")

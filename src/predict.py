@@ -14,8 +14,7 @@ ONLY_ROUND = os.environ.get("ONLY_ROUND")
 GOAL_SHARE_1H = 0.44     # share of goals in the first half (Serie A long-run, re-estimated below)
 os.makedirs(OUT, exist_ok=True)
 for old in __import__("glob").glob(f"{OUT}/2*.json"): os.remove(old)  # matches already played drop out of the board
-cal = json.load(open(f"{DATA}/calibration.json"))
-W_MODEL = cal["model_weight"]
+W_MODEL = 1.0   # the published forecast is the statistical model alone; bookmaker prices are read only to be compared with it
 bt = json.load(open(f"{DATA}/backtest.json"))
 try: bt["markets"] = json.load(open(f"{DATA}/backtest_markets.json"))   # every bettable market vs its historical frequency / the bookmaker
 except OSError: pass
@@ -147,14 +146,14 @@ for r in up.itertuples():
     both = pd.concat([vh, va])
     lam_model = gm.predict(both) * FACT["goals"]
     has_mk = not pd.isna(r.p1_close)
-    if has_mk:
+    if has_mk:   # the bookmaker's goal rates are kept only for the comparison shown on the page
         pov = r.pover / (r.pover + r.punder) if r.pover and r.punder and not pd.isna(r.pover) else None
         mlh, mla = model.market_lambdas(r.p1_close, r.px_close, r.p2_close, r.ou_line, pov)
-        lh, la = lam_model[0] ** W_MODEL * mlh ** (1 - W_MODEL), lam_model[1] ** W_MODEL * mla ** (1 - W_MODEL)
     else:
-        mlh = mla = None; lh, la = lam_model
-    S = model.dixon_coles(lh, la)
-    Smodel = model.dixon_coles(*lam_model)
+        mlh = mla = None
+    lh, la = lam_model
+    S = model.score_grid(lh, la)
+    Smodel = S
     i = np.arange(model.MAXG + 1); tot = i[:, None] + i[None, :]; diff = i[:, None] - i[None, :]
     H1 = model.dixon_coles(lh * share_1h, la * share_1h, 0)
     stats = {}
@@ -188,7 +187,7 @@ for r in up.itertuples():
         "lambda": {"home": r3(lh), "away": r3(la)}, "lambda_model": {"home": r3(lam_model[0]), "away": r3(lam_model[1])},
         "lambda_base": {"home": r3(vh.lam_base.iloc[0]), "away": r3(va.lam_base.iloc[0])},
         "lambda_market": {"home": r3(mlh), "away": r3(mla)} if has_mk else None, "model_weight": W_MODEL if has_mk else 1.0,
-        "regime": {k: r3(float(v)) for k, v in FACT.items()},
+        "regime": {k: r3(float(v)) for k, v in FACT.items()}, "grid": 2,
         "p": {**{k: r3(v) for k, v in model.outcome_probs(S).items()}},
         "p_model": {k: r3(v) for k, v in model.outcome_probs(Smodel).items()}, "p_model_over25": r3(Smodel[tot > 2.5].sum()),
         "p_market": {"1": r3(r.p1_close / (r.p1_close + r.px_close + r.p2_close)), "X": r3(r.px_close / (r.p1_close + r.px_close + r.p2_close)),

@@ -52,7 +52,7 @@ W.columns = [f"{a}_{b}" for a, b in W.columns]
 W = W.join(M.set_index("match_id")[["season", "date", "home", "away", "hg", "ag", "p1_close", "px_close", "p2_close", "pover", "punder", "ou_line"]])
 
 def probs(lh, la):
-    S = model.dixon_coles(lh, la)
+    S = model.score_grid(lh, la)
     i = np.arange(model.MAXG + 1); tot = i[:, None] + i[None, :]
     return {**model.outcome_probs(S), "o25": S[tot > 2.5].sum(), "btts": S[1:, 1:].sum(),
             "o05": S[tot > 0.5].sum(), "o15": S[tot > 1.5].sum(), "o35": S[tot > 3.5].sum(), "o45": S[tot > 4.5].sum(),
