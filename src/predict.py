@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 import numpy as np
 import pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import features, model
+import books, features, model
 
 DATA, OUT = sys.argv[1], sys.argv[2]
 DAYS_AHEAD = 10
@@ -29,6 +29,7 @@ if AS_OF:
     D["team_match"] = D["team_match"][~D["team_match"].match_id.isin(gone)]
     D["player_match"] = D["player_match"][~D["player_match"].match_id.isin(gone) & (D["player_match"].date < now)]  # cups too
 M, T, P, tr = features.build(D)
+EXTRA = books.load_extra(DATA, set(M.home) | set(M.away))   # extra bookmaker markets (btts, goal / corner / card lines), comparison only
 L = model.lineup_strength(P, M)
 R = model.referee_table(M, T)
 V = model.team_view(M, T, L, R)
@@ -172,6 +173,17 @@ for r in up.itertuples():
                                  ("fouls", stats["fouls"]["home"] + stats["fouls"]["away"], stats["fouls"]["disp"], (20.5, 22.5, 24.5, 26.5, 28.5)),
                                  ("offsides", stats["offsides"]["home"] + stats["offsides"]["away"], stats["offsides"]["disp"], (2.5, 3.5, 4.5))):
         lines[name] = {"mean": r3(mean), "disp": r3(disp), "over": {str(l): r3(model.count_over(mean, l, disp)) for l in ls}}
+    # our probability on the very lines the bookmaker quotes (its price de-vigged, median across bookmakers); no bookmaker price enters our numbers
+    extra = {}
+    bk = books.find(EXTRA, r.home, r.away, r.date)
+    if bk:
+        keep = lambda rows: sorted([x for x in rows if .1 <= x["book"] <= .9], key=lambda x: abs(x["book"] - .5))[:4]
+        if bk["btts"] is not None: extra["btts"] = [{"line": None, "us": P_((i[:, None] > 0) & (i[None, :] > 0)), "book": bk["btts"]}]
+        for mk, mean, disp in (("corners", lines["corners"]["mean"], stats["corners"]["disp"]), ("cards", lines["cards"]["mean"], stats["yc"]["disp"])):
+            rows = keep([{"line": float(l), "us": r3(model.count_over(mean, float(l), disp)), "book": q} for l, q in bk[mk].items()])
+            if rows: extra[mk] = sorted(rows, key=lambda x: x["line"])
+        rows = keep([{"line": float(l), "us": r3(S[tot > float(l)].sum()), "book": q} for l, q in bk["goals"].items()])
+        if rows: extra["goals"] = sorted(rows, key=lambda x: x["line"])
     H = team_block(r.home, "home", vh.iloc[0], {**r.lineup["home"], "formation": r.home_formation}, r.date)
     A = team_block(r.away, "away", va.iloc[0], {**r.lineup["away"], "formation": r.away_formation}, r.date)
     player_props(H, lh, {"shots": stats["shots"]["home"], "opp_sot": stats["sot"]["away"], "opp_lam": la})
@@ -209,7 +221,7 @@ for r in up.itertuples():
         },
         "top_scores": [{"s": f"{a}-{b}", "p": r3(S[a, b])} for a, b in sorted(((a, b) for a in range(7) for b in range(7)), key=lambda x: -S[x])[:9]],
         "matrix": [[r3(S[a, b]) for b in range(6)] for a in range(6)],
-        "stats": stats, "lines": lines, "teams": {"home": H, "away": A},
+        "stats": stats, "lines": lines, "extra": extra, "teams": {"home": H, "away": A},
         "share_1h": r3(share_1h),
     }
     fn = f"{r.date:%Y%m%d}_{r.home}_{r.away}".replace(" ", "-")

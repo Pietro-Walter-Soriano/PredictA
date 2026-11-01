@@ -110,6 +110,18 @@ def score_match(d, kind):
                 r["skill"]["stat"].append(((ln["over"][str(FIXED_LINES[name])] - y) ** 2, (STAT_BASE[name] - y) ** 2))
         r["counts"]["goals"] = {"pred": r["exp_goals"], "act": hg + ag, "abs_err": abs(r["exp_goals"] - hg - ag)}
         r["xg_act"] = {"home": th.get("npxg"), "away": ta.get("npxg")}
+        # every line the bookmaker quoted (both teams to score, goal / corner / card lines): our probability against its de-vigged price
+        ex, acts = d.get("extra") or {}, {"goals": hg + ag, "corners": th.get("corners") + ta.get("corners") if not pd.isna(th.get("corners")) else None,
+                                          "cards": th.get("yc") + ta.get("yc") if not pd.isna(th.get("yc")) else None}
+        r["vs_book"] = []
+        for mk, rows in ex.items():
+            for x in rows:
+                if mk == "btts": y = float(hg > 0 and ag > 0); label = "Gol entrambe"
+                else:
+                    if acts.get(mk) is None: continue
+                    y = float(acts[mk] > x["line"]); label = {"goals": "Gol", "corners": "Angoli", "cards": "Gialli"}[mk] + f" over {x['line']}"
+                if mk == "goals" and x["line"] == 2.5: continue          # already compared above
+                r["vs_book"].append({"market": mk, "label": label, "us": x["us"], "book": x["book"], "y": y})
     r["binary"] = {k: {"p": float(v[0]), "y": bool(v[1]), "hit": (v[0] >= .5) == bool(v[1]), "brier": (v[0] - float(v[1])) ** 2} for k, v in binary.items()}
     # players: anytime scorer
     act_pl = P[P.match_id == mid].set_index("player_id")
@@ -168,6 +180,23 @@ def head2head(ms):
                                   "tie": sum(abs(abs(o["model"] - o["y"]) - abs(o["mkt"] - o["y"])) < TIE for o in ov)}}
     return out
 
+def vs_book(ms):
+    """Per market (both teams to score, goal / corner / card lines): our probability against the bookmaker's, on the same events.
+    A win goes to whoever was closer to what happened by more than TIE; log-loss and Brier are averaged over the events."""
+    rows = [dict(v, mid=m["match_id"]) for m in ms for v in m.get("vs_book", [])]
+    if not rows: return None
+    bl = lambda p, y: -math.log(max(min(p, 1 - 1e-4) if y else min(1 - p, 1 - 1e-4), 1e-4))
+    out = {}
+    for key, name in (("btts", "Gol entrambe"), ("goals", "Gol totali"), ("corners", "Angoli"), ("cards", "Gialli")):
+        x = [v for v in rows if v["market"] == key]
+        if not x: continue
+        gap = lambda v: abs(v["book"] - v["y"]) - abs(v["us"] - v["y"])       # positive: we were closer
+        out[key] = {"name": name, "n": len(x), "matches": len({v["mid"] for v in x}),
+                    "us": {"logloss": mean([bl(v["us"], v["y"]) for v in x]), "brier": mean([(v["us"] - v["y"]) ** 2 for v in x])},
+                    "book": {"logloss": mean([bl(v["book"], v["y"]) for v in x]), "brier": mean([(v["book"] - v["y"]) ** 2 for v in x])},
+                    "wins": {"us": sum(gap(v) >= TIE for v in x), "book": sum(gap(v) <= -TIE for v in x), "tie": sum(abs(gap(v)) < TIE for v in x)}}
+    return out or None
+
 def summarize(ms):
     if not ms: return None
     n = len(ms); mk = [m for m in ms if "mk_logloss" in m]
@@ -192,7 +221,7 @@ def summarize(ms):
         "market": {"n": len(mk), "fav_hit": mean([m["mk_fav_hit"] for m in mk]), "logloss": mean([m["mk_logloss"] for m in mk]),
                    "brier": mean([m["mk_brier"] for m in mk]), "rps": mean([m["mk_rps"] for m in mk]),
                    "model_logloss_same": mean([m["logloss"] for m in mk])} if mk else None,
-        "h2h": head2head(ms),
+        "h2h": head2head(ms), "vs_book": vs_book(ms),
         "top1_hit": mean([m["top1_hit"] for m in ms]), "top3_hit": mean([m["top3_hit"] for m in ms]),
         "binary": {k: {"n": len(v), "hit": mean([x["hit"] for x in v]), "brier": mean([x["brier"] for x in v])} for k, v in allbin.items()},
         "counts": {k: {"n": len(v), "mae": mean([x["abs_err"] for x in v]), "line_hit": mean([(x["p_over"] >= .5) == (x["act"] > x["line"]) for x in v if "line" in x])} for k, v in counts.items()},

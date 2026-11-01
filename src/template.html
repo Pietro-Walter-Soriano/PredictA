@@ -265,6 +265,18 @@ function header() {
 
 // Where the model-only probability differs from the bookmaker's (margin removed): quote "equa" = 1 / bookmaker probability.
 // The bookmaker's real price carries a margin (typically 4-8% of expected value), so an edge only matters if it is clearly larger.
+// Our probability against the bookmaker's on the extra lines it quotes (both teams to score, goals, corners, cards); the rows come from predict.py
+function extraSection() {
+  const E = D.extra || {}, keys = [["btts", "Gol entrambe segnano"], ["goals", "Gol totali"], ["corners", "Angoli totali"], ["cards", "Gialli totali"]].filter(([k]) => (E[k] || []).length);
+  const edge = RND.edge ?? 0.03;
+  const note = `<p class="small muted" style="margin:8px 0 0">Il bookmaker quota questi mercati solo a ridosso della partita (circa un'ora prima). Falli, fuorigioco, tiri e tiri in porta di squadra non sono quotati da nessun bookmaker: per quelli il confronto è con la frequenza storica, nella tabella dei mercati in fondo alla pagina.</p>`;
+  if (!keys.length) return `<section class="sec"><div class="sec-head"><h2>Altri mercati contro bookmaker</h2></div><div class="panel"><p class="small muted" style="margin:0">Quote di angoli, gialli, gol entrambe e linee gol non ancora disponibili per questa partita.</p>${note}</div></section>`;
+  const rows = keys.flatMap(([k, name]) => E[k].map(x => { const d = x.us - x.book, big = Math.abs(d) >= edge;
+    return `<tr><td>${name}${x.line == null ? " · Sì" : ` · over ${x.line}`}</td><td class="n"><b>${pct(x.us, 1)}</b></td><td class="n">${pct(x.book, 1)}</td><td class="n"><b class="${big ? (d > 0 ? "up" : "down") : "muted"}">${d >= 0 ? "+" : "−"}${Math.abs(d * 100).toFixed(1)}</b></td><td class="n muted">${fair(x.us)}</td><td class="n muted">${fair(x.book)}</td></tr>`; })).join("");
+  return `<section class="sec"><div class="sec-head"><h2>Altri mercati contro bookmaker</h2><span class="small muted">Stessa linea, due probabilità: a partita finita si vede chi era più vicino</span></div>
+    <div class="panel tbl"><table><thead><tr><th>Mercato</th><th class="n">Noi</th><th class="n">Bookmaker</th><th class="n">Scarto</th><th class="n">Quota nostra</th><th class="n">Quota bookmaker</th></tr></thead><tbody>${rows}</tbody></table>${note}</div></section>`;
+}
+
 function valueSection() {
   if (!D.p_market) return "";
   const q = D.p_market, M = D.markets, edge = RND.edge ?? 0.03;
@@ -474,7 +486,7 @@ function track() {
 function render(file) {
   D = ALL[file]; byId = {};
   for (const s of ["home", "away"]) for (const p of D.teams[s].players) byId[p.id] = { ...p, side: s };
-  document.getElementById("main").innerHTML = header() + verdict() + valueSection() +
+  document.getElementById("main").innerHTML = header() + verdict() + valueSection() + extraSection() +
     `<section class="sec"><div class="sec-head"><h2>Formazioni</h2><span class="small muted">Nel cerchio: numero e voto FotMob recente · probabilità di segnare · ▲▼ forma ultime 5</span></div><div class="pitch-wrap">${pitch("away")}${pitch("home")}</div></section>` +
     style() + markets() + stats() + props() + context() + track();
   rail(file);
@@ -531,6 +543,16 @@ function h2hPanel(h) {
     </tbody></table>
     <p class="small muted" style="margin:8px 0 0"><b>Noi</b> = solo i nostri dati su squadre e giocatori (rating, stile, formazioni, riposo, arbitro), senza quote. <b>Bookmaker</b> = quote di chiusura senza margine. Log-loss, Brier e RPS: più basso è meglio. Con poche partite i numeri sono instabili: un singolo risultato sposta tutto.</p></div></section>`;
 }
+// All the markets the bookmaker prices besides 1X2 and Over 2.5, scored on the finished matches: who was closer to what happened
+function bookMarkets(v) {
+  if (!v) return `<section class="sec"><div class="sec-head"><h2>Altri mercati contro bookmaker</h2></div><div class="panel"><p class="small muted" style="margin:0">Le quote di angoli, gialli, gol entrambe e linee gol si leggono solo poco prima di ogni partita: il confronto comparirà man mano che le partite vengono giocate. Falli, fuorigioco, tiri e tiri in porta non sono quotati da nessun bookmaker.</p></div></section>`;
+  const rows = Object.values(v).map(m => { const w = m.wins, lead = w.us > w.book ? "up" : w.us < w.book ? "down" : "", ll = m.us.logloss < m.book.logloss ? "up" : "down";
+    return `<tr><td><b>${esc(m.name)}</b> <span class="small muted">${m.n} linee, ${m.matches} partite</span></td><td class="n"><b class="${lead}">${w.us}</b></td><td class="n"><b>${w.book}</b></td><td class="n muted">${w.tie}</td>
+      <td class="n"><b class="${ll}">${fx(m.us.logloss, 3)}</b></td><td class="n">${fx(m.book.logloss, 3)}</td><td class="n"><b class="${m.us.brier < m.book.brier ? "up" : "down"}">${fx(m.us.brier, 3)}</b></td><td class="n">${fx(m.book.brier, 3)}</td></tr>`; }).join("");
+  return `<section class="sec"><div class="sec-head"><h2>Altri mercati contro bookmaker</h2><span class="small muted">Per ogni linea quotata: chi era più vicino a ciò che è successo, «pari» se sotto mezzo punto</span></div>
+    <div class="panel tbl"><table><thead><tr><th>Mercato</th><th class="n">Vince noi</th><th class="n">Vince bookmaker</th><th class="n">Pari</th><th class="n">Log-loss noi</th><th class="n">Log-loss book</th><th class="n">Brier noi</th><th class="n">Brier book</th></tr></thead><tbody>${rows}</tbody></table>
+    <p class="small muted" style="margin:8px 0 0">Verde = meglio del bookmaker, rosso = peggio. Più basso è meglio. Pochi casi: leggere come tendenza.</p></div></section>`;
+}
 function renderRound(key) {
   curRound = key; rail(key);
   const main = document.getElementById("main");
@@ -562,6 +584,7 @@ function renderRound(key) {
     </div>${first && first.n ? `<p class="small muted" style="margin:12px 0 0">Prima previsione della settimana: log-loss ${fx(first.logloss, 3)}, favorito ${pct(first.fav_hit)}. Ultima prima del calcio d'inizio: ${fx(f.logloss, 3)}, ${pct(f.fav_hit)}.</p>` : ""}</div>
   </section>
   ${h2hPanel(f.h2h)}
+  ${bookMarkets(f.vs_book)}
   <section class="grid2">
     <div class="panel tbl"><h3 style="margin-bottom:8px">Mercati sì/no</h3><table><thead><tr><th>Mercato</th><th class="n">Indovinati</th><th class="n">Brier</th><th class="n">Casi</th></tr></thead><tbody>
       ${BN.map(([k, x]) => `<tr><td>${esc(k)}</td><td class="n"><b class="${x.hit >= .6 ? "up" : x.hit < .45 ? "down" : ""}">${pct(x.hit)}</b></td><td class="n">${fx(x.brier, 3)}</td><td class="n">${x.n}</td></tr>`).join("")}</tbody></table>
