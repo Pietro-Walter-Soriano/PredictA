@@ -39,15 +39,16 @@ for y in seasons.all_starts():
 # matches that start within EXTRA_WINDOW_MIN minutes and not fetched in the last EXTRA_REFRESH_MIN. They are compared with our forecast, never used by it.
 # Each call costs one credit per market: EXTRA_MAX caps the calls per run and nothing is fetched when fewer than EXTRA_MIN_CREDITS are left. ---
 EXTRA_MARKETS = "btts,alternate_totals,alternate_totals_corners,alternate_totals_cards"
-EXTRA_WINDOW_MIN, EXTRA_REFRESH_MIN = 75, 25
-EXTRA_MAX = int(os.environ.get("ODDS_EXTRA_MAX", "8"))
-EXTRA_MIN_CREDITS = int(os.environ.get("ODDS_EXTRA_MIN_CREDITS", "150"))
+EXTRA_WINDOW_MIN, EXTRA_REFRESH_MIN = 75, 180          # one fetch per match (the first cycle inside the window), ~4 credits each
+EXTRA_MAX = int(os.environ.get("ODDS_EXTRA_MAX", "6"))
+EXTRA_MIN_CREDITS = int(os.environ.get("ODDS_EXTRA_MIN_CREDITS", "250"))   # reserve: the main 1X2 / totals call must never run dry because of the extras
 
 def fetch_extra(events, key, remaining):
     try:
-        if remaining is not None and float(remaining) < EXTRA_MIN_CREDITS:
-            print(f"odds-api extra: skipped, only {remaining} credits left (< {EXTRA_MIN_CREDITS})", flush=True); return
-    except ValueError: pass
+        if remaining is None or float(remaining) < EXTRA_MIN_CREDITS:
+            print(f"odds-api extra: skipped, credits left: {remaining} (needs at least {EXTRA_MIN_CREDITS})", flush=True); return
+    except ValueError:
+        print("odds-api extra: skipped, credits left unknown", flush=True); return
     now, done = datetime.now(timezone.utc), 0
     os.makedirs(f"{DATA}/raw/odds_extra", exist_ok=True)
     for ev in sorted(events, key=lambda e: e["commence_time"]):
