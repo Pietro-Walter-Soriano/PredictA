@@ -1,6 +1,6 @@
 # PredictA — Serie A
 
-Aggiornato: 2026-11-01 01:33 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
+Aggiornato: 2026-11-01 08:12 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
 
 ## Voto complessivo: **71/100** su 93 partite
 
@@ -31,13 +31,13 @@ Favorito indovinato 62% · log-loss 1X2 0.900 (storico 1.053, bookmaker 0.902) �
 
 | Data (UTC) | Partita | 1 | X | 2 | Gol attesi | Over 2.5 | Gol entrambe | Più probabile | Formazioni |
 |---|---|---|---|---|---|---|---|---|---|
-| 2026-11-01 11:30 | Como – Venezia | 75% | 15% | 10% | 2.83–1.00 | 74% | 60% | 2-1 (9%) | probabili |
-| 2026-11-01 14:00 | Lazio – Cagliari | 66% | 21% | 13% | 2.05–0.79 | 54% | 48% | 2-0 (12%) | probabili |
-| 2026-11-01 14:00 | Frosinone – Torino | 45% | 24% | 31% | 1.76–1.44 | 62% | 64% | 1-1 (11%) | probabili |
-| 2026-11-01 17:00 | Lecce – Genoa | 28% | 32% | 40% | 0.92–1.14 | 34% | 42% | 1-1 (14%) | probabili |
-| 2026-11-01 19:45 | Juventus – Napoli | 43% | 28% | 29% | 1.43–1.15 | 48% | 53% | 1-1 (13%) | probabili |
+| 2026-11-01 11:30 | Como – Venezia | 74% | 16% | 10% | 2.66–0.90 | 69% | 56% | 2-0 (10%) | probabili |
+| 2026-11-01 14:00 | Lazio – Cagliari | 66% | 21% | 13% | 2.01–0.77 | 52% | 47% | 2-0 (12%) | probabili |
+| 2026-11-01 14:00 | Frosinone – Torino | 48% | 25% | 28% | 1.76–1.30 | 59% | 61% | 1-1 (11%) | probabili |
+| 2026-11-01 17:00 | Lecce – Genoa | 31% | 32% | 37% | 0.97–1.09 | 34% | 42% | 1-1 (14%) | probabili |
+| 2026-11-01 19:45 | Juventus – Napoli | 44% | 27% | 29% | 1.47–1.15 | 48% | 53% | 1-1 (13%) | probabili |
 | 2026-11-02 17:30 | Sassuolo – Fiorentina | 34% | 25% | 41% | 1.44–1.59 | 58% | 61% | 1-1 (12%) | probabili |
-| 2026-11-02 19:45 | Atalanta – Parma | 64% | 21% | 16% | 2.16–0.99 | 61% | 56% | 2-0 (10%) | probabili |
+| 2026-11-02 19:45 | Atalanta – Parma | 64% | 21% | 16% | 2.15–0.97 | 60% | 56% | 2-0 (10%) | probabili |
 
 ---
 Strumento di analisi statistica, non un consiglio di scommessa.
