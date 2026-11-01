@@ -20,7 +20,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import model
 
 LEDGER, DATA, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
-EDGE = 0.03          # minimum probability edge over the market to count as a "value" pick
+TIE = 0.005          # probabilities closer than this (half a percentage point) count as a draw between us and the bookmaker
+EDGE = 0.03         # minimum probability edge over the market to count as a "value" pick
 D = pd.read_pickle(f"{DATA}/dataset.pkl")
 M = D["matches"].set_index("match_id"); T = D["team_match"].set_index(["match_id", "venue"]); P = D["player_match"]
 # naive references come from the seasons BEFORE the one being scored, so no scored match leaks into its own baseline
@@ -153,16 +154,18 @@ def head2head(ms):
            "model": {k: mean([m["pm_" + k] for m in x]) for k in ("fav_hit", "logloss", "brier", "rps")},
            "final": {k: mean([m[k] for m in x]) for k in ("fav_hit", "logloss", "brier", "rps")},
            "market": {k: mean([m["mk_" + k] for m in x]) for k in ("fav_hit", "logloss", "brier", "rps")},
-           "wins": {"model": sum(m["pm_logloss"] < m["mk_logloss"] for m in x), "final": sum(m["logloss"] < m["mk_logloss"] for m in x),
-                    "market": sum(m["mk_logloss"] < m["pm_logloss"] for m in x)},
+           # who gave the outcome that happened the higher probability; a gap under TIE (half a point) is a draw, not a win
+           "wins": {"model": sum(m["pm_p"][m["res"]] - m["mk_p"][m["res"]] >= TIE for m in x), "market": sum(m["mk_p"][m["res"]] - m["pm_p"][m["res"]] >= TIE for m in x),
+                    "tie": sum(abs(m["pm_p"][m["res"]] - m["mk_p"][m["res"]]) < TIE for m in x)},
            "over25": None}
     ov = [m["ov25"] for m in ms if "ov25" in m]
     if ov:
         src = {"model": "model", "final": "final", "market": "mkt"}
         out["over25"] = {"n": len(ov), **{k: {"logloss": mean([bl(o[s], o["y"]) for o in ov]), "brier": mean([(o[s] - o["y"]) ** 2 for o in ov]),
                                             "hit": mean([(o[s] >= .5) == bool(o["y"]) for o in ov])} for k, s in src.items()},
-                         "wins": {"model": sum(abs(o["model"] - o["y"]) < abs(o["mkt"] - o["y"]) for o in ov), "final": sum(abs(o["final"] - o["y"]) < abs(o["mkt"] - o["y"]) for o in ov),
-                                  "market": sum(abs(o["mkt"] - o["y"]) < abs(o["model"] - o["y"]) for o in ov)}}
+                         "wins": {"model": sum(abs(o["mkt"] - o["y"]) - abs(o["model"] - o["y"]) >= TIE for o in ov),
+                                  "market": sum(abs(o["model"] - o["y"]) - abs(o["mkt"] - o["y"]) >= TIE for o in ov),
+                                  "tie": sum(abs(abs(o["model"] - o["y"]) - abs(o["mkt"] - o["y"])) < TIE for o in ov)}}
     return out
 
 def summarize(ms):
@@ -228,7 +231,7 @@ for (season, rnd), v in sorted(rounds.items()):
                 "grade": grade(fin), "components": components(fin), "final": fin, "first": first, "matches": matches})
 allm = [m for r in out for m in r["matches"]]
 total = summarize(allm)
-json.dump({"rounds": out, "total": total, "total_grade": grade(total), "total_components": components(total), "edge": EDGE, "base": BASE}, open(OUT, "w"), ensure_ascii=False, default=float, indent=0)
+json.dump({"rounds": out, "total": total, "total_grade": grade(total), "total_components": components(total), "edge": EDGE, "tie": TIE, "base": BASE}, open(OUT, "w"), ensure_ascii=False, default=float, indent=0)
 for r in out:
     f = r["final"]
     print(r["components"])
