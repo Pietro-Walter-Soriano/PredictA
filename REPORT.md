@@ -1,6 +1,6 @@
 # PredictA — Serie A
 
-Aggiornato: 2026-11-02 02:35 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
+Aggiornato: 2026-11-02 10:02 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
 
 ## Voto complessivo: **71/100** su 98 partite
 
@@ -33,6 +33,7 @@ Favorito indovinato 62% · log-loss 1X2 0.884 (storico 1.048, bookmaker 0.889) �
 |---|---|---|---|---|---|---|---|---|---|
 | 2026-11-02 17:30 | Sassuolo – Fiorentina | 41% | 28% | 31% | 1.70–1.45 | 62% | 66% | 1-1 (12%) | probabili |
 | 2026-11-02 19:45 | Atalanta – Parma | 60% | 24% | 15% | 1.98–0.91 | 56% | 55% | 1-1 (12%) | probabili |
+| 2026-11-06 19:45 | Venezia – Udinese | 40% | 29% | 31% | 1.51–1.32 | 55% | 60% | 1-1 (13%) | probabili |
 
 ---
 Strumento di analisi statistica, non un consiglio di scommessa.
