@@ -1,6 +1,6 @@
 # PredictA — Serie A
 
-Aggiornato: 2026-11-04 10:01 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
+Aggiornato: 2026-11-04 17:59 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
 
 ## Voto complessivo: **70/100** su 100 partite
 
@@ -32,8 +32,8 @@ Favorito indovinato 61% · log-loss 1X2 0.897 (storico 1.049, bookmaker 0.899) �
 | Data (UTC) | Partita | 1 | X | 2 | Gol attesi | Over 2.5 | Gol entrambe | Più probabile | Formazioni |
 |---|---|---|---|---|---|---|---|---|---|
 | 2026-11-06 19:45 | Venezia – Udinese | 40% | 29% | 31% | 1.53–1.33 | 56% | 61% | 1-1 (13%) | probabili |
-| 2026-11-07 14:00 | Torino – Lecce | 53% | 27% | 20% | 1.75–0.99 | 53% | 55% | 1-1 (13%) | probabili |
-| 2026-11-07 14:00 | Cagliari – Frosinone | 32% | 28% | 40% | 1.54–1.75 | 65% | 68% | 1-1 (11%) | probabili |
+| 2026-11-07 14:00 | Torino – Lecce | 53% | 28% | 20% | 1.70–0.96 | 51% | 54% | 1-1 (13%) | probabili |
+| 2026-11-07 14:00 | Cagliari – Frosinone | 34% | 28% | 37% | 1.58–1.65 | 64% | 67% | 1-1 (12%) | probabili |
 | 2026-11-07 17:00 | Parma – Bologna | 22% | 30% | 48% | 0.91–1.44 | 43% | 49% | 1-1 (14%) | probabili |
 | 2026-11-07 19:45 | Roma – Sassuolo | 78% | 15% | 7% | 3.20–0.96 | 79% | 61% | 3-0 (8%) | probabili |
 | 2026-11-08 11:30 | Napoli – Lazio | 50% | 27% | 23% | 1.82–1.18 | 59% | 61% | 1-1 (12%) | probabili |
