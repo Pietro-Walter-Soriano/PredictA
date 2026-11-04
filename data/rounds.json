@@ -6623,8 +6623,8 @@
 "xi_overlap": 1.0,
 "scorer_names": [
 "Jakub Piotrowski",
-"Gustavo Varela",
 "Jurgen Ekkelenkamp",
+"Gustavo Varela",
 "Andrea Colpani",
 "Hassane Kamara"
 ]
@@ -7931,8 +7931,8 @@
 "picks": [],
 "xi_overlap": 1.0,
 "scorer_names": [
-"Rasmus Højlund",
 "Martin Baturina",
+"Rasmus Højlund",
 "Anastasios Douvikas"
 ]
 }
@@ -15332,10 +15332,10 @@
 "picks": [],
 "xi_overlap": 1.0,
 "scorer_names": [
-"Antoine Hainaut",
+"Akor Adams",
 "Mateo Pellegrino",
 "Franco Mastantuono",
-"Akor Adams"
+"Antoine Hainaut"
 ]
 }
 },
@@ -17093,8 +17093,8 @@
 "xi_overlap": 1.0,
 "scorer_names": [
 "Lassana Coulibaly",
-"Tiago Gabriel",
 "Exequiel Zeballos",
+"Tiago Gabriel",
 "Ricardo Mangas"
 ]
 }
@@ -24034,9 +24034,9 @@
 ],
 "xi_overlap": 1.0,
 "scorer_names": [
+"Christian Pulisic",
 "Diego Moreira",
-"Adrien Rabiot",
-"Christian Pulisic"
+"Adrien Rabiot"
 ]
 }
 }
@@ -26631,9 +26631,9 @@
 "xi_overlap": 1.0,
 "scorer_names": [
 "Saba Goglichidze",
-"Nuno Tavares",
+"Andrea Pinamonti",
 "Gustav Isaksen",
-"Andrea Pinamonti"
+"Nuno Tavares"
 ]
 }
 },
@@ -32774,8 +32774,8 @@
 "picks": [],
 "xi_overlap": 1.0,
 "scorer_names": [
-"Fisayo Dele-Bashiru",
 "Oliver Provstgaard",
+"Fisayo Dele-Bashiru",
 "Gustav Isaksen"
 ]
 }
@@ -34531,8 +34531,8 @@
 "xi_overlap": 0.9090909090909091,
 "scorer_names": [
 "Kian Fitz-Jim",
-"Nikola Vlašić",
 "Gustavo Varela",
+"Nikola Vlašić",
 "Rafik Belghali"
 ]
 }
@@ -39563,8 +39563,8 @@
 "Rodrigo Mora",
 "Emanuele Lulli",
 "Donyell Malen",
-"M'Bala Nzola",
 "Daniel Maldini",
+"M'Bala Nzola",
 "Niccolò Pisilli"
 ]
 }
@@ -45789,9 +45789,9 @@
 "picks": [],
 "xi_overlap": 0.8636363636363636,
 "scorer_names": [
+"M'Bala Nzola",
 "Gustav Isaksen",
-"Andrea Pinamonti",
-"M'Bala Nzola"
+"Andrea Pinamonti"
 ]
 }
 },
