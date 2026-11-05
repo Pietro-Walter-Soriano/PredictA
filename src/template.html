@@ -461,13 +461,36 @@ function marketsBacktest(b) {
       ${ob ? ` L'unico confronto vero è Over 2.5: sulle ${ob.n} partite con quota, log-loss modello ${fx(ob.logloss_model, 4)} contro bookmaker ${fx(ob.logloss_book, 4)} (z ${fx(ob.z_vs_book, 1)}: il bookmaker è migliore).` : ""}</p></div></section>`;
 }
 
+// Player against player: the direct opponents of the two starting elevens (matched by position on the pitch) and what that adds to the models
+const DN = { goals: "Gol", shots: "Tiri", sot: "Tiri in porta", corners: "Angoli", fouls: "Falli", yc: "Gialli", offsides: "Fuorigioco" };
+const SN1 = { dribbles: "dribbling", kp: "passaggi chiave", sh: "tiri", sot: "tiri in porta", npxg: "xG", xa: "xA", crosses: "cross", fouled: "falli subiti", box_touches: "tocchi in area", final_third: "passaggi in trequarti",
+  aerials: "duelli aerei", dispossessed: "palloni persi", fouls: "falli fatti", tackles: "contrasti", duels_won: "duelli vinti", duels_lost: "duelli persi", interceptions: "intercetti", def_actions: "azioni difensive",
+  clearances: "rinvii", blocks: "blocchi", recoveries: "recuperi", yc: "gialli" };
+const ZN = { all: "ovunque", flank: "sulle fasce", centre: "al centro" };
+const duelName = f => { const m = /^duel:(\w+):(\w+)\*(\w+)$/.exec(f); return m ? `${SN1[m[2]] || m[2]} suoi × ${SN1[m[3]] || m[3]} dell'avversario diretto (${ZN[m[1]]})` : f; };
+function duelsSection(b) {
+  const d = b.duels; if (!d || !d.targets) return "";
+  const keys = Object.keys(DN).filter(k => d.targets[k]);
+  const g6 = k => d.targets[k].gain["6"], g15 = k => d.targets[k].gain["15"];
+  const cell = g => !g || !g.tested ? `<td class="n muted">–</td><td class="n muted">–</td>` :
+    `<td class="n"><b class="${g.pct > 0.1 && g.z > 2 ? "up" : g.pct < -0.05 ? "down" : "muted"}">${g.pct >= 0 ? "+" : ""}${g.pct.toFixed(2)}%</b></td><td class="n"><span class="${g.better >= g.tested - 0 && g.tested > 1 ? "up" : "muted"}">${g.better}/${g.tested}</span></td>`;
+  const rows = keys.map(k => `<tr><td><b>${DN[k]}</b></td><td class="n">${d.targets[k].n_above}</td>${cell(g6(k))}${cell(g15(k))}</tr>`).join("");
+  const best = keys.map(k => d.targets[k].top.slice(0, 2).map(x => ({ k, ...x }))).flat().sort((a, c) => c.z - a.z).slice(0, 8);
+  return `<section class="sec"><div class="sec-head"><h2>Giocatore contro giocatore</h2><span class="small muted">Ogni giocatore di movimento è accoppiato all'avversario diretto (stessa zona di campo): ${d.n_features} combinazioni di statistiche testate</span></div>
+    <div class="grid2"><div class="panel tbl"><h3 style="margin-bottom:8px">Quanto aggiungono ai modelli</h3><table><thead><tr><th>Statistica</th><th class="n" data-tip="Combinazioni 1 contro 1 che superano la soglia statistica corretta per i test multipli (${d.n_features} test)">Segnali veri</th><th class="n" data-tip="Riduzione dell'errore quadratico del modello se si aggiungono le 6 combinazioni migliori, scelte sulle sole stagioni precedenti">+6 migliori</th><th class="n">Stagioni</th><th class="n">+15 migliori</th><th class="n">Stagioni</th></tr></thead><tbody>${rows}</tbody></table>
+      <p class="small muted" style="margin:8px 0 0">Il guadagno è misurato fuori campione, scegliendo le combinazioni solo sulle stagioni precedenti a quella provata: è onesto ma severo. Verde = migliora in modo chiaro. «Segnali veri» = quante combinazioni superano da sole la soglia (per caso se ne vedrebbero pochissime).</p></div>
+    <div class="panel tbl"><h3 style="margin-bottom:8px">Gli scontri diretti che contano di più</h3><table><thead><tr><th>Scontro</th><th>Per</th><th class="n">Effetto</th><th class="n">Stagioni</th></tr></thead><tbody>
+      ${best.map(x => `<tr><td class="small">${esc(duelName(x.feature))}</td><td>${DN[x.k]}</td><td class="n"><b class="${x.corr > 0 ? "up" : "down"}">${x.corr > 0 ? "più" : "meno"}</b> <span class="small muted">(z ${x.z.toFixed(1)})</span></td><td class="n">${x.agree}/${x.seasons}</td></tr>`).join("")}</tbody></table>
+      <p class="small muted" style="margin:8px 0 0">«Più» = quando lo scontro si verifica, il modello sottostima la statistica (ne arrivano di più del previsto). Stagioni = in quante lo stesso segno.</p></div></div></section>`;
+}
+
 function track() {
   const b = IDX.backtest, f = b.full_model, base = b.base_elo_xg, c = b.climatology, vm = b.vs_market || {};
   const bg = vm.blend_grid && vm.blend_grid[String(IDX.model_weight)] || vm.blend_grid?.[IDX.model_weight];
   const cal = b.calibration_home_win || [];
   const st = Object.entries(b).filter(([k]) => k.startsWith("stat_"));
   const SN = { stat_corners: "Angoli", stat_shots: "Tiri", stat_sot: "Tiri in porta", stat_yc: "Gialli", stat_fouls: "Falli", stat_offsides: "Fuorigioco" };
-  return marketsBacktest(b) + `<section class="sec"><div class="sec-head"><h2>Affidabilità del modello</h2><span class="small muted">Backtest walk-forward su ${b.n_matches} partite (${b.seasons.join(", ")}): ogni gara prevista solo con i dati precedenti</span></div>
+  return marketsBacktest(b) + duelsSection(b) + `<section class="sec"><div class="sec-head"><h2>Affidabilità del modello</h2><span class="small muted">Backtest walk-forward su ${b.n_matches} partite (${b.seasons.join(", ")}): ogni gara prevista solo con i dati precedenti</span></div>
   <div class="grid2"><div class="panel tbl"><table><thead><tr><th>Metodo</th><th class="n">Log-loss 1X2</th><th class="n">RPS</th><th class="n">Log-loss O2.5</th></tr></thead><tbody>
     <tr><td>Solo frequenze storiche</td><td class="n">${fx(c.logloss_1x2, 3)}</td><td class="n">${fx(c.rps, 3)}</td><td class="n">–</td></tr>
     <tr><td>Rating xG (base)</td><td class="n">${fx(base.logloss_1x2, 3)}</td><td class="n">${fx(base.rps, 3)}</td><td class="n">${fx(base.logloss_o25, 3)}</td></tr>

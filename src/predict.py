@@ -18,6 +18,8 @@ W_MODEL = 1.0   # the published forecast is the statistical model alone; bookmak
 bt = json.load(open(f"{DATA}/backtest.json"))
 try: bt["markets"] = json.load(open(f"{DATA}/backtest_markets.json"))   # every bettable market vs its historical frequency / the bookmaker
 except OSError: pass
+try: bt["duels"] = json.load(open(f"{DATA}/study_duels.json"))   # player-against-player study (src/study_duels.py), shown in the dashboard
+except OSError: pass
 
 D = pd.read_pickle(f"{DATA}/dataset.pkl")
 now = datetime.fromisoformat(AS_OF) if AS_OF else datetime.now(timezone.utc).replace(tzinfo=None)
@@ -32,7 +34,7 @@ M, T, P, tr = features.build(D)
 EXTRA = books.load_extra(DATA, set(M.home) | set(M.away))   # extra bookmaker markets (btts, goal / corner / card lines), comparison only
 L = model.lineup_strength(P, M)
 R = model.referee_table(M, T)
-V = model.team_view(M, T, L, R)
+V = model.team_view(M, T, L, R, P)
 V["o_lam_base"] = V.groupby("match_id")["lam_base"].transform(lambda s: s[::-1].values)
 fin = V[V.finished]
 tm = T.set_index(["match_id", "venue"])

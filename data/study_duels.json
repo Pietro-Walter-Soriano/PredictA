@@ -1,0 +1,1161 @@
+{
+ "thr": 3.9247896514058467,
+ "n_features": 576,
+ "targets": {
+  "goals": {
+   "gain": {
+    "6": {
+     "err0": 1.186124878737181,
+     "err1": 1.186124878737181,
+     "pct": 0.0,
+     "z": null,
+     "seasons": {
+      "2021-2022": 0.0,
+      "2022-2023": 0.0,
+      "2023-2024": 0.0,
+      "2024-2025": 0.0,
+      "2025-2026": 0.0,
+      "2026-2027": 0.0
+     },
+     "better": 0,
+     "tested": 0
+    },
+    "15": {
+     "err0": 1.186124878737181,
+     "err1": 1.186124878737181,
+     "pct": 0.0,
+     "z": null,
+     "seasons": {
+      "2021-2022": 0.0,
+      "2022-2023": 0.0,
+      "2023-2024": 0.0,
+      "2024-2025": 0.0,
+      "2025-2026": 0.0,
+      "2026-2027": 0.0
+     },
+     "better": 0,
+     "tested": 0
+    }
+   },
+   "top": [
+    {
+     "feature": "duel:all:sot*aerials",
+     "corr": -0.0426,
+     "z": 2.69,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:centre:sot*duels_won",
+     "corr": -0.0421,
+     "z": 2.66,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:npxg*aerials",
+     "corr": -0.0402,
+     "z": 2.54,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:dispossessed*dribbles",
+     "corr": 0.04,
+     "z": 2.52,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:npxg*duels_won",
+     "corr": -0.0398,
+     "z": 2.51,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:centre:sh*duels_won",
+     "corr": -0.0395,
+     "z": 2.5,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:sot*clearances",
+     "corr": -0.0384,
+     "z": 2.43,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:sot*duels_won",
+     "corr": -0.0379,
+     "z": 2.39,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:centre:sot*tackles",
+     "corr": -0.0376,
+     "z": 2.38,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:sh*aerials",
+     "corr": -0.0374,
+     "z": 2.36,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:sot*def_actions",
+     "corr": -0.0361,
+     "z": 2.28,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:centre:sot*aerials",
+     "corr": -0.0356,
+     "z": 2.25,
+     "agree": 6,
+     "seasons": 6
+    }
+   ],
+   "n_above": 0,
+   "chosen": {
+    "2021-2022": {
+     "6": [],
+     "15": []
+    },
+    "2022-2023": {
+     "6": [],
+     "15": []
+    },
+    "2023-2024": {
+     "6": [],
+     "15": []
+    },
+    "2024-2025": {
+     "6": [],
+     "15": []
+    },
+    "2025-2026": {
+     "6": [],
+     "15": []
+    },
+    "2026-2027": {
+     "6": [],
+     "15": []
+    }
+   }
+  },
+  "corners": {
+   "gain": {
+    "6": {
+     "err0": 6.722292182261295,
+     "err1": 6.72692944872183,
+     "pct": -0.06898341123540555,
+     "z": -1.911730088936428,
+     "seasons": {
+      "2021-2022": 0.0,
+      "2022-2023": 0.0,
+      "2023-2024": 0.0,
+      "2024-2025": 0.0,
+      "2025-2026": 0.0,
+      "2026-2027": -1.206
+     },
+     "better": 0,
+     "tested": 1
+    },
+    "15": {
+     "err0": 6.722292182261295,
+     "err1": 6.72692944872183,
+     "pct": -0.06898341123540555,
+     "z": -1.911730088936428,
+     "seasons": {
+      "2021-2022": 0.0,
+      "2022-2023": 0.0,
+      "2023-2024": 0.0,
+      "2024-2025": 0.0,
+      "2025-2026": 0.0,
+      "2026-2027": -1.206
+     },
+     "better": 0,
+     "tested": 1
+    }
+   },
+   "top": [
+    {
+     "feature": "duel:all:dispossessed*dribbles",
+     "corr": 0.0625,
+     "z": 3.95,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:dribbles*dribbles",
+     "corr": 0.0529,
+     "z": 3.34,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:dispossessed*dribbles",
+     "corr": 0.0497,
+     "z": 3.14,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:crosses*clearances",
+     "corr": -0.0479,
+     "z": 3.03,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:dribbles*dribbles",
+     "corr": 0.044,
+     "z": 2.78,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:box_touches*dribbles",
+     "corr": 0.0427,
+     "z": 2.69,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:dispossessed*recoveries",
+     "corr": 0.0408,
+     "z": 2.58,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:centre:dispossessed*recoveries",
+     "corr": 0.0407,
+     "z": 2.57,
+     "agree": 2,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:xa*clearances",
+     "corr": -0.0399,
+     "z": 2.52,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:duels_lost*dribbles",
+     "corr": 0.0389,
+     "z": 2.46,
+     "agree": 2,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:box_touches*dribbles",
+     "corr": 0.0383,
+     "z": 2.42,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:crosses*def_actions",
+     "corr": -0.0379,
+     "z": 2.39,
+     "agree": 6,
+     "seasons": 6
+    }
+   ],
+   "n_above": 1,
+   "chosen": {
+    "2021-2022": {
+     "6": [],
+     "15": []
+    },
+    "2022-2023": {
+     "6": [],
+     "15": []
+    },
+    "2023-2024": {
+     "6": [],
+     "15": []
+    },
+    "2024-2025": {
+     "6": [],
+     "15": []
+    },
+    "2025-2026": {
+     "6": [],
+     "15": []
+    },
+    "2026-2027": {
+     "6": [
+      "duel:all:dispossessed*dribbles"
+     ],
+     "15": [
+      "duel:all:dispossessed*dribbles"
+     ]
+    }
+   }
+  },
+  "shots": {
+   "gain": {
+    "6": {
+     "err0": 20.688207333223854,
+     "err1": 20.70964727628298,
+     "pct": -0.10363364362020913,
+     "z": -2.1428113812703535,
+     "seasons": {
+      "2021-2022": 0.0,
+      "2022-2023": 0.0,
+      "2023-2024": 0.0,
+      "2024-2025": 0.0,
+      "2025-2026": 0.0,
+      "2026-2027": -1.397
+     },
+     "better": 0,
+     "tested": 1
+    },
+    "15": {
+     "err0": 20.688207333223854,
+     "err1": 20.70964727628298,
+     "pct": -0.10363364362020913,
+     "z": -2.1428113812703535,
+     "seasons": {
+      "2021-2022": 0.0,
+      "2022-2023": 0.0,
+      "2023-2024": 0.0,
+      "2024-2025": 0.0,
+      "2025-2026": 0.0,
+      "2026-2027": -1.397
+     },
+     "better": 0,
+     "tested": 1
+    }
+   },
+   "top": [
+    {
+     "feature": "duel:all:dispossessed*dribbles",
+     "corr": 0.0585,
+     "z": 3.69,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:aerials*fouls",
+     "corr": -0.0546,
+     "z": 3.45,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:aerials*duels_lost",
+     "corr": -0.0538,
+     "z": 3.4,
+     "agree": 2,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:aerials*duels_won",
+     "corr": -0.0537,
+     "z": 3.39,
+     "agree": 2,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:dribbles*dribbles",
+     "corr": 0.0524,
+     "z": 3.31,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:dispossessed*dribbles",
+     "corr": 0.0503,
+     "z": 3.18,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:dribbles*dribbles",
+     "corr": 0.0492,
+     "z": 3.11,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:final_third*duels_won",
+     "corr": -0.0468,
+     "z": 2.96,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:final_third*tackles",
+     "corr": -0.0467,
+     "z": 2.95,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:dispossessed*duels_lost",
+     "corr": 0.0413,
+     "z": 2.61,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:aerials*tackles",
+     "corr": -0.0392,
+     "z": 2.48,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:aerials*duels_won",
+     "corr": -0.038,
+     "z": 2.4,
+     "agree": 4,
+     "seasons": 6
+    }
+   ],
+   "n_above": 0,
+   "chosen": {
+    "2021-2022": {
+     "6": [],
+     "15": []
+    },
+    "2022-2023": {
+     "6": [],
+     "15": []
+    },
+    "2023-2024": {
+     "6": [],
+     "15": []
+    },
+    "2024-2025": {
+     "6": [],
+     "15": []
+    },
+    "2025-2026": {
+     "6": [],
+     "15": []
+    },
+    "2026-2027": {
+     "6": [
+      "duel:all:dispossessed*dribbles",
+      "duel:all:dribbles*dribbles"
+     ],
+     "15": [
+      "duel:all:dispossessed*dribbles",
+      "duel:all:dribbles*dribbles"
+     ]
+    }
+   }
+  },
+  "sot": {
+   "gain": {
+    "6": {
+     "err0": 4.567024269213232,
+     "err1": 4.565317506736501,
+     "pct": 0.0373714343546591,
+     "z": 1.0668479320970492,
+     "seasons": {
+      "2021-2022": 0.0,
+      "2022-2023": 0.0,
+      "2023-2024": 0.0,
+      "2024-2025": 0.0,
+      "2025-2026": 0.0,
+      "2026-2027": 0.644
+     },
+     "better": 1,
+     "tested": 1
+    },
+    "15": {
+     "err0": 4.567024269213232,
+     "err1": 4.565317506736501,
+     "pct": 0.0373714343546591,
+     "z": 1.0668479320970492,
+     "seasons": {
+      "2021-2022": 0.0,
+      "2022-2023": 0.0,
+      "2023-2024": 0.0,
+      "2024-2025": 0.0,
+      "2025-2026": 0.0,
+      "2026-2027": 0.644
+     },
+     "better": 1,
+     "tested": 1
+    }
+   },
+   "top": [
+    {
+     "feature": "duel:all:dispossessed*duels_lost",
+     "corr": 0.0668,
+     "z": 4.22,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:dispossessed*dribbles",
+     "corr": 0.0568,
+     "z": 3.58,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:aerials*duels_won",
+     "corr": -0.0558,
+     "z": 3.53,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:aerials*duels_won",
+     "corr": -0.0552,
+     "z": 3.49,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:aerials*fouls",
+     "corr": -0.0543,
+     "z": 3.43,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:dribbles*duels_lost",
+     "corr": 0.0522,
+     "z": 3.3,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:dispossessed*fouls",
+     "corr": 0.0513,
+     "z": 3.24,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:dispossessed*duels_lost",
+     "corr": 0.051,
+     "z": 3.22,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:aerials*duels_lost",
+     "corr": -0.0507,
+     "z": 3.2,
+     "agree": 2,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:dribbles*duels_lost",
+     "corr": 0.0504,
+     "z": 3.18,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:dispossessed*dribbles",
+     "corr": 0.05,
+     "z": 3.16,
+     "agree": 2,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:aerials*tackles",
+     "corr": -0.0479,
+     "z": 3.03,
+     "agree": 4,
+     "seasons": 6
+    }
+   ],
+   "n_above": 1,
+   "chosen": {
+    "2021-2022": {
+     "6": [],
+     "15": []
+    },
+    "2022-2023": {
+     "6": [],
+     "15": []
+    },
+    "2023-2024": {
+     "6": [],
+     "15": []
+    },
+    "2024-2025": {
+     "6": [],
+     "15": []
+    },
+    "2025-2026": {
+     "6": [],
+     "15": []
+    },
+    "2026-2027": {
+     "6": [
+      "duel:all:dispossessed*duels_lost"
+     ],
+     "15": [
+      "duel:all:dispossessed*duels_lost"
+     ]
+    }
+   }
+  },
+  "yc": {
+   "gain": {
+    "6": {
+     "err0": 1.520163072507606,
+     "err1": 1.519278247825725,
+     "pct": 0.0582059055296898,
+     "z": 0.5571212441536794,
+     "seasons": {
+      "2021-2022": 0.0,
+      "2022-2023": 0.0,
+      "2023-2024": -0.019,
+      "2024-2025": 0.182,
+      "2025-2026": 0.297,
+      "2026-2027": -0.459
+     },
+     "better": 2,
+     "tested": 4
+    },
+    "15": {
+     "err0": 1.520163072507606,
+     "err1": 1.5183381519645573,
+     "pct": 0.12004768278171513,
+     "z": 0.9347123488063243,
+     "seasons": {
+      "2021-2022": 0.0,
+      "2022-2023": 0.0,
+      "2023-2024": -0.019,
+      "2024-2025": 0.182,
+      "2025-2026": 0.808,
+      "2026-2027": -1.019
+     },
+     "better": 2,
+     "tested": 4
+    }
+   },
+   "top": [
+    {
+     "feature": "duel:all:fouls*dribbles",
+     "corr": 0.0948,
+     "z": 5.99,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:duels_won*dribbles",
+     "corr": 0.0875,
+     "z": 5.53,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:tackles*dribbles",
+     "corr": 0.0842,
+     "z": 5.32,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:fouled*dribbles",
+     "corr": 0.0832,
+     "z": 5.26,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:duels_won*duels_won",
+     "corr": 0.0798,
+     "z": 5.04,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:fouls*duels_won",
+     "corr": 0.0788,
+     "z": 4.98,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:fouls*recoveries",
+     "corr": 0.0769,
+     "z": 4.86,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:duels_lost*dribbles",
+     "corr": 0.0761,
+     "z": 4.81,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:fouled*recoveries",
+     "corr": 0.0747,
+     "z": 4.72,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:fouled*duels_won",
+     "corr": 0.0746,
+     "z": 4.71,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:fouls*duels_won",
+     "corr": 0.0738,
+     "z": 4.66,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:duels_won*recoveries",
+     "corr": 0.0731,
+     "z": 4.62,
+     "agree": 6,
+     "seasons": 6
+    }
+   ],
+   "n_above": 27,
+   "chosen": {
+    "2021-2022": {
+     "6": [],
+     "15": []
+    },
+    "2022-2023": {
+     "6": [],
+     "15": []
+    },
+    "2023-2024": {
+     "6": [
+      "duel:all:tackles*dribbles"
+     ],
+     "15": [
+      "duel:all:tackles*dribbles"
+     ]
+    },
+    "2024-2025": {
+     "6": [
+      "duel:all:fouls*duels_won",
+      "duel:all:duels_won*duels_won",
+      "duel:all:fouls*dribbles",
+      "duel:all:tackles*dribbles"
+     ],
+     "15": [
+      "duel:all:fouls*duels_won",
+      "duel:all:duels_won*duels_won",
+      "duel:all:fouls*dribbles",
+      "duel:all:tackles*dribbles"
+     ]
+    },
+    "2025-2026": {
+     "6": [
+      "duel:all:fouls*dribbles",
+      "duel:all:fouls*duels_won",
+      "duel:all:duels_won*duels_won",
+      "duel:all:tackles*dribbles",
+      "duel:all:duels_won*dribbles",
+      "duel:all:fouled*duels_won"
+     ],
+     "15": [
+      "duel:all:fouls*dribbles",
+      "duel:all:fouls*duels_won",
+      "duel:all:duels_won*duels_won",
+      "duel:all:tackles*dribbles",
+      "duel:all:duels_won*dribbles",
+      "duel:all:fouled*duels_won",
+      "duel:all:fouled*dribbles",
+      "duel:all:fouls*tackles",
+      "duel:flank:fouls*duels_won",
+      "duel:all:fouls*recoveries"
+     ]
+    },
+    "2026-2027": {
+     "6": [
+      "duel:all:fouls*dribbles",
+      "duel:all:duels_won*dribbles",
+      "duel:all:fouled*dribbles",
+      "duel:all:tackles*dribbles",
+      "duel:all:fouls*duels_won",
+      "duel:all:duels_won*duels_won"
+     ],
+     "15": [
+      "duel:all:fouls*dribbles",
+      "duel:all:duels_won*dribbles",
+      "duel:all:fouled*dribbles",
+      "duel:all:tackles*dribbles",
+      "duel:all:fouls*duels_won",
+      "duel:all:duels_won*duels_won",
+      "duel:flank:fouls*duels_won",
+      "duel:all:fouls*recoveries",
+      "duel:all:duels_lost*dribbles",
+      "duel:all:final_third*dribbles",
+      "duel:flank:fouls*recoveries",
+      "duel:all:fouled*duels_won",
+      "duel:all:fouled*recoveries",
+      "duel:all:duels_won*recoveries",
+      "duel:flank:fouls*tackles"
+     ]
+    }
+   }
+  },
+  "fouls": {
+   "gain": {
+    "6": {
+     "err0": 12.823758745999921,
+     "err1": 12.826804581315466,
+     "pct": -0.023751502003998344,
+     "z": -0.14202563428169301,
+     "seasons": {
+      "2021-2022": 0.0,
+      "2022-2023": 0.0,
+      "2023-2024": -0.021,
+      "2024-2025": 0.37,
+      "2025-2026": -0.512,
+      "2026-2027": 0.0
+     },
+     "better": 1,
+     "tested": 3
+    },
+    "15": {
+     "err0": 12.823758745999921,
+     "err1": 12.828147526872511,
+     "pct": -0.03422382594306392,
+     "z": -0.20415702873556688,
+     "seasons": {
+      "2021-2022": 0.0,
+      "2022-2023": 0.0,
+      "2023-2024": -0.021,
+      "2024-2025": 0.37,
+      "2025-2026": -0.567,
+      "2026-2027": 0.0
+     },
+     "better": 1,
+     "tested": 3
+    }
+   },
+   "top": [
+    {
+     "feature": "duel:all:npxg*aerials",
+     "corr": -0.0673,
+     "z": 4.25,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:sot*aerials",
+     "corr": -0.0648,
+     "z": 4.1,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:sh*aerials",
+     "corr": -0.0618,
+     "z": 3.9,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:box_touches*aerials",
+     "corr": -0.059,
+     "z": 3.72,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:sot*tackles",
+     "corr": -0.0589,
+     "z": 3.72,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:xa*aerials",
+     "corr": -0.0571,
+     "z": 3.6,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:sot*def_actions",
+     "corr": -0.0569,
+     "z": 3.59,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:npxg*duels_won",
+     "corr": -0.0541,
+     "z": 3.42,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:sot*duels_won",
+     "corr": -0.054,
+     "z": 3.41,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:kp*aerials",
+     "corr": -0.0536,
+     "z": 3.39,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:sot*interceptions",
+     "corr": -0.0536,
+     "z": 3.39,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:xa*aerials",
+     "corr": -0.0535,
+     "z": 3.38,
+     "agree": 6,
+     "seasons": 6
+    }
+   ],
+   "n_above": 2,
+   "chosen": {
+    "2021-2022": {
+     "6": [],
+     "15": []
+    },
+    "2022-2023": {
+     "6": [],
+     "15": []
+    },
+    "2023-2024": {
+     "6": [
+      "duel:all:dribbles*recoveries",
+      "duel:all:sot*recoveries",
+      "duel:all:dribbles*duels_lost",
+      "duel:all:npxg*recoveries",
+      "duel:all:sh*recoveries"
+     ],
+     "15": [
+      "duel:all:dribbles*recoveries",
+      "duel:all:sot*recoveries",
+      "duel:all:dribbles*duels_lost",
+      "duel:all:npxg*recoveries",
+      "duel:all:sh*recoveries"
+     ]
+    },
+    "2024-2025": {
+     "6": [
+      "duel:all:sot*recoveries",
+      "duel:all:dribbles*recoveries",
+      "duel:all:sh*recoveries",
+      "duel:all:kp*recoveries"
+     ],
+     "15": [
+      "duel:all:sot*recoveries",
+      "duel:all:dribbles*recoveries",
+      "duel:all:sh*recoveries",
+      "duel:all:kp*recoveries"
+     ]
+    },
+    "2025-2026": {
+     "6": [
+      "duel:all:sot*recoveries",
+      "duel:all:npxg*aerials",
+      "duel:all:sot*aerials",
+      "duel:all:npxg*recoveries",
+      "duel:all:sh*aerials",
+      "duel:all:kp*recoveries"
+     ],
+     "15": [
+      "duel:all:sot*recoveries",
+      "duel:all:npxg*aerials",
+      "duel:all:sot*aerials",
+      "duel:all:npxg*recoveries",
+      "duel:all:sh*aerials",
+      "duel:all:kp*recoveries",
+      "duel:all:sh*recoveries"
+     ]
+    },
+    "2026-2027": {
+     "6": [],
+     "15": []
+    }
+   }
+  },
+  "offsides": {
+   "gain": {
+    "6": {
+     "err0": 1.922305722629905,
+     "err1": 1.921689571913168,
+     "pct": 0.03205269117620569,
+     "z": 1.2646668309551259,
+     "seasons": {
+      "2021-2022": 0.0,
+      "2022-2023": 0.0,
+      "2023-2024": 0.0,
+      "2024-2025": 0.0,
+      "2025-2026": 0.0,
+      "2026-2027": 0.42
+     },
+     "better": 1,
+     "tested": 1
+    },
+    "15": {
+     "err0": 1.922305722629905,
+     "err1": 1.921689571913168,
+     "pct": 0.03205269117620569,
+     "z": 1.2646668309551259,
+     "seasons": {
+      "2021-2022": 0.0,
+      "2022-2023": 0.0,
+      "2023-2024": 0.0,
+      "2024-2025": 0.0,
+      "2025-2026": 0.0,
+      "2026-2027": 0.42
+     },
+     "better": 1,
+     "tested": 1
+    }
+   },
+   "top": [
+    {
+     "feature": "duel:flank:dribbles*yc",
+     "corr": -0.0732,
+     "z": 4.62,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:dribbles*fouls",
+     "corr": -0.0699,
+     "z": 4.42,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:dispossessed*yc",
+     "corr": -0.0657,
+     "z": 4.15,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:duels_won*yc",
+     "corr": -0.0644,
+     "z": 4.07,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:dispossessed*fouls",
+     "corr": -0.0634,
+     "z": 4.0,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:duels_lost*yc",
+     "corr": -0.062,
+     "z": 3.92,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:dribbles*tackles",
+     "corr": -0.062,
+     "z": 3.91,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:dribbles*recoveries",
+     "corr": -0.0608,
+     "z": 3.84,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:dispossessed*fouls",
+     "corr": -0.0603,
+     "z": 3.81,
+     "agree": 4,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:all:dribbles*fouls",
+     "corr": -0.0595,
+     "z": 3.76,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:tackles*interceptions",
+     "corr": -0.0593,
+     "z": 3.74,
+     "agree": 6,
+     "seasons": 6
+    },
+    {
+     "feature": "duel:flank:tackles*yc",
+     "corr": -0.0589,
+     "z": 3.72,
+     "agree": 6,
+     "seasons": 6
+    }
+   ],
+   "n_above": 5,
+   "chosen": {
+    "2021-2022": {
+     "6": [],
+     "15": []
+    },
+    "2022-2023": {
+     "6": [],
+     "15": []
+    },
+    "2023-2024": {
+     "6": [],
+     "15": []
+    },
+    "2024-2025": {
+     "6": [],
+     "15": []
+    },
+    "2025-2026": {
+     "6": [],
+     "15": []
+    },
+    "2026-2027": {
+     "6": [
+      "duel:flank:dribbles*yc",
+      "duel:flank:dribbles*fouls"
+     ],
+     "15": [
+      "duel:flank:dribbles*yc",
+      "duel:flank:dribbles*fouls"
+     ]
+    }
+   }
+  }
+ }
+}

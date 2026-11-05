@@ -100,7 +100,7 @@ def lineup_strength(P, matches):
     return pd.DataFrame(rows)
 
 
-def team_view(M, T, L, refs):
+def team_view(M, T, L, refs, P=None):
     """One row per (match, side) with the base rate, own style (s_), opponent style (o_s_), lineup and referee features."""
     sty = T[["match_id", "venue"] + [c for c in T.columns if c.startswith("s_")]]
     # upcoming matches have no team_match row: use each team's state after its latest match (cur_ columns)
@@ -137,6 +137,7 @@ def team_view(M, T, L, refs):
     V["xi_rating_rel"] = V["xi_rating"] - V.groupby("team")["xi_rating"].transform(lambda s: s.shift(1).ewm(halflife=6).mean())
     V["o_xi_rating_rel"] = V["o_xi_rating"] - V.groupby("opp")["o_xi_rating"].transform(lambda s: s.shift(1).ewm(halflife=6).mean())
     V = add_context(V, M, T)
+    if P is not None and DUEL_COLS: V = _duels.add(V, M, P)
     return V.sort_values(["date", "match_id", "side"]).reset_index(drop=True)
 
 
@@ -238,6 +239,15 @@ CONTEXT_STATS = {   # extra columns per target, kept only where they cut the squ
 }                       # corners, shots, shots on target: the same columns made them slightly worse, so they stay as they were
 
 
+try:
+    import duels as _duels
+    DUEL_COLS = list(_duels.COLUMNS)
+except ImportError:                       # the second stage is optional: without src/duels.py the models are the first stage only
+    DUEL_COLS = []
+DUEL_STATS = {"yc": 300.0}   # target -> penalty of the second stage. Yellow cards only: src/study_duels2.py, squared error -0.67% (z 3.6), 5 seasons of 6;
+                             # the other statistics and the goals gain less than 0.3% with no significance, so they stay on the first stage
+
+
 class StatModel:
     def __init__(self, target, alpha=1.0):
         self.target, self.alpha = target, WIDE_STATS.get(target, alpha)
@@ -256,10 +266,19 @@ class StatModel:
         self.m = PoissonRegressor(alpha=self.alpha / len(V) * 100, max_iter=500).fit(self._X(V), y)
         resid_var = np.mean((y - self.m.predict(self._X(V))) ** 2)
         self.dispersion = max(resid_var / np.mean(self.m.predict(self._X(V))), 1.0)  # >1: overdispersed vs Poisson
+        self.stage2 = None
+        if self.target in DUEL_STATS and all(c in V.columns for c in DUEL_COLS):
+            # second stage: ridge Poisson on the ratio actual / first-stage prediction with the player-against-player columns (src/duels.py)
+            p1 = self.m.predict(self._X(V)); self.d_mu, self.d_sd = V[DUEL_COLS].mean(), V[DUEL_COLS].std().replace(0, 1)
+            self.stage2 = PoissonRegressor(alpha=DUEL_STATS[self.target] / len(V) * 100, max_iter=300).fit(self._D(V), y.values / p1, sample_weight=p1)
         return self
 
+    def _D(self, V):
+        return ((V[DUEL_COLS].astype(float) - self.d_mu) / self.d_sd).fillna(0.0).clip(-4, 4).values
+
     def predict(self, V):
-        return self.m.predict(self._X(V))
+        p = self.m.predict(self._X(V))
+        return p * self.stage2.predict(self._D(V)) if self.stage2 is not None and all(c in V.columns for c in DUEL_COLS) else p
 
 
 def count_over(mean, line, dispersion=1.0):
