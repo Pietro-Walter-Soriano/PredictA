@@ -45,9 +45,13 @@ def outcome_probs(M):
     return {"1": np.tril(M, -1).sum(), "X": np.trace(M), "2": np.triu(M, 1).sum()}
 
 
+PROFILE_RATES = ("fouls", "fouled", "aerials", "duels_lost", "tackles", "def_actions")   # per-90 rates summed over the XI: px_<name> (src/study_players2.py)
+
+
 def lineup_strength(P, matches):
     """Per match/side: expected attacking output (npxG+xA per 90 * expected minutes) of the XI vs the team's recent XIs,
-    average pre-match FotMob rating and form of the XI, and its fatigue (all competitions, strictly before kick-off)."""
+    average pre-match FotMob rating and form of the XI, its fatigue (all competitions, strictly before kick-off), and the XI profile px_*:
+    the sum over the starters of their recent per-90 fouls, fouls suffered, aerial duels, duels lost, tackles and defensive actions."""
     key = P.set_index(["match_id", "player_id"])
     last = P.sort_values("date").groupby("player_id").tail(1).set_index("player_id")  # latest state for upcoming matches
     apps = {pid: (g.date.values, g["min"].values) for pid, g in P[P["min"] > 0][["player_id", "date", "min"]].groupby("player_id")}
@@ -65,17 +69,23 @@ def lineup_strength(P, matches):
             if len(xi) < 11:
                 rows.append({"match_id": r.match_id, "side": side}); continue
             att, rat, frm, mv, known = 0.0, [], [], 0.0, 0
+            prof, prof_n = {k: 0.0 for k in PROFILE_RATES}, {k: 0 for k in PROFILE_RATES}
             fat = [fatigue(s["id"], r.date) for s in xi]
             for s in xi:
+                pre = None
                 if (r.match_id, s["id"]) in key.index:
                     p = key.loc[(r.match_id, s["id"])]
                     p = p.iloc[0] if isinstance(p, pd.DataFrame) else p
-                    a90, rt, f5 = (p.get("pre_npxg"), p.get("pre_xa")), p.get("pre_rating"), p.get("pre_form5")
+                    a90, rt, f5, pre = (p.get("pre_npxg"), p.get("pre_xa")), p.get("pre_rating"), p.get("pre_form5"), "pre_"
                 elif s["id"] in last.index:  # upcoming match: player's state after his latest game
                     p = last.loc[s["id"]]
-                    a90, rt, f5 = (p.get("cur_npxg"), p.get("cur_xa")), p.get("cur_rating"), p.get("cur_form5")
+                    a90, rt, f5, pre = (p.get("cur_npxg"), p.get("cur_xa")), p.get("cur_rating"), p.get("cur_form5"), "cur_"
                 else:
                     a90, rt, f5 = (None, None), None, None
+                if pre:
+                    for k in PROFILE_RATES:
+                        v = p.get(pre + k)
+                        if v is not None and not pd.isna(v): prof[k] += float(v); prof_n[k] += 1
                 if a90[0] is not None and not pd.isna(a90[0]):
                     att += (a90[0] or 0) + (a90[1] or 0); known += 1
                 if rt is not None and not pd.isna(rt): rat.append(rt)
@@ -85,7 +95,8 @@ def lineup_strength(P, matches):
                          "xi_rating": np.mean(rat) if rat else np.nan, "xi_form": np.mean(frm) if frm else 0.0, "xi_mv": mv,
                          "xi_rest": np.nanmean([x[0] for x in fat]) if any(not np.isnan(x[0]) for x in fat) else np.nan,
                          "xi_min14": np.mean([x[1] for x in fat]), "xi_games10": np.mean([x[2] for x in fat]),
-                         "xi_short_rest": float(np.mean([x[0] <= 3.5 for x in fat if not np.isnan(x[0])] or [0]))})
+                         "xi_short_rest": float(np.mean([x[0] <= 3.5 for x in fat if not np.isnan(x[0])] or [0])),
+                         **{"px_" + k: (prof[k] if prof_n[k] >= 6 else np.nan) for k in PROFILE_RATES}})
     return pd.DataFrame(rows)
 
 
@@ -117,7 +128,7 @@ def team_view(M, T, L, refs):
     o["side"] = o["side"].map({"home": "away", "away": "home"})
     V = V.merge(o, on=["match_id", "side"], how="left")
     V = V.merge(L, on=["match_id", "side"], how="left")
-    Lo = L.rename(columns={c: "o_" + c for c in L.columns if c.startswith("xi_")}); Lo["side"] = Lo["side"].map({"home": "away", "away": "home"})
+    Lo = L.rename(columns={c: "o_" + c for c in L.columns if c.startswith(("xi_", "px_"))}); Lo["side"] = Lo["side"].map({"home": "away", "away": "home"})
     V = V.merge(Lo, on=["match_id", "side"], how="left")
     V = V.merge(refs, on="match_id", how="left")
     # lineup attack relative to the team's own recent XIs (EW, pre-match)
@@ -221,7 +232,8 @@ WIDE_STATS = {"offsides": 20.0}   # targets that use every style / lineup / refe
 
 CONTEXT_STATS = {   # extra columns per target, kept only where they cut the squared error in 6 of 6 seasons (src/study_stats2.py)
     "yc": ["lam_gap_abs", "hour", "x_yc", "x_fouls"],                                    # -1.5%
-    "fouls": ["lam_gap_abs", "hour", "x_fouls"],                                         # -1.2%
+    "fouls": ["lam_gap_abs", "hour", "x_fouls",                                          # -1.2%
+              "o_px_fouled", "px_fouls", "px_aerials", "px_duels_lost", "px_tackles", "px_def_actions"],   # XI profiles: -0.7% more, chosen on earlier seasons only (z 2.4)
     "offsides": ["lam_gap_abs", "hour", "x_offsides", "o_cl_offsides_3", "o_cl_offsides_25"],   # -0.8% on top of the wide model
 }                       # corners, shots, shots on target: the same columns made them slightly worse, so they stay as they were
 

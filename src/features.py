@@ -10,7 +10,7 @@ import pandas as pd
 
 STYLE = ["poss", "ppda", "deep", "long_balls", "crosses", "aerials", "corners", "box_touches", "xg_set", "shot_xg_fastbreak",
          "shot_xg_head", "fouls", "yc", "tackles", "interceptions", "dribbles", "shots", "sot", "saves", "offsides"]
-PLAYER_RATES = ["npxg", "xa", "sh", "sot", "kp", "box_touches", "yc", "fouls", "fouled", "def_actions", "tackles", "interceptions",
+PLAYER_RATES = ["npxg", "xa", "sh", "sot", "kp", "box_touches", "yc", "fouls", "fouled", "def_actions", "tackles", "interceptions", "duels_lost",
                 "recoveries", "aerials", "dribbles", "saves", "conceded", "xgot_faced"]
 SEASON_REGRESS = 0.70   # share of last season's rating kept over the summer (rest goes back to league mean)
 
