@@ -1,6 +1,6 @@
 # PredictA — Serie A
 
-Aggiornato: 2026-11-06 07:03 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
+Aggiornato: 2026-11-06 15:01 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
 
 ## Voto complessivo: **70/100** su 100 partite
 
@@ -31,13 +31,13 @@ Favorito indovinato 61% · log-loss 1X2 0.897 (storico 1.049, bookmaker 0.899) �
 
 | Data (UTC) | Partita | 1 | X | 2 | Gol attesi | Over 2.5 | Gol entrambe | Più probabile | Formazioni |
 |---|---|---|---|---|---|---|---|---|---|
-| 2026-11-06 19:45 | Venezia – Udinese | 42% | 29% | 30% | 1.61–1.33 | 58% | 62% | 1-1 (13%) | probabili |
-| 2026-11-07 14:00 | Torino – Lecce | 53% | 28% | 20% | 1.70–0.96 | 51% | 54% | 1-1 (13%) | probabili |
-| 2026-11-07 14:00 | Cagliari – Frosinone | 34% | 28% | 37% | 1.58–1.65 | 64% | 67% | 1-1 (12%) | probabili |
-| 2026-11-07 17:00 | Parma – Bologna | 23% | 30% | 48% | 0.92–1.45 | 44% | 50% | 1-1 (14%) | probabili |
-| 2026-11-07 19:45 | Roma – Sassuolo | 79% | 14% | 7% | 3.23–0.95 | 79% | 60% | 3-0 (8%) | probabili |
-| 2026-11-08 11:30 | Napoli – Lazio | 48% | 28% | 24% | 1.77–1.19 | 58% | 61% | 1-1 (12%) | probabili |
-| 2026-11-08 14:00 | Genoa – Milan | 24% | 28% | 48% | 1.20–1.77 | 58% | 61% | 1-1 (12%) | probabili |
+| 2026-11-06 19:45 | Venezia – Udinese | 42% | 29% | 30% | 1.61–1.34 | 58% | 62% | 1-1 (13%) | probabili |
+| 2026-11-07 14:00 | Torino – Lecce | 53% | 27% | 20% | 1.77–1.00 | 54% | 56% | 1-1 (13%) | probabili |
+| 2026-11-07 14:00 | Cagliari – Frosinone | 32% | 28% | 40% | 1.50–1.72 | 64% | 67% | 1-1 (12%) | probabili |
+| 2026-11-07 17:00 | Parma – Bologna | 24% | 30% | 46% | 0.93–1.40 | 42% | 49% | 1-1 (15%) | probabili |
+| 2026-11-07 19:45 | Roma – Sassuolo | 77% | 15% | 8% | 3.19–0.99 | 79% | 62% | 3-0 (8%) | probabili |
+| 2026-11-08 11:30 | Napoli – Lazio | 48% | 28% | 24% | 1.75–1.18 | 57% | 60% | 1-1 (13%) | probabili |
+| 2026-11-08 14:00 | Genoa – Milan | 24% | 28% | 48% | 1.21–1.77 | 59% | 62% | 1-1 (12%) | probabili |
 | 2026-11-08 14:00 | Monza – Atalanta | 28% | 26% | 45% | 1.61–2.05 | 72% | 72% | 2-2 (10%) | probabili |
 | 2026-11-08 17:00 | Inter – Como | 50% | 26% | 24% | 2.05–1.39 | 68% | 68% | 1-1 (10%) | probabili |
 | 2026-11-08 19:45 | Fiorentina – Juventus | 18% | 25% | 56% | 1.04–1.97 | 59% | 59% | 1-1 (12%) | probabili |
