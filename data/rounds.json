@@ -7931,8 +7931,8 @@
 "picks": [],
 "xi_overlap": 1.0,
 "scorer_names": [
-"Martin Baturina",
 "Rasmus Højlund",
+"Martin Baturina",
 "Anastasios Douvikas"
 ]
 }
@@ -11821,8 +11821,8 @@
 ],
 "xi_overlap": 1.0,
 "scorer_names": [
-"Éderson",
 "Matias Soulé",
+"Éderson",
 "Mario Hermoso"
 ]
 }
@@ -15332,10 +15332,10 @@
 "picks": [],
 "xi_overlap": 1.0,
 "scorer_names": [
-"Akor Adams",
+"Antoine Hainaut",
 "Mateo Pellegrino",
 "Franco Mastantuono",
-"Antoine Hainaut"
+"Akor Adams"
 ]
 }
 },
@@ -18398,8 +18398,8 @@
 ],
 "xi_overlap": 1.0,
 "scorer_names": [
-"Jacobo Ramón",
 "Kaiki",
+"Jacobo Ramón",
 "David Romero"
 ]
 }
@@ -32774,8 +32774,8 @@
 "picks": [],
 "xi_overlap": 1.0,
 "scorer_names": [
-"Oliver Provstgaard",
 "Fisayo Dele-Bashiru",
+"Oliver Provstgaard",
 "Gustav Isaksen"
 ]
 }
@@ -43707,8 +43707,8 @@
 "xi_overlap": 0.7727272727272727,
 "scorer_names": [
 "Tommaso Pobega",
-"Gustavo Varela",
-"Federico Bernardeschi"
+"Federico Bernardeschi",
+"Gustavo Varela"
 ]
 }
 },
@@ -44556,10 +44556,10 @@
 "picks": [],
 "xi_overlap": 1.0,
 "scorer_names": [
+"Christian Pulisic",
 "Diego Moreira",
 "Alessandro Bastoni",
-"Adrien Rabiot",
-"Christian Pulisic"
+"Adrien Rabiot"
 ]
 }
 },
@@ -45789,9 +45789,9 @@
 "picks": [],
 "xi_overlap": 0.8636363636363636,
 "scorer_names": [
-"M'Bala Nzola",
 "Gustav Isaksen",
-"Andrea Pinamonti"
+"Andrea Pinamonti",
+"M'Bala Nzola"
 ]
 }
 },
