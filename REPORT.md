@@ -1,14 +1,14 @@
 # PredictA — Serie A
 
-Aggiornato: 2026-11-08 19:30 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
+Aggiornato: 2026-11-08 23:07 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
 
-## Voto complessivo: **69/100** su 109 partite
+## Voto complessivo: **69/100** su 110 partite
 
 | 1X2 vs storico | 1X2 vs bookmaker | Mercati gol | Linee statistiche | Marcatori |
 |---|---|---|---|---|
-| 87 | 50 | 59 | 84 | 65 |
+| 86 | 50 | 60 | 83 | 66 |
 
-Favorito indovinato 61% · log-loss 1X2 0.896 (storico 1.051, bookmaker 0.896) · risultato esatto 13% (top-3 37%) · scommesse di valore 48/112, P&L +2.37 u
+Favorito indovinato 61% · log-loss 1X2 0.900 (storico 1.053, bookmaker 0.899) · risultato esatto 13% (top-3 36%) · scommesse di valore 49/114, P&L +2.31 u
 
 50 = come il riferimento ingenuo, 75 = errore più basso del 10%. Dettagli nel README.
 
@@ -16,7 +16,7 @@ Favorito indovinato 61% · log-loss 1X2 0.896 (storico 1.051, bookmaker 0.896) �
 
 | Giornata | Voto | 1X2 vs storico | 1X2 vs bookmaker | Mercati gol | Linee statistiche | Marcatori | Favorito | Log-loss | Value P&L | Tipo |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2026-2027 R11 | **52** | 94 | 40 | 0 | 78 | 48 | 67% | 0.881 | -0.97 | live (in corso) |
+| 2026-2027 R11 | **53** | 87 | 37 | 9 | 76 | 56 | 60% | 0.930 | -1.03 | live |
 | 2026-2027 R10 | **64** | 83 | 40 | 53 | 70 | 74 | 70% | 0.859 | -0.35 | live |
 | 2026-2027 R9 | **77** | 91 | 48 | 76 | 100 | 69 | 60% | 0.914 | -1.58 | live |
 | 2026-2027 R8 | **76** | 100 | 70 | 68 | 83 | 59 | 80% | 0.725 | +2.28 | live |
@@ -27,12 +27,6 @@ Favorito indovinato 61% · log-loss 1X2 0.896 (storico 1.051, bookmaker 0.896) �
 | 2026-2027 R3 | **72** | 91 | 70 | 59 | 69 | 70 | 60% | 0.911 | -0.25 | ricostruita |
 | 2026-2027 R2 | **80** | 100 | 58 | 76 | 94 | 71 | 70% | 0.758 | +1.11 | ricostruita |
 | 2026-2027 R1 | **61** | 95 | 25 | 79 | 57 | 49 | 60% | 0.882 | -1.61 | ricostruita |
-
-## Prossime partite
-
-| Data (UTC) | Partita | 1 | X | 2 | Gol attesi | Over 2.5 | Gol entrambe | Più probabile | Formazioni |
-|---|---|---|---|---|---|---|---|---|---|
-| 2026-11-08 19:45 | Fiorentina – Juventus | 18% | 25% | 57% | 1.01–1.96 | 58% | 58% | 1-1 (12%) | ufficiali |
 
 ---
 Strumento di analisi statistica, non un consiglio di scommessa.
