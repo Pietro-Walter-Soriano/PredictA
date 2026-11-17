@@ -1,6 +1,6 @@
 # PredictA — Serie A
 
-Aggiornato: 2026-11-17 02:06 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
+Aggiornato: 2026-11-17 10:43 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
 
 ## Voto complessivo: **69/100** su 110 partite
 
@@ -27,6 +27,14 @@ Favorito indovinato 61% · log-loss 1X2 0.900 (storico 1.053, bookmaker 0.899) �
 | 2026-2027 R3 | **72** | 91 | 70 | 59 | 69 | 70 | 60% | 0.911 | -0.25 | ricostruita |
 | 2026-2027 R2 | **80** | 100 | 58 | 76 | 94 | 71 | 70% | 0.758 | +1.11 | ricostruita |
 | 2026-2027 R1 | **61** | 95 | 25 | 79 | 57 | 49 | 60% | 0.882 | -1.61 | ricostruita |
+
+## Prossime partite
+
+| Data (UTC) | Partita | 1 | X | 2 | Gol attesi | Over 2.5 | Gol entrambe | Più probabile | Formazioni |
+|---|---|---|---|---|---|---|---|---|---|
+| 2026-11-21 14:00 | Lazio – Lecce | 71% | 20% | 10% | 2.28–0.72 | 58% | 49% | 2-0 (13%) | probabili |
+| 2026-11-21 14:00 | Como – Cagliari | 76% | 17% | 7% | 2.52–0.65 | 62% | 46% | 2-0 (13%) | probabili |
+| 2026-11-21 17:00 | Parma – Roma | 8% | 17% | 75% | 0.73–2.60 | 65% | 50% | 0-2 (12%) | probabili |
 
 ---
 Strumento di analisi statistica, non un consiglio di scommessa.
