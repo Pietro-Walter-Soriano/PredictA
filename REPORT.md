@@ -1,6 +1,6 @@
 # PredictA — Serie A
 
-Aggiornato: 2026-11-19 17:24 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
+Aggiornato: 2026-11-19 23:45 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
 
 ## Voto complessivo: **69/100** su 110 partite
 
@@ -37,8 +37,10 @@ Favorito indovinato 61% · log-loss 1X2 0.900 (storico 1.053, bookmaker 0.899) �
 | 2026-11-21 17:00 | Parma – Roma | 7% | 17% | 76% | 0.72–2.60 | 65% | 50% | 0-2 (12%) | probabili |
 | 2026-11-21 19:45 | Napoli – Torino | 72% | 19% | 9% | 2.44–0.78 | 63% | 52% | 2-0 (12%) | probabili |
 | 2026-11-22 11:30 | Juventus – Venezia | 78% | 16% | 6% | 2.63–0.66 | 64% | 47% | 2-0 (13%) | probabili |
-| 2026-11-22 14:00 | Sassuolo – Genoa | 36% | 30% | 34% | 1.41–1.37 | 54% | 60% | 1-1 (14%) | probabili |
 | 2026-11-22 14:00 | Bologna – Udinese | 59% | 25% | 16% | 1.98–0.96 | 57% | 56% | 1-1 (12%) | probabili |
+| 2026-11-22 14:00 | Sassuolo – Genoa | 36% | 30% | 34% | 1.41–1.37 | 54% | 60% | 1-1 (14%) | probabili |
+| 2026-11-22 17:00 | Milan – Frosinone | 60% | 23% | 18% | 2.45–1.29 | 73% | 69% | 2-1 (9%) | probabili |
+| 2026-11-22 19:45 | Atalanta – Inter | 14% | 21% | 65% | 1.19–2.61 | 74% | 67% | 1-2 (9%) | probabili |
 
 ---
 Strumento di analisi statistica, non un consiglio di scommessa.
