@@ -1,14 +1,14 @@
 # PredictA — Serie A
 
-Aggiornato: 2026-11-22 17:57 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
+Aggiornato: 2026-11-22 23:31 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
 
-## Voto complessivo: **71/100** su 117 partite
+## Voto complessivo: **72/100** su 119 partite
 
 | 1X2 vs storico | 1X2 vs bookmaker | Mercati gol | Linee statistiche | Marcatori |
 |---|---|---|---|---|
-| 91 | 50 | 61 | 86 | 67 |
+| 90 | 50 | 63 | 88 | 67 |
 
-Favorito indovinato 62% · log-loss 1X2 0.880 (storico 1.052, bookmaker 0.881) · risultato esatto 14% (top-3 36%) · scommesse di valore 51/119, P&L +0.30 u
+Favorito indovinato 61% · log-loss 1X2 0.883 (storico 1.053, bookmaker 0.883) · risultato esatto 13% (top-3 35%) · scommesse di valore 51/120, P&L -0.70 u
 
 50 = come il riferimento ingenuo, 75 = errore più basso del 10%. Dettagli nel README.
 
@@ -16,7 +16,7 @@ Favorito indovinato 62% · log-loss 1X2 0.880 (storico 1.052, bookmaker 0.881) �
 
 | Giornata | Voto | 1X2 vs storico | 1X2 vs bookmaker | Mercati gol | Linee statistiche | Marcatori | Favorito | Log-loss | Value P&L | Tipo |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2026-2027 R12 | **87** | 100 | 65 | 81 | 100 | 88 | 71% | 0.568 | -2.01 | live (in corso) |
+| 2026-2027 R12 | **88** | 100 | 59 | 100 | 100 | 83 | 67% | 0.677 | -3.01 | live (in corso) |
 | 2026-2027 R11 | **53** | 87 | 37 | 9 | 76 | 56 | 60% | 0.930 | -1.03 | live |
 | 2026-2027 R10 | **64** | 83 | 40 | 53 | 70 | 74 | 70% | 0.859 | -0.35 | live |
 | 2026-2027 R9 | **77** | 91 | 48 | 76 | 100 | 69 | 60% | 0.914 | -1.58 | live |
@@ -33,9 +33,7 @@ Favorito indovinato 62% · log-loss 1X2 0.880 (storico 1.052, bookmaker 0.881) �
 
 | Data (UTC) | Partita | 1 | X | 2 | Gol attesi | Over 2.5 | Gol entrambe | Più probabile | Formazioni |
 |---|---|---|---|---|---|---|---|---|---|
-| 2026-11-22 17:00 | Milan – Frosinone | 59% | 23% | 18% | 2.39–1.28 | 72% | 68% | 2-1 (9%) | ufficiali |
-| 2026-11-22 19:45 | Atalanta – Inter | 14% | 20% | 66% | 1.18–2.69 | 75% | 67% | 1-2 (8%) | probabili |
-| 2026-11-23 19:45 | Monza – Fiorentina | 32% | 28% | 40% | 1.60–1.80 | 67% | 70% | 1-1 (11%) | probabili |
+| 2026-11-23 19:45 | Monza – Fiorentina | 33% | 27% | 40% | 1.66–1.85 | 69% | 71% | 1-1 (10%) | probabili |
 
 ---
 Strumento di analisi statistica, non un consiglio di scommessa.
