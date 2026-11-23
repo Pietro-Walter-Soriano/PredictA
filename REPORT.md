@@ -1,6 +1,6 @@
 # PredictA — Serie A
 
-Aggiornato: 2026-11-23 03:59 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
+Aggiornato: 2026-11-23 14:28 UTC · dashboard completa: https://pietro-walter-soriano.github.io/PredictA/ (oppure *Actions → ultimo run → Artifacts*).
 
 ## Voto complessivo: **72/100** su 119 partite
 
@@ -34,6 +34,7 @@ Favorito indovinato 61% · log-loss 1X2 0.883 (storico 1.053, bookmaker 0.883) �
 | Data (UTC) | Partita | 1 | X | 2 | Gol attesi | Over 2.5 | Gol entrambe | Più probabile | Formazioni |
 |---|---|---|---|---|---|---|---|---|---|
 | 2026-11-23 19:45 | Monza – Fiorentina | 33% | 27% | 40% | 1.66–1.85 | 69% | 71% | 1-1 (10%) | probabili |
+| 2026-11-27 19:45 | Venezia – Bologna | 26% | 29% | 46% | 1.16–1.62 | 54% | 59% | 1-1 (13%) | probabili |
 
 ---
 Strumento di analisi statistica, non un consiglio di scommessa.
