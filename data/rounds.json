@@ -7931,9 +7931,9 @@
 "picks": [],
 "xi_overlap": 1.0,
 "scorer_names": [
-"Rasmus Højlund",
 "Martin Baturina",
-"Anastasios Douvikas"
+"Anastasios Douvikas",
+"Rasmus Højlund"
 ]
 }
 },
@@ -11821,8 +11821,8 @@
 ],
 "xi_overlap": 1.0,
 "scorer_names": [
-"Éderson",
 "Matias Soulé",
+"Éderson",
 "Mario Hermoso"
 ]
 }
@@ -15332,10 +15332,10 @@
 "picks": [],
 "xi_overlap": 1.0,
 "scorer_names": [
-"Antoine Hainaut",
+"Akor Adams",
 "Mateo Pellegrino",
 "Franco Mastantuono",
-"Akor Adams"
+"Antoine Hainaut"
 ]
 }
 },
@@ -17093,8 +17093,8 @@
 "xi_overlap": 1.0,
 "scorer_names": [
 "Lassana Coulibaly",
-"Exequiel Zeballos",
 "Tiago Gabriel",
+"Exequiel Zeballos",
 "Ricardo Mangas"
 ]
 }
@@ -24034,9 +24034,9 @@
 ],
 "xi_overlap": 1.0,
 "scorer_names": [
+"Christian Pulisic",
 "Diego Moreira",
-"Adrien Rabiot",
-"Christian Pulisic"
+"Adrien Rabiot"
 ]
 }
 }
@@ -27075,8 +27075,8 @@
 "picks": [],
 "xi_overlap": 1.0,
 "scorer_names": [
-"Riccardo Orsolini",
 "Amar Fatah",
+"Riccardo Orsolini",
 "Jay Enem"
 ]
 }
@@ -37016,8 +37016,8 @@
 "Nikola Krstović",
 "Giacomo Calò",
 "Romano Schmid",
-"Éderson",
 "Eljif Elmas",
+"Éderson",
 "Aleksa Terzić"
 ]
 }
@@ -39563,8 +39563,8 @@
 "Rodrigo Mora",
 "Emanuele Lulli",
 "Donyell Malen",
-"Daniel Maldini",
 "M'Bala Nzola",
+"Daniel Maldini",
 "Niccolò Pisilli"
 ]
 }
@@ -43707,8 +43707,8 @@
 "xi_overlap": 0.7727272727272727,
 "scorer_names": [
 "Tommaso Pobega",
-"Federico Bernardeschi",
-"Gustavo Varela"
+"Gustavo Varela",
+"Federico Bernardeschi"
 ]
 }
 },
@@ -44556,10 +44556,10 @@
 "picks": [],
 "xi_overlap": 1.0,
 "scorer_names": [
+"Christian Pulisic",
 "Diego Moreira",
 "Alessandro Bastoni",
-"Adrien Rabiot",
-"Christian Pulisic"
+"Adrien Rabiot"
 ]
 }
 },
@@ -45789,8 +45789,8 @@
 "picks": [],
 "xi_overlap": 0.8636363636363636,
 "scorer_names": [
-"Gustav Isaksen",
 "M'Bala Nzola",
+"Gustav Isaksen",
 "Andrea Pinamonti"
 ]
 }
@@ -53713,8 +53713,8 @@
 "xi_overlap": 0.6363636363636364,
 "scorer_names": [
 "Rodrigo Mora",
-"Nesta Elphege",
-"Donyell Malen"
+"Donyell Malen",
+"Nesta Elphege"
 ]
 }
 },
@@ -54977,8 +54977,8 @@
 ],
 "xi_overlap": 0.8636363636363636,
 "scorer_names": [
-"Nadir Zortea",
-"Nicolò Zaniolo"
+"Nicolò Zaniolo",
+"Nadir Zortea"
 ]
 }
 },
@@ -55821,8 +55821,8 @@
 ],
 "xi_overlap": 0.8181818181818182,
 "scorer_names": [
-"Christian Pulisic",
 "Patrizio Masini",
+"Christian Pulisic",
 "Alphadjo Cissè",
 "Ardon Jashari",
 "Gonçalo Ramos"
